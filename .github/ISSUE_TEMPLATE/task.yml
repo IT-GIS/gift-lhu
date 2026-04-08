@@ -1,0 +1,40 @@
+name: Task / Deployment
+description: Catat pekerjaan, revisi, atau deploy agar progresnya bisa dilacak.
+title: "[Task] "
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Tujuan
+      description: Jelaskan hasil akhir yang ingin dicapai.
+      placeholder: Deploy aplikasi Next.js ke Hostinger dan pastikan login berhasil.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Ruang Lingkup
+      description: Tuliskan file, area aplikasi, atau sistem yang terdampak.
+      placeholder: GitHub repo, Hostinger Node.js App, database MySQL, env vars.
+    validations:
+      required: true
+  - type: textarea
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Tulis langkah kerja utama.
+      placeholder: |
+        - [ ] Buat repo GitHub
+        - [ ] Push source code
+        - [ ] Setup database Hostinger
+        - [ ] Import migrasi SQL
+        - [ ] Deploy Node.js app
+        - [ ] Verifikasi login
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Catatan
+      description: Risiko, credential yang perlu diisi, atau kendala khusus.
+      placeholder: APP_URL harus memakai domain production.

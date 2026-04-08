@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Global Color Scheme ─── */
+:root {
+  color-scheme: light;
+
+  /* Neumorphic palette (light mode) */
+  --neu-bg:       #eaeef6;
+  --neu-white:    #ffffff;
+  --neu-shadow-a: #c8d0e7;
+  --neu-shadow-b: #ffffff;
+  --neu-primary:  #289db9;
+  --neu-pri-light:#5ac8e0;
+  --neu-pri-dark: #1e7a91;
+  --neu-text:     #9baacf;
+
+  /* Raised shadow (element lifts off surface) */
+  --neu-raised: .4rem .4rem .9rem var(--neu-shadow-a),
+                -.25rem -.25rem .7rem var(--neu-white);
+
+  /* Inset shadow (element pressed into surface) */
+  --neu-inset:  inset .2rem .2rem .5rem var(--neu-shadow-a),
+               inset -.2rem -.2rem .5rem var(--neu-white);
+}
+
+.dark {
+  /* Dark mode neumorphic uses slate tones */
+  --neu-bg:       #1e2535;
+  --neu-white:    #252d3d;
+  --neu-shadow-a: #161b28;
+  --neu-shadow-b: #283044;
+  --neu-raised: .4rem .4rem .9rem var(--neu-shadow-a),
+                -.25rem -.25rem .7rem var(--neu-shadow-b);
+  --neu-inset:  inset .2rem .2rem .5rem var(--neu-shadow-a),
+               inset -.2rem -.2rem .5rem var(--neu-shadow-b);
+}
+
+/* ─── Neumorphic Utility Classes ─── */
+
+/** Raised card — element appears to float above the background */
+.neu-card {
+  background: var(--neu-bg) !important;
+  border: none !important;
+  box-shadow: var(--neu-raised) !important;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.neu-card:hover {
+  box-shadow: .6rem .6rem 1.2rem var(--neu-shadow-a),
+              -.3rem -.3rem .9rem var(--neu-white) !important;
+}
+
+/** Pressed card — element sinks into the background */
+.neu-card-inset {
+  background: var(--neu-bg) !important;
+  border: none !important;
+  box-shadow: var(--neu-inset) !important;
+}
+
+/** Neumorphic primary button press state */
+.neu-btn-press:active {
+  box-shadow: inset .2rem .2rem .6rem var(--neu-pri-dark),
+              inset -.2rem -.2rem .6rem var(--neu-pri-light) !important;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-background text-foreground antialiased;
+  background-image:
+    radial-gradient(circle at top, rgba(40, 157, 185, 0.10), transparent 28%),
+    linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(247,249,255,1) 100%);
+}
+
+.dark body {
+  background-image: linear-gradient(180deg, rgba(11,15,25,1) 0%, rgba(15,23,42,1) 100%);
+}
+
+::selection {
+  background: rgba(40, 157, 185, 0.16);
+}
