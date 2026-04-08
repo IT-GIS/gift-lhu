@@ -424,8 +424,13 @@ export default function LoginClient({
     setError(null);
     const formData = new FormData(e.currentTarget);
     startTransition(async () => {
-      const result = await loginAction(formData);
-      if (result?.error) setError(result.error);
+      try {
+        const result = await loginAction(formData);
+        if (result?.error) setError(result.error);
+      } catch (error) {
+        console.error("[login] Unexpected login error:", error);
+        setError("Terjadi gangguan saat memproses login. Silakan coba lagi.");
+      }
     });
   };
 
