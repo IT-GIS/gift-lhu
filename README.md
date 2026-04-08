@@ -21,19 +21,6 @@ Starter fullstack modern untuk **Laporan Hasil Uji (LHU) Kuat Tekan Beton** deng
 - User management dan audit log page
 - Seed reference & schema
 
-## Demo login
-
-- `superadmin@example.com`
-- `admin@example.com`
-- `analis@example.com`
-- `qa@example.com`
-
-Password demo untuk semua akun:
-
-```bash
-Demo123!
-```
-
 ## Jalankan lokal
 
 ```bash
