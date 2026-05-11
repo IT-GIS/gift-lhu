@@ -1,0 +1,373 @@
+.btn.btn-custom { background:#bd1628 ; border-color: #bd1628 ; color: #fff; }
+.bg-custom { background-color:#bd1628; }
+.bg-custom-footer { background-color:#262b35; }
+.rounded {
+    border-radius: 0.5rem !important;
+}
+
+.map-responsive{
+    overflow:hidden;
+    padding-bottom:56.25%;
+    position:relative;
+    height:0;
+    }
+    .map-responsive iframe{
+    left:0;
+    top:0;
+    height:100%;
+    width:100%;
+    position:absolute;
+    }
+
+.btn-primary-button {
+    background-color: #bd1628 !important;
+    color: #fff !important;
+}
+
+.card-img {
+    width: 200px;
+    height: 300px;
+    object-fit: scale-down;
+}
+
+.select2-container .select2-selection--single {
+    height: calc(1.5em + 0.75rem + 2px);
+  }
+  .select2-container .select2-search--inline .select2-search__field {
+    margin-top: 0;
+    margin: 0.25rem 0.25rem 0.25rem 0;
+    height: 1.375rem;
+    line-height: 1.375rem;
+  }
+  .select2-container .select2-dropdown {
+    border-color: #dfe3ea;
+    border-bottom-right-radius: 0.375rem;
+    border-bottom-left-radius: 0.375rem;
+  }
+  .select2-container .select2-dropdown .select2-search__field {
+    padding: 0.25rem 0.75rem;
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    border-radius: 0.375rem;
+    box-shadow: none;
+  }
+  .select2-container .select2-dropdown .select2-search__field:focus {
+    border-color: #a6bcee;
+    box-shadow: 0 0 0 0.25rem rgba(76, 120, 221, 0.25);
+    outline: 0;
+  }
+
+  .select2-container--default .select2-selection--single {
+    border-color: #dfe3ea;
+    border-radius: 0.375rem;
+  }
+  .select2-container--default .select2-selection--single .select2-selection__rendered {
+    display: flex;
+    align-items: center;
+    padding-left: 0.75rem;
+    height: calc(1.5em + 0.75rem + 2px);
+    line-height: 1.5;
+  }
+  .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: calc(1.5em + 0.75rem + 2px);
+  }
+  .select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: #6c757d;
+  }
+  .select2-container--default .select2-selection--multiple {
+    display: flex;
+    align-items: center;
+    border-color: #dfe3ea;
+    border-radius: 0.375rem;
+    min-height: calc(1.5em + 0.75rem + 2px);
+  }
+  .select2-container--default .select2-selection--multiple .select2-selection__rendered {
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+  }
+  .select2-container--default.select2-container--focus .select2-selection--multiple, .select2-container--default.select2-container--focus .select2-selection--single, .select2-container--default.select2-container--open .select2-selection--multiple, .select2-container--default.select2-container--open .select2-selection--single {
+    border-color: #a6bcee;
+    box-shadow: 0 0 0 0.25rem rgba(76, 120, 221, 0.25);
+    outline: 0;
+  }
+  .is-valid + .select2-container--default .select2-selection--single,
+  .is-valid + .select2-container--default .select2-selection--multiple, .is-valid + .select2-container--default.select2-container--focus .select2-selection--single,
+  .is-valid + .select2-container--default.select2-container--focus .select2-selection--multiple {
+    border-color: #65A30D;
+  }
+  .is-valid + .select2-container--default.select2-container--focus .select2-selection--single,
+  .is-valid + .select2-container--default.select2-container--focus .select2-selection--multiple, .is-valid + .select2-container--default.select2-container--open .select2-selection--single,
+  .is-valid + .select2-container--default.select2-container--open .select2-selection--multiple {
+    box-shadow: 0 0 0 0.25rem rgba(101, 163, 13, 0.25);
+  }
+  .is-invalid + .select2-container--default .select2-selection--single,
+  .is-invalid + .select2-container--default .select2-selection--multiple, .is-invalid + .select2-container--default.select2-container--focus .select2-selection--single,
+  .is-invalid + .select2-container--default.select2-container--focus .select2-selection--multiple {
+    border-color: #DC2626;
+  }
+  .is-invalid + .select2-container--default.select2-container--focus .select2-selection--single,
+  .is-invalid + .select2-container--default.select2-container--focus .select2-selection--multiple, .is-invalid + .select2-container--default.select2-container--open .select2-selection--single,
+  .is-invalid + .select2-container--default.select2-container--open .select2-selection--multiple {
+    box-shadow: 0 0 0 0.25rem rgba(220, 38, 38, 0.25);
+  }
+  .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    margin: 0.25rem 0.25rem 0.25rem 0;
+    height: 1.375rem;
+    line-height: 1.375rem;
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 600;
+    background-color: #4c78dd;
+    border: none;
+    border-radius: 0.375rem;
+  }
+  .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    margin-right: 5px;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+    color: rgba(255, 255, 255, 0.75);
+  }
+  .select2-container--default .select2-search--dropdown .select2-search__field {
+    border-color: #dfe3ea;
+  }
+  .select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #4c78dd;
+  }
+  .select2-container--default .select2-search--inline .select2-search__field {
+    padding-right: 0;
+    padding-left: 0;
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    box-shadow: none;
+  }
+
+  .dark-mode .select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: #637998;
+  }
+  .dark-mode .select2-container--default .select2-selection--single,
+  .dark-mode .select2-container--default .select2-selection--multiple {
+    background-color: #171e28;
+    border-color: #2e3c51;
+  }
+  .dark-mode .select2-container--default.select2-container--focus .select2-selection--multiple, .dark-mode .select2-container--default.select2-container--focus .select2-selection--single, .dark-mode .select2-container--default.select2-container--open .select2-selection--multiple, .dark-mode .select2-container--default.select2-container--open .select2-selection--single {
+    border-color: #4c78dd;
+  }
+  .dark-mode .select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #bec8d5;
+  }
+  .dark-mode .select2-container--default .select2-search--dropdown .select2-search__field {
+    border-color: #2e3c51;
+  }
+  .dark-mode .select2-container--default .select2-dropdown .select2-search__field:focus {
+    border-color: #4c78dd;
+  }
+  .dark-mode .select2-container--default .select2-dropdown {
+    background-color: #171e28;
+    border-color: #2e3c51;
+  }
+  .dark-mode .select2-container--default .select2-search--dropdown .select2-search__field {
+    color: #bec8d5;
+    background-color: #171e28;
+    border-color: #2e3c51;
+  }
+  .dark-mode .select2-container--default .select2-results__option[aria-selected=true] {
+    color: #fff;
+    background-color: #4c78dd;
+  }
+  .dark-mode .select2-container--default .select2-search__field::-moz-placeholder {
+    color: #637998;
+  }
+  .dark-mode .select2-container--default .select2-search__field::placeholder {
+    color: #637998;
+  }
+  .dark-mode .is-valid + .select2-container--default .select2-selection--single,
+  .dark-mode .is-valid + .select2-container--default .select2-selection--multiple,
+  .dark-mode .is-valid + .select2-container--default.select2-container--focus .select2-selection--single,
+  .dark-mode .is-valid + .select2-container--default.select2-container--focus .select2-selection--multiple {
+    border-color: #82d211;
+  }
+  .dark-mode .is-valid + .select2-container--default.select2-container--focus .select2-selection--single,
+  .dark-mode .is-valid + .select2-container--default.select2-container--focus .select2-selection--multiple,
+  .dark-mode .is-valid + .select2-container--default.select2-container--open .select2-selection--single,
+  .dark-mode .is-valid + .select2-container--default.select2-container--open .select2-selection--multiple {
+    box-shadow: 0 0 0 0.25rem rgba(130, 210, 17, 0.25);
+  }
+  .dark-mode .is-invalid + .select2-container--default .select2-selection--single,
+  .dark-mode .is-invalid + .select2-container--default .select2-selection--multiple,
+  .dark-mode .is-invalid + .select2-container--default.select2-container--focus .select2-selection--single,
+  .dark-mode .is-invalid + .select2-container--default.select2-container--focus .select2-selection--multiple {
+    border-color: #e35252;
+  }
+  .dark-mode .is-invalid + .select2-container--default.select2-container--focus .select2-selection--single,
+  .dark-mode .is-invalid + .select2-container--default.select2-container--focus .select2-selection--multiple,
+  .dark-mode .is-invalid + .select2-container--default.select2-container--open .select2-selection--single,
+  .dark-mode .is-invalid + .select2-container--default.select2-container--open .select2-selection--multiple {
+    box-shadow: 0 0 0 0.25rem rgba(227, 82, 82, 0.25);
+  }
+    /* .freedownloads-popup-sec { font-family: 'Roboto Slab', serif;  margin: 30px auto;  -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover; box-sizing: border-box; position: relative; justify-content: center;}
+    .freedownloads-email-sec { margin: 0 0 15px 0; padding: 0px; width: 100%; float: left; position: relative; -webkit-box-shadow: 5px 5px 5px 0 rgba(0,0,0,0.27); box-shadow: 5px 5px 5px 0 rgba(0,0,0,0.27); }
+    .freedownloads-popup-sec .freedownloadsemail-input { width: 100%; background: #000; border: 0px; height: 64px; float: left; padding: 16px 170px 16px 16px; font-family: Arial, Helvetica, sans-serif; font-size: 14px; box-sizing: border-box; color: #fff; }
+    .freedownloads-popup-sec .freedownloadsemail-input:focus, .freedownloads-popup-sec .freedownloads-cls-btn, .freedownloads-popup-sec .freedownloads-input-btn { outline: none; }
+    .freedownloads-popup-sec .freedownloads-input-btn { width: 160px; background: #bd1628; height: 64px; cursor: pointer; margin: 0px; padding: 17px 16px; float: right; border: 0px; font-family: 'Roboto Slab', serif; font-size: 22px; text-transform: uppercase; color: #000000; box-sizing: border-box; font-weight: bold; -webkit-transition: all 0.4s; transition: all 0.4s; position: absolute; top: 0px; right: 0px; }
+    .freedownloads-popup-sec .freedownloads-input-btn:hover { background: #bd1628; }
+    .freedownloads-popup-sec .freedownloads-cls-btn { font-size: 14px; line-height: 18px; width: 28px; height: 28px; -webkit-border-radius: 50%; border-radius: 50%; background: #FFF; position: absolute; right: -14px; top: -14px; border: 0px; -webkit-box-shadow: 0 0 2px 0 rgba(0,0,0,0.27); box-shadow: 0 0 2px 0 rgba(0,0,0,0.27); cursor: pointer; }
+    .freedownloads-popup-sec .freedownloads-cls-btn:hover {color: #000; background: #bd1628;}
+    .popup-graybox {position: fixed;width: 100%;top: 0;left: 0;height: 100vh;z-index: 99999;align-items: center;display: flex;box-sizing: border-box;overflow: auto;}
+    @media only screen and (max-width:815px) {
+    .freedownloads-popup-sec { width: 90%; padding: 40px 50px 50px 50px; }
+    .freedownloads-popup-sec h2 { line-height: 82px; font-size: 75px; }
+    }
+    @media only screen and (max-width:675px) {
+    }
+    @media only screen and (max-width:480px) {
+    .freedownloads-popup-sec { width: 90%; padding: 20px 30px 30px 30px; }
+    .freedownloads-popup-sec h2 { line-height: 58px; font-size: 50px; }
+    .freedownloads-popup-sec h4 { font-size: 18px; }
+    .freedownloads-popup-sec .freedownloads-input-btn { width: 100%; position: inherit; margin-top: 20px; height: 50px; font-size: 20px; padding: 10px; }
+    .freedownloads-popup-sec .freedownloadsemail-input { padding: 15px; height: 50px; }
+    }
+    @media only screen and (max-width:375px) {
+    .freedownloads-popup-sec h2 { line-height: 35px; font-size: 30px; }
+    .freedownloads-popup-sec h4 {font-size: 13px;letter-spacing: 0.5px;margin: 0 0 20px 0;}
+    .freedownloads-popup-sec h4 br { display: none; }
+    .freedownloads-popup-sec h2 {margin: 0 0 15px 0;}
+    .freedownloads-popup-sec .freedownloads-input-btn {width: 100%;margin-top: 10px;height: 45px;font-size: 14px;}
+    .freedownloads-popup-sec .freedownloadsemail-input {height: 45px;}
+    } */
+
+    .text-blue { color: #4c78dd; }
+
+    .modal {
+        position: fixed;
+        top: 200px;
+        left: 0;
+        z-index: 1055;
+        display: none;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        outline: 0;
+    }
+
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1050;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .modal-content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        pointer-events: auto;
+        background-color: transparent;
+        background-clip: padding-box;
+        border: 1px solid rgba(0,0,0,0);
+        border-radius: 0.3rem;
+        outline: 0;
+    }
+
+    .modal-dialog {
+        max-width: 1000px;
+        margin: 1.75rem auto;
+    }
+
+    #whatsapp-chat{
+        position:fixed;
+        background:#fff;
+        width:350px;
+        border-radius:10px;
+        box-shadow:0 1px 15px rgba(32,33,36,.28);
+        bottom:90px;
+        right:30px;
+        overflow:hidden;
+        z-index:99;
+        animation-name:showchat;
+        animation-duration:1s;
+        transform:scale(1)}
+        a.blantershow-chat{
+            background:linear-gradient(to right top,#23ab23,#23ab23);
+            color:#fff;
+            position:fixed;
+            z-index:98;
+            bottom:25px;right:30px;
+            font-size:15px;
+            padding:10px 20px;border-radius:30px;
+            box-shadow:0 1px 15px rgba(32,33,36,.28)
+        }
+            a.blantershow-chat i{
+                transform:scale(1.2);margin:0 10px 0 0
+            }
+            .header-chat{
+                background:linear-gradient(to right top,rgb(9, 94, 84),rgb(9, 94, 84));
+                color:#fff;
+                padding:20px}
+                .header-chat h3{margin:0 0 10px}
+                .header-chat p{font-size:14px;
+                    line-height:1.7;
+                    margin:0}
+                    .info-avatar{position:relative}
+                    .info-avatar img{border-radius:100%;
+                        width:60px;
+                        float:left;
+                        margin:0 10px 0 0}
+                        .info-avatar:before{content:'\f232';
+                            z-index:1;font-family:"Font Awesome 5 Brands";
+                            background:#23ab23;
+                            color:#fff;
+                            padding:1px 9px;
+                            border-radius:100%;position:absolute;top:30px;left:30px}
+                            a.informasi{padding:20px;display:block;overflow:hidden;animation-name:showhide;
+                                animation-duration:2.5s}a
+                                .informasi:hover{background:#f1f1f1}
+                                .info-chat span{display:block}
+                                #get-label,span.chat-label{font-size:12px;
+                                    color:#888}
+                                    #get-nama,span
+                                    .chat-nama{margin:0 0 0;
+                                        font-size:15px;font-weight:700;
+                                        color:#222}#get-label,#get-nama{color:#fff}span
+                                        .my-number{display:none}
+                                        .blanter-msg{color:#444;
+                                            padding:20px;
+                                            font-size:12.5px;text-align:center;
+                                            border-top:1px solid #ddd}textarea#chat-input{border:none;font-family:'Arial',sans-serif;width:100%;height:20px;
+                                                outline:none;
+                                                resize:none}a#send-it{color:#fff;width:500px;
+                                                    margin:-5px 0 0 5px;
+                                                    font-weight:700;
+                                                    padding:8px;
+                                                    background:#23ab23;
+                                                    border-radius:10px}
+                                                    .first-msg{background:#f5f5f5;
+                                                        padding:30px;
+                                                        text-align:center}
+                                                        .first-msg span{background:#e2e2e2;
+                                                            color:#333;
+                                                            font-size:14.2px;
+                                                            line-height:1.7;
+                                                            border-radius:10px;
+                                                            padding:15px 20px;
+                                                            display:inline-block}
+                                                            .start-chat
+                                                            .blanter-msg{display:flex}
+                                                            #get-number{display:none}a.close-chat{position:absolute;
+                                                                top:5px;right:15px;
+                                                                color:#fff;
+                                                                font-size:30px}@keyframes showhide{from{transform:scale(.5);
+                                                                    opacity:0}}@keyframes showchat{from{transform:scale(0);
+                                                                        opacity:0}}@media screen and (max-width:480px){#whatsapp-chat{width:auto;
+                                                                            left:5%;
+                                                                            right:5%;
+                                                                            font-size:80%}}.hide{display:none;
+                                                                                animation-name:showhide;animation-duration:1.5s;
+                                                                                transform:scale(1);opacity:1}.show{display:block;
+                                                                                    /* animation-name:showhide; */
+                                                                                    animation-duration:1.5s;
+                                                                                    transform:scale(1);
+                                                                                    opacity:1}
+

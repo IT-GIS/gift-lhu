@@ -3,8 +3,9 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
-  title: "LHU Verification System",
-  description: "Workflow dan verifikasi publik untuk LHU kuat tekan beton.",
+  title: "GIFT Laboratory | LHU Verification System",
+  description:
+    "Landing publik PT. Global Inspeksi Forensik Teknik dan aplikasi internal verifikasi LHU.",
 };
 
 /**
@@ -33,4 +34,3 @@ export default function RootLayout({
     </html>
   );
 }
-

@@ -86,7 +86,7 @@ export function AppShellClient({
             <div className="text-sm font-medium text-slate-500 dark:text-slate-400 hidden sm:block">Workflow LHU Beton • Draft → Review → Publish → Verify</div>
             <div className="text-sm font-medium text-slate-500 dark:text-slate-400 sm:hidden">LHU Panel</div>
             
-            <Link href="/profile" className="flex items-center gap-3 group bg-white/70 hover:bg-white px-2 py-2 sm:px-3 sm:py-1.5 rounded-full border border-white/80 shadow-sm transition-all hover:shadow-md dark:bg-slate-800/80 dark:border-slate-700 dark:hover:bg-slate-800">
+            <Link href="/account" className="flex items-center gap-3 group bg-white/70 hover:bg-white px-2 py-2 sm:px-3 sm:py-1.5 rounded-full border border-white/80 shadow-sm transition-all hover:shadow-md dark:bg-slate-800/80 dark:border-slate-700 dark:hover:bg-slate-800">
               <div className="text-right hidden md:block">
                 <div className="text-sm font-bold text-slate-800 dark:text-slate-100 group-hover:text-[#289db9] dark:group-hover:text-[#5ac8e0] transition-colors">{userFullName}</div>
                 <div className="text-[10px] font-semibold uppercase tracking-wider text-[#289db9] dark:text-[#5ac8e0]">{userRoleLabel}</div>

@@ -15,6 +15,13 @@
       "when": 1775538838543,
       "tag": "0001_powerful_runaways",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1778506583712,
+      "tag": "0002_foamy_lorna_dane",
+      "breakpoints": true
     }
   ]
 }

@@ -21,7 +21,7 @@ const protectedPatterns = [
   "/settings",
   "/users",
   "/audit-logs",
-  "/profile",
+  "/account",
 ];
 
 export default async function middleware(request: NextRequest) {
@@ -57,6 +57,6 @@ export const config = {
     "/settings/:path*",
     "/users/:path*",
     "/audit-logs/:path*",
-    "/profile/:path*",
+    "/account/:path*",
   ],
 };

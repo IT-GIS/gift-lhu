@@ -166,3 +166,16 @@ export const pdfTemplateLayoutVersions = mysqlTable("pdf_template_layout_version
   notes: text("notes"), // Opsional, catatan perubahan
   createdAt: datetime("created_at").notNull(),
 });
+
+export const posts = mysqlTable("posts", {
+  id: varchar("id", { length: 36 }).primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  slug: varchar("slug", { length: 255 }).notNull().unique(),
+  content: longtext("content").notNull(),
+  excerpt: text("excerpt"),
+  imageUrl: varchar("image_url", { length: 255 }),
+  category: varchar("category", { length: 191 }),
+  publishedAt: datetime("published_at").notNull(),
+  createdAt: datetime("created_at").notNull(),
+  updatedAt: datetime("updated_at").notNull(),
+});

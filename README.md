@@ -7,7 +7,7 @@ Starter fullstack modern untuk **Laporan Hasil Uji (LHU) Kuat Tekan Beton** deng
 - Next.js App Router + TypeScript
 - Tailwind CSS + komponen UI bergaya shadcn
 - Drizzle ORM schema untuk MySQL
-- Landing page premium ala SaaS B2B
+- Landing page publik GIFT Laboratory dari referensi WordPress lama
 - Login demo + proteksi route dasar
 - Dashboard internal
 - Data LHU list
@@ -56,10 +56,37 @@ npm run seed
 ## Catatan arsitektur
 
 Struktur project memakai:
-- `app/(marketing)` untuk landing publik
+- `app/(landing)` untuk landing publik
 - `app/(app)` untuk dashboard internal
 - `app/verify/[token]` untuk public verification
 - `app/api/public/verify/[token]` untuk endpoint verifikasi JSON
+
+## Migrasi landing WordPress
+
+Landing publik sekarang dipisah dari aplikasi internal:
+
+- halaman publik: `app/(landing)/page.tsx`
+- halaman publik tambahan: `/profile`, `/services`, `/blog`, `/contact`
+- alias WordPress lama: `/about` -> `/profile`, `/blog-financial-services-v1` -> `/blog`
+- komponen landing WordPress-to-TSX: `components/landing/wp-landing.tsx`
+- data landing: `components/landing/landing-data.ts`
+- CSS landing lokal: `components/landing/WpStyles.tsx` dan `public/landing/css`
+- aplikasi internal LHU: `app/(app)`
+- profil akun internal: `/account`
+- asset landing publik: `public/landing`
+- asset logo aplikasi: `public/brand`
+
+File SQL `u652037858_f4kBS.sql` yang dikirim berisi database WordPress
+(`wp_posts`, `wp_options`, Elementor, AIOSEO, WPForms). Database tersebut
+dipakai sebagai referensi konten dan identitas landing, bukan digabung ke
+schema operasional LHU yang sudah ada di Drizzle.
+
+Source visual landing diambil dari folder WordPress
+`c:\Users\Thinkpad X390\Documents\Project 2026\giftlandingpage`, terutama
+homepage Elementor dengan `page_on_front = 1184` dan theme
+`royal-elementor-kit`. Markup WordPress mentah tidak dirender lagi; struktur
+halaman sudah dikonversi ke TSX, sementara CSS Elementor yang dibutuhkan
+disajikan dari asset lokal dan diberi override kecil untuk environment Next.js.
 
 ## Catatan penting
 
