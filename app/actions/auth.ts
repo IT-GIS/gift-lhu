@@ -6,30 +6,38 @@ import { insertAuditLog } from "@/lib/db/queries/audit";
 import { requireSession } from "@/lib/auth/session";
 
 export async function loginAction(formData: FormData) {
-  const email = String(formData.get("email") || "").trim();
-  const password = String(formData.get("password") || "");
+  try {
+    const email = String(formData.get("email") || "").trim();
+    const password = String(formData.get("password") || "");
 
-  if (!email || !password) {
-    return { error: "Email dan password wajib diisi." };
+    if (!email || !password) {
+      return { error: "Email dan password wajib diisi." };
+    }
+
+    const user = await authenticate(email, password);
+    if (!user) {
+      return { error: "Email atau password salah." };
+    }
+
+    await createSession(user);
+
+    // Log login event (non-blocking)
+    await insertAuditLog({
+      userId: user.id,
+      action: "login",
+      entityType: "users",
+      entityId: user.id,
+      metadata: { email: user.email, role: user.role },
+    });
+
+    redirect("/dashboard");
+  } catch (error) {
+    console.error("[auth] Login action failed:", error);
+    return {
+      error:
+        "Login gagal karena konfigurasi server atau database belum siap. Periksa AUTH_SECRET, DATABASE_URL, dan tabel users/sessions di production.",
+    };
   }
-
-  const user = await authenticate(email, password);
-  if (!user) {
-    return { error: "Email atau password salah." };
-  }
-
-  await createSession(user);
-
-  // Log login event (non-blocking)
-  await insertAuditLog({
-    userId: user.id,
-    action: "login",
-    entityType: "users",
-    entityId: user.id,
-    metadata: { email: user.email, role: user.role },
-  });
-
-  redirect("/dashboard");
 }
 
 export async function logoutAction() {

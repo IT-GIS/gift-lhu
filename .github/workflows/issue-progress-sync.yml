@@ -1,0 +1,107 @@
+name: Issue Progress Sync
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - master
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - closed
+
+jobs:
+  sync-progress:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: read
+
+    steps:
+      - name: Update linked issue comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const marker = '<!-- issue-progress-sync -->';
+
+            const branchName = context.eventName === 'pull_request'
+              ? context.payload.pull_request.head.ref
+              : context.ref.replace('refs/heads/', '');
+
+            const match = branchName.match(/^issue-(\d+)(-|$)/i);
+            if (!match) {
+              core.notice(`Branch "${branchName}" tidak memakai format issue-<nomor>-slug. Workflow dilewati.`);
+              return;
+            }
+
+            const issueNumber = Number(match[1]);
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            let body = `${marker}\n## Progress Update\n\n`;
+            body += `Issue: #${issueNumber}\n`;
+            body += `Branch: \`${branchName}\`\n`;
+            body += `Updated: ${new Date().toISOString()}\n\n`;
+
+            if (context.eventName === 'push') {
+              const commit = context.payload.head_commit;
+              body += `Event: push\n`;
+              body += `Latest commit: \`${commit?.id?.slice(0, 7) ?? 'unknown'}\` ${commit?.message?.split('\n')[0] ?? 'No message'}\n`;
+              if (context.payload.compare) {
+                body += `Compare: ${context.payload.compare}\n`;
+              }
+            } else {
+              const pr = context.payload.pull_request;
+              const action = context.payload.action;
+              const state = pr.merged ? 'merged' : pr.state;
+
+              body += `Event: pull_request (${action})\n`;
+              body += `PR: #${pr.number} ${pr.title}\n`;
+              body += `Status: ${state}\n`;
+              body += `URL: ${pr.html_url}\n`;
+            }
+
+            try {
+              await github.rest.issues.get({
+                owner,
+                repo,
+                issue_number: issueNumber,
+              });
+            } catch (error) {
+              core.warning(`Issue #${issueNumber} tidak ditemukan: ${error.message}`);
+              return;
+            }
+
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner,
+              repo,
+              issue_number: issueNumber,
+              per_page: 100,
+            });
+
+            const existingComment = comments.find((comment) =>
+              comment.body && comment.body.includes(marker)
+            );
+
+            if (existingComment) {
+              await github.rest.issues.updateComment({
+                owner,
+                repo,
+                comment_id: existingComment.id,
+                body,
+              });
+              core.notice(`Comment progress di issue #${issueNumber} berhasil di-update.`);
+              return;
+            }
+
+            await github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number: issueNumber,
+              body,
+            });
+
+            core.notice(`Comment progress baru dibuat di issue #${issueNumber}.`);

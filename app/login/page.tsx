@@ -13,7 +13,7 @@ export default async function LoginPage() {
   }
 
   return (
-    <LoginClient 
+    <LoginClient
       initialLogoSrc={settings.logo_login}
       initialLogoScale={parseInt(settings.logo_login_scale || "80", 10)}
     />
