@@ -2,17 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, FileText, ClipboardCheck, Upload, Settings, Users, ScrollText, SearchCheck, Layers } from "lucide-react";
+import { LayoutDashboard, FileText, Upload, Settings, Users, ScrollText, SearchCheck, Newspaper } from "lucide-react";
 import { can, type Role } from "@/lib/auth/rbac";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/lhu/new", label: "Buat Draft", icon: Upload },
-  { href: "/lhu/review", label: "Review QA", icon: ClipboardCheck },
   { href: "/lhu", label: "Data LHU", icon: FileText },
   { href: "/publish", label: "Dokumen Publish", icon: SearchCheck },
+  { href: "/posts", label: "Post", icon: Newspaper, permission: "managePosts" },
   { href: "/settings", label: "Settings", icon: Settings, permission: "manageSettings" },
-  { href: "/settings/pdf-template-layout", label: "PDF Layout", icon: Layers, permission: "manageSettings" },
   { href: "/users", label: "Users", icon: Users, permission: "manageUsers" },
   { href: "/audit-logs", label: "Audit Logs", icon: ScrollText, permission: "viewAuditLogs" },
 ];

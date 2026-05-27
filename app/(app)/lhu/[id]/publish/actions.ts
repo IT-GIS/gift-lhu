@@ -9,14 +9,13 @@ import { assertPermission } from "@/lib/auth/rbac";
 import {
   getLhuDocumentById,
   setLhuStatus,
-  generateLhuNumber,
   createVerificationToken,
 } from "@/lib/db/queries/lhu";
 import { insertAuditLog } from "@/lib/db/queries/audit";
 
 /**
  * Publish a document: status approved → published
- * - Generates final LHU number (locked after this)
+ * - Uses No. Pengujian as final LHU number (locked after this)
  * - Creates verification token in DB
  * - Records publish timestamp
  */
@@ -34,8 +33,8 @@ export async function publishLhuAction(id: string) {
     };
   }
 
-  // Generate final LHU number (immutable after publish)
-  const lhuNumber = await generateLhuNumber(doc.concreteType);
+  // Use No. Pengujian from the form as final LHU number (immutable after publish)
+  const lhuNumber = doc.projectName || doc.referenceNumber || doc.documentCode;
 
   // Create a new unique verification token in the DB
   const publicToken = await createVerificationToken(id);

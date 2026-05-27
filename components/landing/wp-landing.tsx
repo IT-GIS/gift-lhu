@@ -2,13 +2,20 @@ import Link from "next/link";
 import type { ComponentType, ReactNode } from "react";
 import {
   ArrowRight,
+  Award,
+  Building2,
   ClipboardCheck,
   FlaskConical,
+  Handshake,
   Mail,
+  MessageSquareText,
   MapPin,
   Phone,
+  Send,
+  ShieldCheck,
   Ship,
   Truck,
+  UserRound,
 } from "lucide-react";
 import {
   blogCategories,
@@ -32,17 +39,46 @@ type BlogCard = {
   category: string;
   image: string;
   excerpt: string;
+  content?: string;
   href: string;
 };
 
 const serviceImages = [
-  "/landing/lab-service.png",
-  "/landing/blog-konstruksi.png",
-  "/landing/blog-workers.png",
-  "/landing/blueprint.jpg",
+  "/landing/service-uji-kuat-tekan.png",
+  "/landing/service-draught-survey.jpg",
+  "/landing/service-uditch-box-culvert.png",
+  "/landing/service-container-survey.jpg",
 ];
 
-const serviceElementIds = ["8bb5804", "e204c3a", "2c75ba7", "ef76db8"];
+const servicePageImages = [
+  serviceImages[0],
+  serviceImages[2],
+  serviceImages[1],
+  serviceImages[3],
+];
+
+const homeServiceSliderImages = [
+  "https://gift-laboratory.com/wp-content/uploads/2025/09/Gemini_Generated_Image_r5u1jjr5u1jjr5u1.png",
+  "https://gift-laboratory.com/wp-content/uploads/2025/09/Gemini_Generated_Image_30b2z830b2z830b2.png",
+  "https://gift-laboratory.com/wp-content/uploads/2026/01/unnamed-10.jpg",
+  "https://gift-laboratory.com/wp-content/uploads/2026/01/unnamed-11.jpg",
+];
+
+const facilityIllustration =
+  "https://img.freepik.com/premium-photo/flat-2d-illustration-design_759095-88017.jpg?w=740";
+
+const profileCompanyImage =
+  "https://gift-laboratory.com/wp-content/uploads/elementor/thumbs/WhatsApp-Image-2025-09-24-at-09.12.27-1-remj6nxntomc2lyj4szlsly4lkfrvsc2z8qnikwso0.jpeg";
+
+const profileVisionImage =
+  "https://gift-laboratory.com/wp-content/uploads/2025/09/Gemini_Generated_Image_8kqbf28kqbf28kqb.png";
+
+const profileMissionImage =
+  "https://gift-laboratory.com/wp-content/uploads/2025/09/WhatsApp-Image-2025-09-24-at-09.12.32-1.jpeg";
+
+const serviceElementIds = ["8bb5804", "2c75ba7", "e204c3a", "ef76db8"];
+
+const facilityIcons = [UserRound, Award, FlaskConical];
 
 const liveOrderedServices = [
   services[0],
@@ -78,13 +114,13 @@ export function HomeLandingPage() {
               <div className="elementor-widget-wrap elementor-element-populated">
                 <div className="elementor-element elementor-element-dc58416 elementor-widget elementor-widget-heading">
                   <div className="elementor-widget-container">
-                    <h2 className="elementor-heading-title elementor-size-default">Pengujian Laboratorium &amp; Inspeksi Material</h2>
+                    <h4 className="elementor-heading-title elementor-size-default">Pengujian Laboratorium &amp; Inspeksi Material</h4>
                   </div>
                 </div>
                 <div className="elementor-element elementor-element-37e5df1a elementor-widget elementor-widget-wpr-advanced-text">
                   <div className="elementor-widget-container">
                     <div className="wpr-advanced-text">
-                      <span className="wpr-advanced-text-preffix">Pengujian &amp; Inspeksi</span>
+                      <h1 className="wpr-advanced-text-preffix">Pengujian &amp; Inspeksi</h1>
                       <span className="wpr-anim-text">
                         {heroLines.map((line) => (
                           <b key={line}>{line}</b>
@@ -158,26 +194,16 @@ export function HomeLandingPage() {
           <div className="elementor-container elementor-column-gap-default gift-wp-two-column">
             <div className="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-5d29a536">
               <div className="elementor-widget-wrap elementor-element-populated">
-                <Heading className="elementor-element-5a5959f2">Fasilitas dan Keunggulan</Heading>
-                <TextWidget className="elementor-element-97d960d">
-                  <p>{company.name} memiliki berbagai fasilitas unggul yang mendukung pengujian kualitas dan keamanan material konstruksi.</p>
-                </TextWidget>
-                <div className="gift-wp-card-list">
-                  {facilities.map((facility) => (
-                    <article key={facility.title} className="gift-wp-card">
-                      <CheckIcon />
-                      <div>
-                        <h3>{facility.title}</h3>
-                        <p>{facility.description}</p>
-                      </div>
-                    </article>
-                  ))}
-                </div>
+                <ImageWidget className="elementor-element-5da5c2e gift-wp-facility-illustration" src={facilityIllustration} alt="Ilustrasi fasilitas laboratorium" />
               </div>
             </div>
             <div className="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-32158e6e">
               <div className="elementor-widget-wrap elementor-element-populated">
-                <ImageWidget className="elementor-element-c360283" src="/landing/blueprint.jpg" alt="Blueprint konstruksi" />
+                <Heading className="elementor-element-5a5959f2" level={3}>Fasilitas dan Keunggulan</Heading>
+                <TextWidget className="elementor-element-563e6ef">
+                  <p><strong>{company.name}</strong> memiliki berbagai fasilitas unggul yang mendukung pengujian kualitas dan keamanan material konstruksi.</p>
+                </TextWidget>
+                <FacilityFeatureList />
               </div>
             </div>
           </div>
@@ -196,9 +222,10 @@ export function ProfileLandingPage() {
       <main data-elementor-type="wp-page" data-elementor-id="1185" className="elementor elementor-1185">
         <SubpageHero pageId="1185" sectionClass="elementor-element-8030a81" headingClass="elementor-element-9408ba5" title="Profile" />
 
-        <section className="elementor-element elementor-element-e2c4003 e-flex e-con-boxed e-con e-parent gift-wp-section">
+        <section className="elementor-element elementor-element-e2c4003 e-flex e-con-boxed e-con e-parent gift-wp-section gift-wp-profile-intro">
           <div className="e-con-inner gift-wp-two-column">
-            <div className="elementor-element elementor-element-3878c15 e-con-full e-flex e-con e-child">
+            <div className="elementor-element elementor-element-3878c15 e-con-full e-flex e-con e-child gift-animate-slide-left">
+              <Heading className="elementor-element-7d19e0" level={3}>PROFIL PERUSAHAAN</Heading>
               <Heading className="elementor-element-1b719f4">PT. Global Inspeksi Forensik Teknik</Heading>
               <TextWidget className="elementor-element-84e7306">
                 {profileParagraphs.map((paragraph) => (
@@ -206,34 +233,36 @@ export function ProfileLandingPage() {
                 ))}
               </TextWidget>
             </div>
-            <div className="elementor-element elementor-element-3c5575f e-con-full e-flex e-con e-child">
-              <ImageWidget className="elementor-element-6fc82a9" src="/landing/profile-lab.jpeg" alt="Laboratorium GIFT" />
+            <div className="elementor-element elementor-element-3c5575f e-con-full e-flex e-con e-child gift-animate-slide-right">
+              <ImageWidget className="elementor-element-6fc82a9" src={profileCompanyImage} alt="Laboratorium GIFT" />
             </div>
           </div>
         </section>
 
-        <section className="elementor-element elementor-element-9657776 e-flex e-con-boxed e-con e-parent gift-wp-section">
+        <section className="elementor-element elementor-element-9657776 e-flex e-con-boxed e-con e-parent gift-wp-section gift-wp-profile-vision">
           <div className="e-con-inner gift-wp-two-column">
-            <div className="elementor-element elementor-element-751a206 e-con-full e-flex e-con e-child">
-              <ImageWidget className="elementor-element-fd7e273" src="/landing/about-building.png" alt="Gedung laboratorium" />
+            <div className="elementor-element elementor-element-751a206 e-con-full e-flex e-con e-child gift-animate-fade-left">
+              <ImageWidget className="elementor-element-fd7e273" src={profileVisionImage} alt="Gedung laboratorium" />
             </div>
-            <div className="elementor-element elementor-element-0876684 e-flex e-con-boxed e-con e-child">
+            <div className="elementor-element elementor-element-0876684 e-flex e-con-boxed e-con e-child gift-animate-slide-right">
               <Heading className="elementor-element-3b33a34">VISI</Heading>
-              <TextWidget className="elementor-element-76264e8">
+              <TextWidget className="elementor-element-76264e8 gift-animate-fade-right">
                 <p>Menjadi laboratorium pengujian produk beton yang paling dipercaya di Indonesia melalui hasil uji yang akurat, objektif, dan berstandar nasional maupun internasional.</p>
               </TextWidget>
             </div>
           </div>
         </section>
 
-        <section className="elementor-element elementor-element-10b14b6 e-flex e-con-boxed e-con e-parent gift-wp-section">
+        <section className="elementor-element elementor-element-10b14b6 e-flex e-con-boxed e-con e-parent gift-wp-section gift-wp-profile-mission">
           <div className="e-con-inner gift-wp-two-column">
-            <div className="elementor-element elementor-element-dbdebb9 e-flex e-con-boxed e-con e-child">
+            <div className="elementor-element elementor-element-dbdebb9 e-flex e-con-boxed e-con e-child gift-animate-slide-left">
               <Heading className="elementor-element-35525b7">MISI</Heading>
-              <FeatureList className="elementor-element-f9309dd" />
+              <div className="gift-animate-fade-up">
+                <FeatureList className="elementor-element-f9309dd" />
+              </div>
             </div>
-            <div className="elementor-element elementor-element-4383361 e-con-full e-flex e-con e-child">
-              <ImageWidget className="elementor-element-3edfafc" src="/landing/lab-service.png" alt="Aktivitas pengujian laboratorium" />
+            <div className="elementor-element elementor-element-4383361 e-con-full e-flex e-con e-child gift-animate-fade-right">
+              <ImageWidget className="elementor-element-3edfafc" src={profileMissionImage} alt="Aktivitas pengujian laboratorium" />
             </div>
           </div>
         </section>
@@ -271,10 +300,16 @@ export function ContactLandingPage() {
 
         <section className="elementor-element elementor-element-91d42b5 e-flex e-con-boxed e-con e-parent gift-wp-section">
           <div className="e-con-inner">
-            <Heading className="elementor-element-d5fce67">Hubungi Kami Kapan Saja!</Heading>
-            <TextWidget className="elementor-element-806c177">
-              <p>Jangan ragu untuk menghubungi kami untuk informasi lebih lanjut.</p>
-            </TextWidget>
+            <div className="gift-wp-contact-intro">
+              <span className="gift-wp-contact-kicker">Corporate Contact</span>
+              <Heading className="elementor-element-d5fce67">Contact Info</Heading>
+              <TextWidget className="elementor-element-806c177">
+                <p>
+                  Hubungi tim kami untuk kebutuhan pengujian, inspeksi, dan verifikasi LHU.
+                  Kami siap membantu Anda dengan respons profesional dan terarah.
+                </p>
+              </TextWidget>
+            </div>
             <div className="elementor-element elementor-element-67a5229 e-grid e-con-boxed e-con e-child gift-wp-contact-grid">
               {contactCards.map((item, index) => (
                 <ContactIconBox
@@ -292,14 +327,12 @@ export function ContactLandingPage() {
         <ContactBand />
 
         <section className="elementor-element elementor-element-62d7e54 e-flex e-con-boxed e-con e-parent gift-wp-map">
-          <div className="e-con-inner">
-            <iframe
-              title="Lokasi GIFT Laboratory"
-              src="https://www.google.com/maps?q=District%2091%20BSD%20Tangerang&output=embed"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </div>
+          <iframe
+            title="Ruko 91 District BSD No C5, Pagedangan, Tangerang, Banten 15339"
+            src="https://maps.google.com/maps?q=Ruko%2091%20District%20BSD%20No%20C5%2C%20Pagedangan%2C%20Tangerang%2C%20Banten%2015339&t=m&z=14&output=embed&iwloc=near"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
         </section>
       </main>
     </WpLandingShell>
@@ -345,9 +378,7 @@ export function BlogDetailLandingPage({ post }: { post: BlogCard & { content?: s
             <h1>{post.title}</h1>
             <img src={post.image} alt={post.title} />
             <article>
-              {contentToParagraphs(post.content || post.excerpt).map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
+              {renderArticleContent(post.content || post.excerpt)}
             </article>
             <Link className="wpr-button" href="/blog">Kembali ke Blog</Link>
           </div>
@@ -465,26 +496,74 @@ function WpFooter() {
 }
 
 function ServicesGrid({ compact = false }: { compact?: boolean }) {
+  if (compact) {
+    return <HomeServicesSlider />;
+  }
+
   return (
     <section className="elementor-section elementor-top-section elementor-element elementor-element-7d185f5 elementor-section-boxed elementor-section-height-default gift-wp-services">
       <div className="elementor-container elementor-column-gap-default">
         <div className="elementor-column elementor-col-100 elementor-top-column">
           <div className="elementor-widget-wrap elementor-element-populated">
             <Heading className="elementor-element-5c74249">
-              {compact ? "Layanan pengujian dan inspeksi untuk kebutuhan proyek Anda." : "Kami Memberikan Layanan Terbaik Untuk Anda"}
+              OUR SERVICES
             </Heading>
             <div className="gift-wp-service-grid">
               {liveOrderedServices.map((service, index) => (
                 <ServicePromoBox
                   key={service.title}
                   className={`elementor-element-${serviceElementIds[index]}`}
-                  image={serviceImages[index]}
+                  image={servicePageImages[index]}
                   title={service.title}
                   description={service.servicePageDescription}
-                  icon={service.icon}
                 />
               ))}
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function HomeServicesSlider() {
+  return (
+    <section className="elementor-element elementor-element-b9accca e-flex e-con-boxed e-con e-parent gift-wp-home-services">
+      <div className="e-con-inner">
+        <Heading className="elementor-element-36ab58f">Layanan Kami</Heading>
+        <div className="gift-wp-home-service-slider" aria-label="Layanan Kami">
+          <div className="gift-wp-home-service-track">
+            {liveOrderedServices.map((service, index) => {
+              const previous = (index + liveOrderedServices.length - 1) % liveOrderedServices.length;
+              const next = (index + 1) % liveOrderedServices.length;
+
+              return (
+                <article
+                  className="gift-wp-home-service-slide"
+                  id={`gift-service-slide-${index}`}
+                  key={service.title}
+                >
+                  <div className="gift-wp-home-service-bg" style={{ backgroundImage: `url(${homeServiceSliderImages[index]})` }} />
+                  <div className="gift-wp-home-service-overlay" />
+                  <div className="gift-wp-home-service-content">
+                    <h2>{service.title}</h2>
+                    <p>{service.description}</p>
+                    <Link className="gift-wp-home-service-button" href="/services">Lihat Selengkapnya</Link>
+                  </div>
+                  <a className="gift-wp-home-service-arrow gift-wp-home-service-prev" href={`#gift-service-slide-${previous}`} aria-label="Layanan sebelumnya">
+                    <span aria-hidden="true">‹</span>
+                  </a>
+                  <a className="gift-wp-home-service-arrow gift-wp-home-service-next" href={`#gift-service-slide-${next}`} aria-label="Layanan berikutnya">
+                    <span aria-hidden="true">›</span>
+                  </a>
+                </article>
+              );
+            })}
+          </div>
+          <div className="gift-wp-home-service-dots" aria-hidden="true">
+            {liveOrderedServices.map((service, index) => (
+              <a href={`#gift-service-slide-${index}`} key={service.title} />
+            ))}
           </div>
         </div>
       </div>
@@ -496,19 +575,39 @@ function ContactBand() {
   return (
     <section className="elementor-element elementor-element-cf5e46f e-flex e-con-boxed e-con e-parent gift-wp-contact-band">
       <div className="e-con-inner gift-wp-two-column">
-        <div className="elementor-element elementor-element-5771a84 e-con-full e-flex e-con e-child">
-          <Heading className="elementor-element-5b9f1ae">Hubungi Kami Kapan Saja!</Heading>
+        <div className="elementor-element elementor-element-5771a84 e-con-full e-flex e-con e-child gift-animate-slide-left">
+          <span className="gift-wp-contact-band-kicker">Get in touch</span>
+          <Heading className="elementor-element-5b9f1ae">Hubungi Kami!</Heading>
+          <p className="gift-wp-contact-band-copy">
+            Konsultasikan kebutuhan pengujian material konstruksi, inspeksi lapangan, atau penerbitan laporan hasil uji bersama tim GIFT Laboratory.
+          </p>
+          <Heading className="elementor-element-2fa7ae0">Main Office</Heading>
+          <Divider className="elementor-element-8725434" />
           <ul className="elementor-icon-list-items gift-wp-contact-list">
             <li><PhoneIcon /> <span>{company.phone}</span></li>
             <li><MailIcon /> <span>{company.email}</span></li>
             <li><MapIcon /> <span>{company.address}</span></li>
           </ul>
+          <div className="gift-wp-contact-credentials" aria-label="Company credentials">
+            <span><Building2 size={16} /> PT Global Inspeksi Forensik Teknik</span>
+            <span><ShieldCheck size={16} /> SNI-oriented testing workflow</span>
+          </div>
         </div>
-        <form className="elementor-element elementor-element-04512b7 elementor-widget elementor-widget-wpr-forms gift-wp-form" action={`mailto:${company.email}`} method="post">
-          <label>Name<input className="wpr-form-field" name="name" placeholder="Name" /></label>
-          <label>Email<input className="wpr-form-field" type="email" name="email" placeholder="Email" /></label>
-          <label>Message<textarea className="wpr-form-field" name="message" placeholder="Message" rows={6} /></label>
-          <button className="wpr-button" type="submit">Send</button>
+        <form className="elementor-element elementor-element-04512b7 elementor-widget elementor-widget-wpr-forms gift-wp-form gift-animate-slide-right" action={`mailto:${company.email}`} method="post">
+          <div className="gift-wp-form-header">
+            <MessageSquareText size={24} />
+            <div>
+              <strong>Kirim Pertanyaan</strong>
+              <span>Tim kami akan menindaklanjuti melalui email resmi.</span>
+            </div>
+          </div>
+          <div className="gift-wp-form-row">
+            <label>Name<input className="wpr-form-field" name="name" placeholder="Nama lengkap" /></label>
+            <label>Email<input className="wpr-form-field" type="email" name="email" placeholder="nama@perusahaan.com" /></label>
+          </div>
+          <label>Company<input className="wpr-form-field" name="company" placeholder="Nama perusahaan / instansi" /></label>
+          <label>Message<textarea className="wpr-form-field" name="message" placeholder="Ceritakan kebutuhan pengujian atau inspeksi Anda" rows={7} /></label>
+          <button className="wpr-button" type="submit">Send Message <Send size={16} /></button>
         </form>
       </div>
     </section>
@@ -542,28 +641,59 @@ function PolicySection() {
           <input type="radio" name="profile-policy-tabs" id="policy-impartiality" defaultChecked />
           <input type="radio" name="profile-policy-tabs" id="policy-antisouap" />
           <div className="gift-wp-policy-tab-nav">
-            <label htmlFor="policy-impartiality">Kebijakan Ketidakberpihakan</label>
-            <label htmlFor="policy-antisouap">Komitmen Anti Suap</label>
+            <label htmlFor="policy-impartiality">
+              <ShieldCheck className="gift-wp-lucide" />
+              <span>Kebijakan Ketidakberpihakan</span>
+            </label>
+            <label htmlFor="policy-antisouap">
+              <Handshake className="gift-wp-lucide" />
+              <span>Komitmen Anti Suap</span>
+            </label>
           </div>
           <article className="gift-wp-policy-panel gift-wp-policy-impartiality">
-            <span>Kebijakan</span>
-            <h2>Ketidakberpihakan</h2>
-            <p>
-              Layanan laboratorium pengujian yang diselenggarakan oleh PT. Global Inspeksi Sistem bertujuan
-              memastikan kepercayaan pemohon atau klien terhadap produk yang dihasilkan, memenuhi persyaratan SNI,
-              serta menjaga setiap personel dari tekanan komersial yang dapat mempengaruhi mutu pelayanan.
-            </p>
-            <p><strong>Director<br />Vera Marini</strong></p>
+            <div className="gift-wp-policy-content">
+              <div className="gift-wp-policy-copy-column">
+                <span className="gift-wp-policy-kicker">Kebijakan</span>
+                <h2>Ketidakberpihakan</h2>
+                <p>
+                  PT Global Inspeksi Forensik Teknik berkomitmen untuk menjaga ketidakberpihakan, independensi, objektivitas, dan integritas dalam seluruh kegiatan pengujian laboratorium dan inspeksi. Seluruh layanan pengujian dan inspeksi dilaksanakan secara profesional, bebas dari tekanan komersial, keuangan, hubungan pribadi, hubungan organisasi, maupun tekanan lain yang dapat mempengaruhi hasil pengujian dan/atau inspeksi. Manajemen puncak memastikan bahwa setiap personel yang terlibat dalam kegiatan pengujian dan inspeksi wajib menjaga objektivitas, menghindari konflik kepentingan, serta tidak menerima intervensi dalam proses maupun hasil pekerjaan. PT Global Inspeksi Forensik Teknik mengidentifikasi, mengevaluasi, mengendalikan, dan meninjau risiko ketidakberpihakan secara berkala untuk memastikan hasil pengujian dan inspeksi tetap akurat, objektif, dan dapat dipercaya.
+                </p>
+                <p>Tangerang, 7 Mei 2026<br />PT Global Inspeksi Forensik Teknik</p>
+                <div className="gift-wp-policy-signature">
+                  <strong>Director</strong>
+                  <span>Vera Marini</span>
+                </div>
+              </div>
+            </div>
           </article>
           <article className="gift-wp-policy-panel gift-wp-policy-antisouap">
-            <span>Komitmen</span>
-            <h2>Anti Suap</h2>
-            <p>
-              PT. Global Inspeksi Sistem berkomitmen menjalankan anti-suap dalam layanan sertifikasi, inspeksi,
-              dan pengendalian risiko. Setiap pelaporan dilakukan dengan prinsip anonim, rahasia, dan independen
-              melalui dukungan data yang relevan.
-            </p>
-            <p><strong>Director<br />Vera Marini</strong></p>
+            <div className="gift-wp-policy-content">
+              <div className="gift-wp-policy-copy-column">
+                <span className="gift-wp-policy-kicker">Komitmen</span>
+                <h2>Anti Suap</h2>
+                <p>
+                  PT Global Inspeksi Forensik Teknik berkomitmen untuk menjalankan seluruh kegiatan pengujian laboratorium dan inspeksi secara jujur, profesional, transparan, independen, dan bebas dari praktik suap. Seluruh personel dilarang meminta, menerima, memberikan, atau menjanjikan uang, hadiah, gratifikasi, fasilitas, atau bentuk imbalan lainnya yang dapat mempengaruhi objektivitas, ketidakberpihakan, dan hasil pengujian maupun inspeksi. Setiap dugaan pelanggaran, benturan kepentingan, gratifikasi, atau praktik suap dapat dilaporkan kepada manajemen perusahaan untuk ditindaklanjuti secara rahasia, objektif, dan bertanggung jawab.
+                </p>
+                <p>
+                  Pelaporan ini dilakukan dengan dukungan data yang relevan dan dimaksudkan untuk kepentingan Perusahaan, tidak dimaksudkan untuk memaksakan seseorang. Pelaporan dapat disampaikan kepada Direktur Global Inspeksi Forensik Teknik atau Bagian Informasi Umum, melalui informasi sebagai berikut:
+                </p>
+                <ul className="gift-wp-policy-contact-list">
+                  <li><strong>Email</strong><span>globalinspeksiforensikteknik@gmail.com</span></li>
+                  <li><strong>Telp</strong><span>+62 812-5065-7742</span></li>
+                  <li><strong>Site web</strong><span>www.gift-laboratory.com</span></li>
+                  <li><strong>Letter</strong><span>PT. Global Inspeksi Forensik Teknik</span></li>
+                  <li><strong>Alamat</strong><span>District 91, No C5 BSD, Tangerang</span></li>
+                  <li><strong>Alamat</strong><span>Foresta Business Loft 2, Unit 16, Jl.BSD Raya Utama, Tangerang 15339</span></li>
+                </ul>
+                <p>
+                  Pelapor harus memberikan identitas mereka dalam melaporkan keluhan dan memastikan bahwa setiap informasi tentang identitas pihak pelapor dan laporannya dijaga kerahasiaannya. Pelaporan dilakukan di bawah prinsip anonim, rahasia dan independen.
+                </p>
+                <div className="gift-wp-policy-signature">
+                  <strong>Director</strong>
+                  <span>Vera marini</span>
+                </div>
+              </div>
+            </div>
           </article>
         </div>
       </div>
@@ -575,8 +705,8 @@ function ClientStrip() {
   return (
     <section className="elementor-element elementor-element-ec38abd e-flex e-con-boxed e-con e-parent gift-wp-client-strip">
       <div className="e-con-inner">
-        <Heading className="elementor-element-b891f8c">Our Client</Heading>
-        <div className="elementor-element elementor-element-974875d e-grid e-con-boxed e-con e-child">
+        <Heading className="elementor-element-b891f8c">Our Clients</Heading>
+        <div className="elementor-element elementor-element-974875d e-grid e-con-boxed e-con e-child gift-animate-fade-up">
           {clientLogos.map((logo) => (
             <img key={logo.src} src={logo.src} alt={logo.alt} />
           ))}
@@ -591,26 +721,26 @@ function ServicePromoBox({
   image,
   title,
   description,
-  icon: Icon,
 }: {
   className: string;
   image: string;
   title: string;
   description: string;
-  icon: ComponentType<{ className?: string }>;
 }) {
   return (
-    <article className={`elementor-element ${className} elementor-widget elementor-widget-wpr-promo-box`}>
+    <article className={`elementor-element ${className} wpr-promo-box-style-cover elementor-widget elementor-widget-wpr-promo-box gift-wp-service-card-anim`}>
       <div className="elementor-widget-container">
-        <div className="wpr-promo-box">
-          <div className="wpr-promo-box-bg-image" style={{ backgroundImage: `url(${image})` }} />
-          <div className="wpr-promo-box-bg-overlay" />
+        <div className="wpr-promo-box wpr-animation-wrap">
+          <div className="wpr-promo-box-image">
+            <div className="wpr-promo-box-bg-image wpr-bg-anim-zoom-in wpr-anim-timing-ease-default" style={{ backgroundImage: `url(${image})` }} />
+            <div className="wpr-promo-box-bg-overlay wpr-border-anim-oscar" />
+          </div>
           <div className="wpr-promo-box-content">
-            <span className="wpr-promo-box-icon"><Icon className="gift-wp-lucide" /></span>
-            <h3 className="wpr-promo-box-title">{title}</h3>
-            <p className="wpr-promo-box-description">{description}</p>
+            <h3 className="wpr-promo-box-title"><span>{title}</span></h3>
+            <div className="wpr-promo-box-description"><p>{description}</p></div>
             <Link className="wpr-promo-box-btn" href="/contact">
-              <span className="wpr-promo-box-btn-text">Hubungi Kami</span>
+              <span className="wpr-promo-box-btn-text">Hubungi kami</span>
+              <span className="wpr-promo-box-btn-icon"><Phone size={14} /></span>
             </Link>
           </div>
         </div>
@@ -679,6 +809,35 @@ function FeatureList({ className }: { className: string }) {
                 </div>
               </li>
             ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FacilityFeatureList() {
+  return (
+    <div className="elementor-element elementor-element-1a8878c4 wpr-feature-list-left wpr-feature-list-square wpr-feature-list-line-yes elementor-widget elementor-widget-wpr-feature-list">
+      <div className="elementor-widget-container">
+        <div className="wpr-feature-list-wrap">
+          <ul className="wpr-feature-list">
+            {facilities.map((facility, index) => {
+              const Icon = facilityIcons[index] ?? CheckIcon;
+
+              return (
+                <li key={facility.title} className="wpr-feature-list-item">
+                  <div className="wpr-feature-list-icon-wrap">
+                    <span className="wpr-feature-list-line" />
+                    <div className="wpr-feature-list-icon-inner-wrap"><Icon className="gift-wp-lucide" /></div>
+                  </div>
+                  <div className="wpr-feature-list-content-wrap">
+                    <h2 className="wpr-feature-list-title">{facility.title}</h2>
+                    <p className="wpr-feature-list-description">{facility.description}</p>
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>
@@ -760,9 +919,9 @@ function Divider({ className }: { className: string }) {
   );
 }
 
-function CheckIcon() {
+function CheckIcon({ className }: { className?: string } = {}) {
   return (
-    <svg aria-hidden="true" className="e-font-icon-svg e-fas-check" viewBox="0 0 512 512">
+    <svg aria-hidden="true" className={`e-font-icon-svg e-fas-check${className ? ` ${className}` : ""}`} viewBox="0 0 512 512">
       <path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z" />
     </svg>
   );
@@ -780,12 +939,82 @@ function MapIcon() {
   return <MapPin className="gift-wp-lucide" />;
 }
 
-function contentToParagraphs(content: string) {
-  return content
+function renderArticleContent(content: string) {
+  const lines = content
     .replace(/<br\s*\/?>/gi, "\n")
     .replace(/<\/p>/gi, "\n")
     .replace(/<[^>]*>/g, "")
     .split(/\n{1,}/)
     .map((line) => line.trim())
     .filter(Boolean);
+
+  const blocks: ReactNode[] = [];
+  let listItems: string[] = [];
+  let listType: "ul" | "ol" | null = null;
+
+  const flushList = () => {
+    if (!listItems.length || !listType) {
+      return;
+    }
+
+    const Tag = listType;
+    const key = `${listType}-${blocks.length}`;
+    blocks.push(
+      <Tag key={key}>
+        {listItems.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </Tag>
+    );
+
+    listItems = [];
+    listType = null;
+  };
+
+  lines.forEach((line, index) => {
+    if (line === "---") {
+      flushList();
+      blocks.push(<hr key={`hr-${index}`} />);
+      return;
+    }
+
+    if (line.startsWith("### ")) {
+      flushList();
+      blocks.push(<h3 key={`h3-${index}`}>{line.replace(/^###\s+/, "")}</h3>);
+      return;
+    }
+
+    if (line.startsWith("## ")) {
+      flushList();
+      blocks.push(<h2 key={`h2-${index}`}>{line.replace(/^##\s+/, "")}</h2>);
+      return;
+    }
+
+    const unordered = line.match(/^-\s+(.+)/);
+    if (unordered) {
+      if (listType !== "ul") {
+        flushList();
+        listType = "ul";
+      }
+      listItems.push(unordered[1]);
+      return;
+    }
+
+    const ordered = line.match(/^\d+\.\s+(.+)/);
+    if (ordered) {
+      if (listType !== "ol") {
+        flushList();
+        listType = "ol";
+      }
+      listItems.push(ordered[1]);
+      return;
+    }
+
+    flushList();
+    blocks.push(<p key={`p-${index}`}>{line}</p>);
+  });
+
+  flushList();
+
+  return blocks;
 }

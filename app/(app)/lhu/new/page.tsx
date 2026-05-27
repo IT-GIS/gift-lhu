@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { GeneralInfoForm } from "@/components/lhu/general-info-form";
 import { AttachmentForm } from "@/components/lhu/attachment-form";
 import { TestResultsForm, TestRow } from "@/components/lhu/test-results-form";
+import { PdfImportDropzone } from "@/components/lhu/pdf-import-dropzone";
+import type { ImportedLhuPdfData } from "@/lib/lhu/pdf-import";
 import { createLhuAction, CreateLhuInput } from "./actions";
 
 function createEmptyRow(): TestRow {
@@ -31,6 +33,9 @@ function createEmptyRow(): TestRow {
 export default function CreateLhuPage() {
   const router = useRouter();
   const [rows, setRows] = useState<TestRow[]>([createEmptyRow()]);
+  const [generalInfoDefaults, setGeneralInfoDefaults] = useState<Record<string, string>>({});
+  const [analystNameDefault, setAnalystNameDefault] = useState("");
+  const [importRevision, setImportRevision] = useState(0);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
@@ -40,6 +45,23 @@ export default function CreateLhuPage() {
   };
   const updateRow = (id: string, field: keyof TestRow, value: string) => {
     setRows(rows.map((r) => (r.id === id ? { ...r, [field]: value } : r)));
+  };
+
+  const handlePdfImported = (data: ImportedLhuPdfData) => {
+    setGeneralInfoDefaults({
+      customer: data.customer || "",
+      projectName: data.projectName || "",
+      projectAddress: data.projectAddress || "",
+      referenceNumber: data.referenceNumber || "",
+      concreteType: data.concreteType || "",
+      testType: data.testType || "",
+      sampleCount: data.sampleCount?.match(/\d+/)?.[0] || "",
+      receivedDate: data.receivedDate || "",
+      testingDate: data.testingDate || "",
+    });
+    setAnalystNameDefault(data.analystName || "");
+    setRows(data.rows.length > 0 ? data.rows : [createEmptyRow()]);
+    setImportRevision((value) => value + 1);
   };
 
   const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
@@ -90,9 +112,9 @@ export default function CreateLhuPage() {
 
       const result = await createLhuAction(input);
       if (result?.success) {
-        router.push(`/lhu/review/${result.id}`);
+        router.push("/lhu");
       } else {
-        setError("Gagal membuat draft. Silakan coba lagi.");
+        setError("Gagal menyimpan dan mempublish LHU. Silakan coba lagi.");
       }
     });
   };
@@ -101,7 +123,7 @@ export default function CreateLhuPage() {
     <form onSubmit={handleSave} className="space-y-6 pb-20">
       <PageHeader
         title="Input Data LHU Baru"
-        description="Lengkapi informasi pelanggan dan parameter pengujian. Setelah draft dibuat, Anda dapat mengisi hasil uji di halaman berikutnya."
+        description="Lengkapi informasi pelanggan, hasil uji, dan lampiran. Setelah disimpan, LHU langsung terpublish dengan QR verifikasi."
       />
 
       {error && (
@@ -110,14 +132,20 @@ export default function CreateLhuPage() {
         </div>
       )}
 
-      <GeneralInfoForm />
+      <GeneralInfoForm
+        key={`general-${importRevision}`}
+        defaultValues={generalInfoDefaults}
+        importSlot={<PdfImportDropzone onImported={handlePdfImported} />}
+      />
 
       <div className="mt-8 mb-4">
         <TestResultsForm
+          key={`results-${importRevision}`}
           rows={rows}
           onAddRow={addRow}
           onRemoveRow={removeRow}
           onUpdateRow={updateRow}
+          analystNameDefault={analystNameDefault}
         />
       </div>
 
@@ -147,7 +175,7 @@ export default function CreateLhuPage() {
           {isPending ? (
             <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Menyimpan...</>
           ) : (
-          <><Save className="mr-2 h-4 w-4" /> Simpan & Kirim ke Review QA</>
+          <><Save className="mr-2 h-4 w-4" /> Simpan & Publish</>
         )}
         </Button>
       </div>

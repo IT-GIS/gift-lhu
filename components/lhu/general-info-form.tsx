@@ -4,7 +4,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FileText } from "lucide-react";
 
-export function GeneralInfoForm({ defaultValues }: { defaultValues?: Record<string, any> }) {
+export function GeneralInfoForm({
+  defaultValues,
+  importSlot,
+}: {
+  defaultValues?: Record<string, any>;
+  importSlot?: React.ReactNode;
+}) {
   const selectClassName = "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50";
 
   return (
@@ -16,6 +22,10 @@ export function GeneralInfoForm({ defaultValues }: { defaultValues?: Record<stri
         </h2>
       </div>
 
+      {importSlot}
+
+      <input type="hidden" name="referenceNumber" defaultValue={defaultValues?.referenceNumber || ""} />
+
       <div className="grid gap-6 md:grid-cols-2">
         <div className="space-y-2 relative group">
           <Label className="font-semibold text-slate-700 dark:text-slate-300 group-focus-within:text-indigo-600 transition-colors">Nama Pelanggan</Label>
@@ -26,8 +36,8 @@ export function GeneralInfoForm({ defaultValues }: { defaultValues?: Record<stri
           <Label className="font-semibold text-slate-700 dark:text-slate-300 group-focus-within:text-indigo-600 transition-colors">Pengujian</Label>
           <select name="concreteType" className={selectClassName + " bg-white dark:bg-slate-900 dark:text-slate-300 dark:border-slate-700 transition-shadow focus-visible:ring-indigo-500"} defaultValue={defaultValues?.concreteType || ""}>
             <option value="" disabled>Pilih Pengujian...</option>
-            <option value="silinder">Kuat Tekan Silinder</option>
-            <option value="kubus">Kuat Tekan Kubus</option>
+            <option value="silinder">Kuat Tekan Beton Silinder</option>
+            <option value="kubus">Kuat Tekan Beton Kubus</option>
           </select>
         </div>
 

@@ -3,7 +3,7 @@
 import { useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { CopyPlus, GripVertical, Loader2, Plus, Save, Send, Trash2 } from "lucide-react";
-import { saveResultsAction, submitForReviewAction } from "@/app/(app)/lhu/[id]/results/actions";
+import { saveResultsAction } from "@/app/(app)/lhu/[id]/results/actions";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -168,22 +168,17 @@ export function ResultEditorConnected({
     });
   };
 
-  const handleSubmitForReview = () => {
+  const handleSaveAndReturn = () => {
     startSubmit(async () => {
       const saveResult = await saveResultsAction(lhuDocumentId, serializeRows());
 
       if (!saveResult?.success) {
-        showMessage("error", saveResult?.error || "Gagal menyimpan sebelum submit.");
+        showMessage("error", saveResult?.error || "Gagal menyimpan hasil uji.");
         return;
       }
 
-      const submitResult = await submitForReviewAction(lhuDocumentId);
-      if (submitResult?.success) {
-        showMessage("success", "Dokumen berhasil dikirim ke QA Review!");
-        setTimeout(() => router.push("/lhu"), 1200);
-      } else {
-        showMessage("error", submitResult?.error || "Gagal mengirim ke review.");
-      }
+      showMessage("success", "Hasil uji berhasil disimpan.");
+      setTimeout(() => router.push("/lhu"), 800);
     });
   };
 
@@ -206,7 +201,7 @@ export function ResultEditorConnected({
           <div>
             <div className="text-lg font-semibold">Tabel Hasil Uji</div>
             <p className="text-sm text-muted-foreground">
-              Tambah, duplikat, dan edit baris data uji. Simpan sebagai draft atau langsung kirim ke QA.
+              Tambah, duplikat, dan edit baris data uji.
             </p>
             <p className="mt-1 text-xs text-muted-foreground">Status saat ini: {currentStatus}</p>
           </div>
@@ -309,11 +304,11 @@ export function ResultEditorConnected({
           ) : (
             <Save className="mr-2 h-4 w-4" />
           )}
-          Simpan Draft
+          Simpan
         </Button>
 
         <Button
-          onClick={handleSubmitForReview}
+          onClick={handleSaveAndReturn}
           disabled={isSaving || isSubmitting}
           className="bg-indigo-600 hover:bg-indigo-700"
         >
@@ -322,7 +317,7 @@ export function ResultEditorConnected({
           ) : (
             <Send className="mr-2 h-4 w-4" />
           )}
-          Kirim ke Review QA
+          Simpan & Kembali
         </Button>
       </div>
     </div>

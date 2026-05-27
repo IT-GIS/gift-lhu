@@ -6,6 +6,8 @@ import { insertAuditLog } from "@/lib/db/queries/audit";
 import { requireSession } from "@/lib/auth/session";
 
 export async function loginAction(formData: FormData) {
+  let shouldRedirect = false;
+
   try {
     const email = String(formData.get("email") || "").trim();
     const password = String(formData.get("password") || "");
@@ -30,13 +32,17 @@ export async function loginAction(formData: FormData) {
       metadata: { email: user.email, role: user.role },
     });
 
-    redirect("/dashboard");
+    shouldRedirect = true;
   } catch (error) {
     console.error("[auth] Login action failed:", error);
     return {
       error:
         "Login gagal karena konfigurasi server atau database belum siap. Periksa AUTH_SECRET, DATABASE_URL, dan tabel users/sessions di production.",
     };
+  }
+
+  if (shouldRedirect) {
+    redirect("/dashboard");
   }
 }
 

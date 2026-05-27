@@ -83,7 +83,7 @@ export function AppShellClient({
 
         <div className="rounded-[32px] flex-1 min-w-0 border border-white/60 dark:border-slate-800/80 bg-white/60 dark:bg-slate-900/40 shadow-glass backdrop-blur-xl flex flex-col overflow-hidden transition-all duration-500">
           <div className="border-b border-white/70 dark:border-slate-800/80 px-6 py-4 flex items-center justify-between bg-white/40 dark:bg-slate-900/30">
-            <div className="text-sm font-medium text-slate-500 dark:text-slate-400 hidden sm:block">Workflow LHU Beton • Draft → Review → Publish → Verify</div>
+            <div className="text-sm font-medium text-slate-500 dark:text-slate-400 hidden sm:block">Workflow LHU Beton: Input data, publish otomatis, lalu verifikasi QR</div>
             <div className="text-sm font-medium text-slate-500 dark:text-slate-400 sm:hidden">LHU Panel</div>
             
             <Link href="/account" className="flex items-center gap-3 group bg-white/70 hover:bg-white px-2 py-2 sm:px-3 sm:py-1.5 rounded-full border border-white/80 shadow-sm transition-all hover:shadow-md dark:bg-slate-800/80 dark:border-slate-700 dark:hover:bg-slate-800">

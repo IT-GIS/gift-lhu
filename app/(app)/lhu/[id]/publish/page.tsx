@@ -5,6 +5,7 @@ import { Card } from "@/components/ui/card";
 import { VerificationCard } from "@/components/lhu/verification-card";
 import { PublishActions } from "./publish-actions";
 import { getConcreteTypeLabel } from "@/lib/utils";
+import { getSetting } from "@/lib/db/queries/settings";
 
 export default async function PublishPage({
   params,
@@ -12,14 +13,17 @@ export default async function PublishPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const doc = await getLhuDocumentById(id);
+  const [doc, verificationBaseUrl] = await Promise.all([
+    getLhuDocumentById(id),
+    getSetting("verification_base_url"),
+  ]);
   if (!doc) return notFound();
 
-  const appUrl = process.env.APP_URL || "http://localhost:3000";
+  const appUrl = verificationBaseUrl || process.env.APP_URL || "http://localhost:3000";
   const activeToken = doc.activeToken?.publicToken ?? "";
   const isPublished = doc.status === "published";
   const displayTestingNumber =
-    doc.referenceNumber || doc.projectName || doc.documentCode;
+    doc.projectName || doc.referenceNumber || doc.documentCode;
 
   return (
     <div className="space-y-8">

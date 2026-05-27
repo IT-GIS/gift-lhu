@@ -7,7 +7,7 @@ import { StatusPieChart, type StatusData } from "@/components/dashboard/charts";
 const STATUS_LABELS: Record<string, string> = {
   draft: "Draft",
   input_hasil: "Input Hasil",
-  review: "Review",
+  review: "Proses",
   revisi: "Revisi",
   approved: "Approved",
   published: "Published",

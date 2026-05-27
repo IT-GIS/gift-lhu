@@ -35,7 +35,7 @@ export function DocumentsChartCard({ allData }: { allData?: DocumentData[] }) {
       >
         <div>
           <div className="text-base font-bold text-slate-800 dark:text-slate-200">Dokumen per Bulan</div>
-          <div className="text-xs font-medium text-slate-500 hidden md:block">Volume Draft, Review, dan Published</div>
+          <div className="text-xs font-medium text-slate-500 hidden md:block">Volume Draft, Proses, dan Published</div>
         </div>
 
         <div className="flex items-center gap-2 shrink-0">

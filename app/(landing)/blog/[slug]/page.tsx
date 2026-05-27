@@ -40,18 +40,17 @@ export default async function BlogPostPage({
 async function getPost(slug: string) {
   const staticPost = blogPosts.find((post) => post.href === `/blog/${slug}`);
 
+  if (staticPost) {
+    return staticPost;
+  }
+
   try {
     const post = await db.query.posts.findFirst({
       where: eq(posts.slug, slug),
     });
 
     if (!post) {
-      return staticPost
-        ? {
-            ...staticPost,
-            content: staticPost.excerpt,
-          }
-        : null;
+      return null;
     }
 
     return {
@@ -64,22 +63,16 @@ async function getPost(slug: string) {
       category: post.category || "Blog",
       image: post.imageUrl?.startsWith("/")
         ? post.imageUrl
-        : staticPost?.image || "/landing/blog-konstruksi.png",
+        : "/landing/blog-konstruksi.png",
       excerpt: post.excerpt || stripHtml(post.content).slice(0, 180),
       content: post.content,
       href: `/blog/${post.slug}`,
     };
   } catch {
-    return staticPost
-      ? {
-          ...staticPost,
-          content: staticPost.excerpt,
-        }
-      : null;
+    return null;
   }
 }
 
 function stripHtml(content: string) {
   return content.replace(/<br\s*\/?>/gi, " ").replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
 }
-

@@ -48,6 +48,8 @@ export default async function VerifyDetailPage({
   }
 
   const customerName = doc.customer?.companyName ?? "-";
+  const testNumber = doc.projectName || doc.referenceNumber || doc.documentCode || "-";
+  const sampleCount = `${doc.resultRows.length} sampel`;
   const attachments = doc.attachments.map((attachment) => ({
     id: attachment.id,
     category: attachment.category,
@@ -86,27 +88,35 @@ export default async function VerifyDetailPage({
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <div className="text-xs text-muted-foreground">Pelanggan</div>
+                  <div className="text-xs text-muted-foreground">Nama Pelanggan</div>
                   <div className="mt-1 font-medium">{customerName}</div>
                 </div>
                 <div>
-                  <div className="text-xs text-muted-foreground">Proyek</div>
-                  <div className="mt-1 font-medium">{doc.projectName}</div>
+                  <div className="text-xs text-muted-foreground">Alamat</div>
+                  <div className="mt-1 font-medium">{doc.projectAddress || "-"}</div>
+                </div>
+                <div>
+                  <div className="text-xs text-muted-foreground">Metode Uji</div>
+                  <div className="mt-1 font-medium">{doc.testType || "-"}</div>
                 </div>
                 <div>
                   <div className="text-xs text-muted-foreground">Acuan</div>
-                  <div className="mt-1 font-medium">{doc.testType}</div>
-                </div>
-                <div>
-                  <div className="text-xs text-muted-foreground">Pengujian</div>
                   <div className="mt-1 font-medium">{getConcreteTypeLabel(doc.concreteType)}</div>
                 </div>
                 <div>
-                  <div className="text-xs text-muted-foreground">Tanggal Terima</div>
+                  <div className="text-xs text-muted-foreground">No. Pengujian</div>
+                  <div className="mt-1 font-medium">{testNumber}</div>
+                </div>
+                <div>
+                  <div className="text-xs text-muted-foreground">Jumlah Contoh</div>
+                  <div className="mt-1 font-medium">{sampleCount}</div>
+                </div>
+                <div>
+                  <div className="text-xs text-muted-foreground">Terima Tanggal</div>
                   <div className="mt-1 font-medium">{formatDate(doc.receivedDate.toISOString())}</div>
                 </div>
                 <div>
-                  <div className="text-xs text-muted-foreground">Tanggal Uji</div>
+                  <div className="text-xs text-muted-foreground">Diuji Tanggal</div>
                   <div className="mt-1 font-medium">{formatDate(doc.testingDate.toISOString())}</div>
                 </div>
                 {doc.publishedAt && (

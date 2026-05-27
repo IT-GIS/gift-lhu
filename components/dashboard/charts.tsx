@@ -48,7 +48,7 @@ const emptyMonthlyData: DocumentData[] = MONTHS.map((month) => ({
 
 const emptyStatusData: StatusData[] = [
   { name: "Draft", value: 0 },
-  { name: "Review", value: 0 },
+  { name: "Proses", value: 0 },
   { name: "Published", value: 0 },
 ];
 
@@ -69,7 +69,7 @@ export function DocumentsBarChart({
           <Tooltip />
           <Legend />
           <Bar dataKey="draft" name="Draft" radius={[8, 8, 0, 0]} fill={colors[0]} />
-          <Bar dataKey="review" name="Review" radius={[8, 8, 0, 0]} fill={colors[1]} />
+          <Bar dataKey="review" name="Proses" radius={[8, 8, 0, 0]} fill={colors[1]} />
           <Bar dataKey="published" name="Published" radius={[8, 8, 0, 0]} fill={colors[4]} />
         </BarChart>
       </ResponsiveContainer>

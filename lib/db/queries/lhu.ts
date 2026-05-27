@@ -160,11 +160,25 @@ export async function getLhuDocumentByToken(
 
 export async function generateDocumentCode(): Promise<string> {
   const year = new Date().getFullYear();
-  const count = await db
-    .select({ id: lhuDocuments.id })
+  const rows = await db
+    .select({ documentCode: lhuDocuments.documentCode })
     .from(lhuDocuments);
-  const seq = String(count.length + 1).padStart(4, "0");
-  return `DRF-${year}-${seq}`;
+
+  const usedNumbers = rows
+    .map((row) => row.documentCode.match(new RegExp(`^DRF-${year}-(\\d+)$`))?.[1])
+    .filter((value): value is string => Boolean(value))
+    .map((value) => Number(value))
+    .filter((value) => Number.isFinite(value));
+  const usedCodes = new Set(rows.map((row) => row.documentCode));
+  let nextNumber = Math.max(0, ...usedNumbers) + 1;
+  let code = `DRF-${year}-${String(nextNumber).padStart(4, "0")}`;
+
+  while (usedCodes.has(code)) {
+    nextNumber += 1;
+    code = `DRF-${year}-${String(nextNumber).padStart(4, "0")}`;
+  }
+
+  return code;
 }
 
 export async function generateLhuNumber(
@@ -196,6 +210,7 @@ export async function generateLhuNumber(
 
 export interface CreateDraftInput {
   customerId: string;
+  lhuNumber?: string | null;
   projectName: string;
   projectAddress: string;
   referenceNumber: string;
@@ -217,7 +232,7 @@ export async function createLhuDraft(
   await db.insert(lhuDocuments).values({
     id,
     documentCode,
-    lhuNumber: null,
+    lhuNumber: input.lhuNumber ?? input.projectName,
     customerId: input.customerId,
     projectName: input.projectName,
     projectAddress: input.projectAddress,
@@ -268,6 +283,16 @@ export async function updateLhuDraft(
       updatedAt: new Date(),
     })
     .where(eq(lhuDocuments.id, id));
+}
+
+export async function deleteLhuDocument(id: string): Promise<void> {
+  await db.transaction(async (tx) => {
+    await tx.delete(lhuResultRows).where(eq(lhuResultRows.lhuDocumentId, id));
+    await tx.delete(lhuAttachments).where(eq(lhuAttachments.lhuDocumentId, id));
+    await tx.delete(lhuReviews).where(eq(lhuReviews.lhuDocumentId, id));
+    await tx.delete(lhuVerificationTokens).where(eq(lhuVerificationTokens.lhuDocumentId, id));
+    await tx.delete(lhuDocuments).where(eq(lhuDocuments.id, id));
+  });
 }
 
 // ─── Status transitions ───────────────────────────────────────────────────────

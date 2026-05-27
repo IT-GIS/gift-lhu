@@ -19,7 +19,7 @@ const ACTION_LABELS: Record<string, string> = {
   create_draft: "Buat Draft",
   edit_document: "Edit Dokumen",
   input_results: "Input Hasil Uji",
-  submit_review: "Kirim ke Review",
+  submit_review: "Kirim ke Proses",
   approve: "Approve",
   return_revision: "Kembalikan Revisi",
   publish: "Publish",

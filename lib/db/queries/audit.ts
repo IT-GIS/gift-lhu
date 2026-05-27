@@ -7,6 +7,7 @@ export type AuditAction =
   | "logout"
   | "create_draft"
   | "edit_document"
+  | "delete_document"
   | "input_results"
   | "submit_review"
   | "approve"

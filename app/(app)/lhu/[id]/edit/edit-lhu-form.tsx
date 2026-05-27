@@ -125,7 +125,7 @@ export function EditLhuForm({ doc }: { doc: any }) {
 
       const result = await updateLhuAction(doc.id, input);
       if (result?.success) {
-        router.push(`/lhu/review/${doc.id}`);
+        router.push(`/lhu/${doc.id}`);
         router.refresh();
       } else {
         alert(result?.error || "Gagal menyimpan perubahan.");
@@ -162,8 +162,8 @@ export function EditLhuForm({ doc }: { doc: any }) {
       </Link>
 
       <PageHeader
-        title={`Edit Draft LHU - ${displayTestingNumber}`}
-        description="Perbaiki data Laporan Hasil Uji. Setelah disimpan, lanjutkan ke halaman Input Hasil untuk memperbaiki data uji."
+        title={`Edit LHU - ${displayTestingNumber}`}
+        description="Perbaiki data Laporan Hasil Uji. Perubahan tersimpan pada dokumen yang sudah terpublish."
       />
 
       <GeneralInfoForm defaultValues={defaultValues} />

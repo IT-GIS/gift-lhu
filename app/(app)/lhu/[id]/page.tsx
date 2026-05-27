@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ClipboardCheck, Edit, FileUp, QrCode } from "lucide-react";
+import { Edit, QrCode } from "lucide-react";
 import { getLhuDocumentById } from "@/lib/db/queries/lhu";
 import { PageHeader } from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
@@ -22,7 +22,7 @@ export default async function LhuDetailPage({
 
   const customerName = doc.customer?.companyName ?? "-";
   const displayTestingNumber =
-    doc.referenceNumber || doc.projectName || doc.documentCode;
+    doc.projectName || doc.referenceNumber || doc.documentCode;
 
   const resultRows = doc.resultRows.map((r) => ({
     id: r.id,
@@ -67,7 +67,7 @@ export default async function LhuDetailPage({
     <div className="space-y-8">
       <PageHeader
         title={customerName}
-        description="Detail dokumen LHU, identitas proyek, hasil uji, lampiran, histori review, dan timeline aktivitas."
+        description="Detail dokumen LHU, identitas proyek, hasil uji, lampiran, dan status verifikasi."
         actions={
           <>
             <PrintActions id={doc.id} />
@@ -79,27 +79,11 @@ export default async function LhuDetailPage({
                 </Link>
               </Button>
             )}
-            {canEdit && (
-              <Button variant="secondary" asChild>
-                <Link href={`/lhu/${doc.id}/results`}>
-                  <FileUp className="h-4 w-4" />
-                  Input Hasil
-                </Link>
-              </Button>
-            )}
-            {doc.status === "review" && (
-              <Button variant="secondary" asChild>
-                <Link href={`/lhu/review/${doc.id}`}>
-                  <ClipboardCheck className="h-4 w-4" />
-                  Review QA
-                </Link>
-              </Button>
-            )}
-            {doc.status === "approved" && (
+            {doc.status === "published" && (
               <Button asChild className="bg-indigo-600 hover:bg-indigo-700">
                 <Link href={`/lhu/${doc.id}/publish`}>
                   <QrCode className="h-4 w-4" />
-                  Publish
+                  QR Verifikasi
                 </Link>
               </Button>
             )}
@@ -148,45 +132,24 @@ export default async function LhuDetailPage({
         </Card>
 
         <Card className="bg-white/85 dark:border-slate-800 dark:bg-slate-900/80">
-          <div className="text-lg font-semibold">Histori Review QA</div>
+          <div className="text-lg font-semibold">Status Publikasi</div>
           <div className="mt-6 space-y-3">
-            {doc.reviews.length === 0 ? (
-              <p className="text-sm text-muted-foreground">Belum ada histori review.</p>
-            ) : (
-              doc.reviews.map((review) => (
-                <div
-                  key={review.id}
-                  className="rounded-2xl border border-border bg-white/70 p-4 dark:border-slate-700 dark:bg-slate-800/60"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="font-medium">{review.reviewer?.fullName ?? "-"}</div>
-                    <span
-                      className={`rounded-full px-2 py-0.5 text-xs font-semibold ${
-                        review.action === "approve"
-                          ? "bg-emerald-100 text-emerald-700"
-                          : review.action === "return_revision"
-                            ? "bg-amber-100 text-amber-700"
-                            : "bg-slate-100 text-slate-600"
-                      }`}
-                    >
-                      {review.action === "approve"
-                        ? "Approve"
-                        : review.action === "return_revision"
-                          ? "Revisi"
-                          : review.action === "reject"
-                            ? "Reject"
-                            : "Review"}
-                    </span>
-                  </div>
-                  {review.comment && (
-                    <div className="mt-2 text-sm text-muted-foreground">{review.comment}</div>
-                  )}
-                  <div className="mt-2 text-xs text-muted-foreground">
-                    {review.createdAt.toLocaleString("id-ID")}
-                  </div>
-                </div>
-              ))
-            )}
+            <div className="rounded-2xl border border-border bg-white/70 p-4 dark:border-slate-700 dark:bg-slate-800/60">
+              <div className="text-sm text-muted-foreground">Nomor LHU</div>
+              <div className="mt-1 font-semibold">{doc.projectName || doc.lhuNumber || "-"}</div>
+            </div>
+            <div className="rounded-2xl border border-border bg-white/70 p-4 dark:border-slate-700 dark:bg-slate-800/60">
+              <div className="text-sm text-muted-foreground">Tanggal Publish</div>
+              <div className="mt-1 font-semibold">
+                {doc.publishedAt ? formatDate(doc.publishedAt.toISOString()) : "-"}
+              </div>
+            </div>
+            <div className="rounded-2xl border border-border bg-white/70 p-4 dark:border-slate-700 dark:bg-slate-800/60">
+              <div className="text-sm text-muted-foreground">Token QR</div>
+              <div className="mt-1 break-all font-mono text-xs">
+                {doc.activeToken?.publicToken ?? "-"}
+              </div>
+            </div>
           </div>
         </Card>
       </div>

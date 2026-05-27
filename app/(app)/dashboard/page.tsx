@@ -22,7 +22,7 @@ const ACTION_LABELS: Record<string, string> = {
   create_draft: "Buat Draft",
   edit_document: "Edit Dokumen",
   input_results: "Input Hasil Uji",
-  submit_review: "Kirim ke Review",
+  submit_review: "Kirim ke Proses",
   approve: "Approve",
   return_revision: "Kembalikan Revisi",
   publish: "Publish Dokumen",
@@ -46,7 +46,7 @@ export default async function DashboardPage() {
   const kpiCards = [
     { label: "Draft", value: stats.draft, color: "text-slate-600" },
     { label: "Input Hasil", value: stats.input_hasil, color: "text-blue-600" },
-    { label: "Review QA", value: stats.review, color: "text-amber-600" },
+    { label: "Proses", value: stats.review, color: "text-amber-600" },
     { label: "Revisi", value: stats.revisi, color: "text-orange-600" },
     { label: "Approved", value: stats.approved, color: "text-purple-600" },
     { label: "Published", value: stats.published, color: "text-emerald-600" },

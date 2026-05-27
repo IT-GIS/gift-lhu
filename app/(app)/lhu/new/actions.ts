@@ -4,7 +4,12 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireSession } from "@/lib/auth/session";
 import { assertPermission } from "@/lib/auth/rbac";
-import { createLhuDraft, generateDocumentCode } from "@/lib/db/queries/lhu";
+import {
+  createLhuDraft,
+  createVerificationToken,
+  generateDocumentCode,
+  setLhuStatus,
+} from "@/lib/db/queries/lhu";
 import { upsertCustomer } from "@/lib/db/queries/customers";
 import { insertAuditLog } from "@/lib/db/queries/audit";
 import { lhuAttachments, lhuResultRows } from "@/lib/db/schema";
@@ -66,6 +71,7 @@ export async function createLhuAction(input: CreateLhuInput) {
 
   const id = await createLhuDraft({
     customerId: customer.id,
+    lhuNumber: input.projectName.trim(),
     projectName: input.projectName.trim(),
     projectAddress: input.projectAddress.trim(),
     referenceNumber: input.referenceNumber.trim(),
@@ -159,8 +165,32 @@ export async function createLhuAction(input: CreateLhuInput) {
     metadata: { documentCode: await generateDocumentCode(), customer: customer.companyName },
   });
 
+  const lhuNumber = input.projectName.trim();
+  const publicToken = await createVerificationToken(id);
+  await setLhuStatus(id, "published", {
+    lhuNumber,
+    publishedAt: new Date(),
+  });
+
+  await insertAuditLog({
+    userId: session.id,
+    action: "publish",
+    entityType: "lhu_documents",
+    entityId: id,
+    metadata: { lhuNumber, autoPublished: true },
+  });
+
+  await insertAuditLog({
+    userId: session.id,
+    action: "generate_token",
+    entityType: "lhu_verification_tokens",
+    entityId: id,
+    metadata: { publicToken, autoPublished: true },
+  });
+
   revalidatePath("/lhu");
+  revalidatePath("/publish");
   revalidatePath("/dashboard");
 
-  return { success: true, id };
+  return { success: true, id, lhuNumber, publicToken };
 }

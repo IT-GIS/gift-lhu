@@ -1,11 +1,14 @@
 import Link from "next/link";
-import { Filter, Plus, Search } from "lucide-react";
+import { Filter, Plus, Printer, QrCode, Search } from "lucide-react";
 import type { LhuStatus } from "@/lib/db/queries/lhu";
 import { listLhuDocuments } from "@/lib/db/queries/lhu";
+import { requireSession } from "@/lib/auth/session";
+import { can } from "@/lib/auth/rbac";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { PageHeader } from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { DeleteLhuButton } from "@/components/lhu/delete-lhu-button";
 import {
   Table,
   TableBody,
@@ -32,6 +35,8 @@ export default async function LhuIndexPage({
   searchParams: Promise<{ status?: string; search?: string }>;
 }) {
   const sp = await searchParams;
+  const session = await requireSession();
+  const canDelete = can(session.role, "deleteLhu");
   const statusFilter = validStatuses.includes(sp.status as LhuStatus)
     ? (sp.status as LhuStatus)
     : undefined;
@@ -41,7 +46,6 @@ export default async function LhuIndexPage({
     search: sp.search,
     limit: 100,
   });
-  const visibleRows = rows.filter(({ doc }) => doc.status !== "review");
 
   return (
     <div className="space-y-6 pb-10 md:space-y-8">
@@ -105,18 +109,24 @@ export default async function LhuIndexPage({
               </TableRow>
             </TableHeader>
             <TableBody className="whitespace-nowrap">
-              {visibleRows.length === 0 ? (
+              {rows.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} className="border-r-0 py-12 text-center text-muted-foreground">
                     Tidak ada data LHU ditemukan.
                   </TableCell>
                 </TableRow>
               ) : (
-                visibleRows.map(({ doc, customer }) => (
-                  <TableRow key={doc.id}>
+                rows.map(({ doc, customer }) => {
+                  const displayNumber = doc.projectName || doc.lhuNumber || doc.documentCode;
+
+                  return (
+                    <TableRow key={doc.id}>
                     <TableCell>
                       <div className="font-semibold text-slate-800 dark:text-slate-100">
-                        {doc.projectName || doc.documentCode}
+                        {displayNumber}
+                      </div>
+                      <div className="mt-0.5 text-xs text-muted-foreground">
+                        {doc.lhuNumber || doc.documentCode}
                       </div>
                     </TableCell>
                     <TableCell className="font-medium text-slate-700 dark:text-slate-300">
@@ -152,20 +162,33 @@ export default async function LhuIndexPage({
                         >
                           <Link href={`/lhu/${doc.id}/edit`}>Edit</Link>
                         </Button>
-                        {doc.status === "review" && (
-                          <Button size="sm" variant="secondary" className="h-8 text-xs font-semibold" asChild>
-                            <Link href={`/lhu/review/${doc.id}`}>Review QA</Link>
-                          </Button>
+                        {doc.status === "published" && (
+                          <>
+                            <Button size="sm" variant="outline" className="h-8 text-xs font-semibold" asChild>
+                              <Link href={`/lhu/${doc.id}/print`}>
+                                <Printer className="mr-1.5 h-3.5 w-3.5" />
+                                Print
+                              </Link>
+                            </Button>
+                            <Button size="sm" className="h-8 bg-indigo-600 text-xs font-semibold hover:bg-indigo-700" asChild>
+                              <Link href={`/lhu/${doc.id}/publish`}>
+                                <QrCode className="mr-1.5 h-3.5 w-3.5" />
+                                QR
+                              </Link>
+                            </Button>
+                          </>
                         )}
-                        {doc.status === "approved" && (
-                          <Button size="sm" className="h-8 bg-indigo-600 text-xs font-semibold hover:bg-indigo-700" asChild>
-                            <Link href={`/lhu/${doc.id}/publish`}>Publish</Link>
-                          </Button>
+                        {canDelete && (
+                          <DeleteLhuButton
+                            id={doc.id}
+                            label={displayNumber}
+                          />
                         )}
                       </div>
                     </TableCell>
                   </TableRow>
-                ))
+                  );
+                })
               )}
             </TableBody>
           </Table>
