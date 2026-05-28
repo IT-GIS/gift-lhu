@@ -14,34 +14,10 @@ import { upsertCustomer } from "@/lib/db/queries/customers";
 import { insertAuditLog } from "@/lib/db/queries/audit";
 import { lhuAttachments, lhuResultRows } from "@/lib/db/schema";
 import { db } from "@/lib/db";
-import fs from "fs/promises";
-import path from "path";
 import { randomUUID } from "crypto";
 import { eq, and } from "drizzle-orm";
 import { TestRow } from "@/components/lhu/test-results-form";
-
-async function saveBase64Image(base64Data: string, prefix: string): Promise<string> {
-  if (!base64Data.startsWith("data:image")) return base64Data; // Already a URL / string
-
-  const matches = base64Data.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-  if (!matches || matches.length !== 3) {
-    throw new Error('Invalid base64 string');
-  }
-
-  const type = matches[1];
-  const data = Buffer.from(matches[2], 'base64');
-  let extension = "jpg";
-  if (type === "image/png") extension = "png";
-  if (type === "image/jpeg" || type === "image/jpg") extension = "jpg";
-
-  const fileName = `${prefix}-${randomUUID()}.${extension}`;
-  const dirPath = path.join(process.cwd(), "public", "uploads", "lhu");
-  
-  await fs.mkdir(dirPath, { recursive: true });
-  await fs.writeFile(path.join(dirPath, fileName), data);
-  
-  return `/uploads/lhu/${fileName}`;
-}
+import { saveLhuAttachmentImage, validateLhuAttachmentImages } from "@/lib/lhu/attachment-upload";
 
 export interface UpdateLhuInput {
   customer: string;
@@ -62,6 +38,8 @@ export interface UpdateLhuInput {
 export async function updateLhuAction(id: string, input: UpdateLhuInput) {
   const session = await requireSession();
   assertPermission(session, "editDraft");
+  validateLhuAttachmentImages(input.attachmentProduk, "produk");
+  validateLhuAttachmentImages(input.attachmentPengujian, "pengujian");
 
   const doc = await getLhuDocumentById(id);
   if (!doc) return { success: false, error: "Dokumen tidak ditemukan." };
@@ -99,7 +77,7 @@ export async function updateLhuAction(id: string, input: UpdateLhuInput) {
           id: randomUUID(),
           lhuDocumentId: id,
           category,
-          fileUrl: await saveBase64Image(file, `${prefix}-${idx}`),
+          fileUrl: await saveLhuAttachmentImage(file, `${prefix}-${idx}`),
           fileName: `gambar_${prefix}_${idx + 1}.jpg`,
           sortOrder: idx,
           createdAt: now,

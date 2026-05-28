@@ -3,7 +3,8 @@ import { QRCodeSVG } from "qrcode.react";
 import { AttachmentGallery } from "@/components/lhu/attachment-gallery";
 import { PublicResultTable } from "@/components/lhu/public-result-table";
 import { Card } from "@/components/ui/card";
-import { getLhuDocumentById } from "@/lib/db/queries/lhu";
+import { getLhuDocumentByToken } from "@/lib/db/queries/lhu";
+import { getPublicAppUrl } from "@/lib/app-url";
 import { formatDate, getConcreteTypeLabel } from "@/lib/utils";
 
 export default async function VerifyDetailPage({
@@ -12,16 +13,22 @@ export default async function VerifyDetailPage({
   params: Promise<{ token: string; lhuId: string }>;
 }) {
   const { token, lhuId } = await params;
-  const appUrl = process.env.APP_URL || "http://localhost:3000";
-  const verifyUrl = `${appUrl}/verify/${token}/${lhuId}`;
+  const appUrl = getPublicAppUrl();
+  const verifyUrl = `${appUrl}/verify/${token}`;
 
-  const doc = await getLhuDocumentById(lhuId);
+  const doc = await getLhuDocumentByToken(token);
 
-  if (!doc) {
+  if (
+    !doc ||
+    doc.id !== lhuId ||
+    !doc.activeToken ||
+    doc.activeToken.publicToken !== token ||
+    !doc.activeToken.isActive
+  ) {
     return (
       <VerifyError
-        title="Dokumen Tidak Ditemukan"
-        message="Dokumen yang Anda cari tidak tersedia."
+        title="Token Tidak Valid"
+        message="Token verifikasi ini tidak sesuai dengan dokumen yang diminta."
         icon="invalid"
       />
     );

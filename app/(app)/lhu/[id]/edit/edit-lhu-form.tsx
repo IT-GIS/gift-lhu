@@ -75,6 +75,7 @@ export function EditLhuForm({ doc }: { doc: any }) {
 
   const [rows, setRows] = useState<TestRow[]>(initialRows);
   const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState("");
 
   const addRow = () => setRows([...rows, createEmptyRow()]);
   const removeRow = (id: string) => {
@@ -123,12 +124,16 @@ export function EditLhuForm({ doc }: { doc: any }) {
         return;
       }
 
-      const result = await updateLhuAction(doc.id, input);
-      if (result?.success) {
-        router.push(`/lhu/${doc.id}`);
-        router.refresh();
-      } else {
-        alert(result?.error || "Gagal menyimpan perubahan.");
+      try {
+        const result = await updateLhuAction(doc.id, input);
+        if (result?.success) {
+          router.push(`/lhu/${doc.id}`);
+          router.refresh();
+        } else {
+          setError(result?.error || "Gagal menyimpan perubahan.");
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Gagal menyimpan perubahan.");
       }
     });
   };
@@ -165,6 +170,12 @@ export function EditLhuForm({ doc }: { doc: any }) {
         title={`Edit LHU - ${displayTestingNumber}`}
         description="Perbaiki data Laporan Hasil Uji. Perubahan tersimpan pada dokumen yang sudah terpublish."
       />
+
+      {error && (
+        <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+          {error}
+        </div>
+      )}
 
       <GeneralInfoForm defaultValues={defaultValues} />
 

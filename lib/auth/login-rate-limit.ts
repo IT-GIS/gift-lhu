@@ -1,10 +1,11 @@
 import { createHash, randomUUID } from "crypto";
 import { db } from "@/lib/db";
 import { loginAttempts } from "@/lib/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, lt } from "drizzle-orm";
 
 const WINDOW_MS = 10 * 60 * 1000;
 const LOCK_MS = 15 * 60 * 1000;
+const RETENTION_MS = 24 * 60 * 60 * 1000;
 const MAX_FAILED_ATTEMPTS = 5;
 
 function normalizeEmail(email: string) {
@@ -100,4 +101,9 @@ export async function recordFailedLogin(email: string, ipAddress: string) {
 export async function resetLoginAttempts(email: string, ipAddress: string) {
   const attemptKey = createAttemptKey(email, ipAddress);
   await db.delete(loginAttempts).where(eq(loginAttempts.attemptKey, attemptKey));
+}
+
+export async function cleanupOldLoginAttempts() {
+  const cutoff = new Date(Date.now() - RETENTION_MS);
+  await db.delete(loginAttempts).where(lt(loginAttempts.updatedAt, cutoff));
 }

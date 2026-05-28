@@ -168,9 +168,14 @@ async function main() {
 
   // ── Done ───────────────────────────────────────────────────────────────────
   console.log("\n✅  Seed selesai!\n");
-  console.log("📋  Credentials yang bisa digunakan:");
-  for (const u of defaultUsers) {
-    console.log(`   ${u.role.padEnd(12)}  →  ${u.email}   /   ${u.password}`);
+  if (process.env.NODE_ENV === "production") {
+    console.log("Production users seeded. Default passwords are intentionally not printed.");
+    console.log("Change all default account passwords immediately after first login.");
+  } else {
+    console.log("📋  Credentials yang bisa digunakan:");
+    for (const u of defaultUsers) {
+      console.log(`   ${u.role.padEnd(12)}  →  ${u.email}   /   ${u.password}`);
+    }
   }
   console.log("");
 

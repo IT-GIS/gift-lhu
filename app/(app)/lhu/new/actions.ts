@@ -16,31 +16,7 @@ import { lhuAttachments, lhuResultRows } from "@/lib/db/schema";
 import { db } from "@/lib/db";
 import { randomUUID } from "crypto";
 import { TestRow } from "@/components/lhu/test-results-form";
-import fs from "fs/promises";
-import path from "path";
-
-async function saveBase64Image(base64Data: string, prefix: string): Promise<string> {
-  if (!base64Data.startsWith("data:image")) return base64Data; // in case it's a regular string
-
-  const matches = base64Data.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-  if (!matches || matches.length !== 3) {
-    throw new Error('Invalid base64 string');
-  }
-
-  const type = matches[1];
-  const data = Buffer.from(matches[2], 'base64');
-  let extension = "jpg";
-  if (type === "image/png") extension = "png";
-  if (type === "image/jpeg" || type === "image/jpg") extension = "jpg";
-
-  const fileName = `${prefix}-${randomUUID()}.${extension}`;
-  const dirPath = path.join(process.cwd(), "public", "uploads", "lhu");
-  
-  await fs.mkdir(dirPath, { recursive: true });
-  await fs.writeFile(path.join(dirPath, fileName), data);
-  
-  return `/uploads/lhu/${fileName}`;
-}
+import { saveLhuAttachmentImage, validateLhuAttachmentImages } from "@/lib/lhu/attachment-upload";
 
 export interface CreateLhuInput {
   customer: string;
@@ -60,6 +36,8 @@ export interface CreateLhuInput {
 export async function createLhuAction(input: CreateLhuInput) {
   const session = await requireSession();
   assertPermission(session, "createDraft");
+  validateLhuAttachmentImages(input.attachmentProduk, "produk");
+  validateLhuAttachmentImages(input.attachmentPengujian, "pengujian");
 
   // Resolve or create customer
   const customer = await upsertCustomer({
@@ -88,41 +66,33 @@ export async function createLhuAction(input: CreateLhuInput) {
 
   if (input.attachmentProduk && input.attachmentProduk.length > 0) {
     for (const [idx, base64Str] of input.attachmentProduk.entries()) {
-      try {
-        const url = await saveBase64Image(base64Str, `produk-${idx}`);
-        attachmentsToInsert.push({
-          id: randomUUID(),
-          lhuDocumentId: id,
-          category: "produk" as const,
-          fileUrl: url,
-          fileName: `gambar_produk_${idx + 1}.jpg`,
-          sortOrder: idx,
-          createdAt: now,
-          updatedAt: now,
-        });
-      } catch (e) {
-        console.error("Gagal simpan gambar produk:", e);
-      }
+      const url = await saveLhuAttachmentImage(base64Str, `produk-${idx}`);
+      attachmentsToInsert.push({
+        id: randomUUID(),
+        lhuDocumentId: id,
+        category: "produk" as const,
+        fileUrl: url,
+        fileName: `gambar_produk_${idx + 1}.jpg`,
+        sortOrder: idx,
+        createdAt: now,
+        updatedAt: now,
+      });
     }
   }
 
   if (input.attachmentPengujian && input.attachmentPengujian.length > 0) {
     for (const [idx, base64Str] of input.attachmentPengujian.entries()) {
-      try {
-        const url = await saveBase64Image(base64Str, `pengujian-${idx}`);
-        attachmentsToInsert.push({
-          id: randomUUID(),
-          lhuDocumentId: id,
-          category: "pengujian" as const,
-          fileUrl: url,
-          fileName: `gambar_pengujian_${idx + 1}.jpg`,
-          sortOrder: idx,
-          createdAt: now,
-          updatedAt: now,
-        });
-      } catch (e) {
-        console.error("Gagal simpan gambar pengujian:", e);
-      }
+      const url = await saveLhuAttachmentImage(base64Str, `pengujian-${idx}`);
+      attachmentsToInsert.push({
+        id: randomUUID(),
+        lhuDocumentId: id,
+        category: "pengujian" as const,
+        fileUrl: url,
+        fileName: `gambar_pengujian_${idx + 1}.jpg`,
+        sortOrder: idx,
+        createdAt: now,
+        updatedAt: now,
+      });
     }
   }
 

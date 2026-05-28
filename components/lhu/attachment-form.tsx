@@ -5,6 +5,10 @@ import { UploadCloud } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
+const MAX_FILES_PER_CATEGORY = 10;
+const MAX_FILE_BYTES = 4 * 1024 * 1024;
+const ALLOWED_IMAGE_TYPES = new Set(["image/jpeg", "image/png"]);
+
 type AttachmentPreview = {
   url: string;
   name: string;
@@ -58,6 +62,7 @@ function UploadCard({
   accentClass,
   existingItems,
   selectedItems,
+  error,
   onChange,
 }: {
   name: string;
@@ -65,6 +70,7 @@ function UploadCard({
   accentClass: string;
   existingItems: AttachmentPreview[];
   selectedItems: AttachmentPreview[];
+  error?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   const hasExistingItems = existingItems.length > 0;
@@ -85,17 +91,23 @@ function UploadCard({
           Klik untuk unggah atau seret gambar ke sini
         </p>
         <p className="text-xs text-slate-500">
-          Mendukung banyak file (PNG, JPG, JPEG)
+          PNG/JPG/JPEG, maksimal 10 file dan 4 MB per gambar
         </p>
         <Input
           name={name}
           type="file"
-          accept="image/*"
+          accept="image/png,image/jpeg"
           multiple
           onChange={onChange}
           className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
         />
       </div>
+
+      {error && (
+        <div className="mb-3 rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-medium text-rose-700">
+          {error}
+        </div>
+      )}
 
       {hasExistingItems && (
         <PreviewGrid
@@ -121,6 +133,8 @@ export function AttachmentForm({
 }: AttachmentFormProps) {
   const [produkPreviews, setProdukPreviews] = useState<AttachmentPreview[]>([]);
   const [pengujianPreviews, setPengujianPreviews] = useState<AttachmentPreview[]>([]);
+  const [produkError, setProdukError] = useState("");
+  const [pengujianError, setPengujianError] = useState("");
 
   useEffect(() => {
     return () => {
@@ -129,9 +143,36 @@ export function AttachmentForm({
     };
   }, [produkPreviews, pengujianPreviews]);
 
+  const validateFiles = (files: File[], label: string) => {
+    if (files.length > MAX_FILES_PER_CATEGORY) {
+      return `Maksimal ${MAX_FILES_PER_CATEGORY} gambar ${label}.`;
+    }
+
+    const invalidType = files.find((file) => !ALLOWED_IMAGE_TYPES.has(file.type));
+    if (invalidType) {
+      return "Lampiran hanya boleh berupa JPEG atau PNG.";
+    }
+
+    const oversized = files.find((file) => file.size > MAX_FILE_BYTES);
+    if (oversized) {
+      return "Ukuran setiap gambar lampiran maksimal 4 MB.";
+    }
+
+    return "";
+  };
+
   const handleProdukChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files ? Array.from(e.target.files) : [];
     produkPreviews.forEach((preview) => URL.revokeObjectURL(preview.url));
+    const validationError = validateFiles(files, "produk");
+    if (validationError) {
+      e.currentTarget.value = "";
+      setProdukPreviews([]);
+      setProdukError(validationError);
+      return;
+    }
+
+    setProdukError("");
     setProdukPreviews(
       files.map((file) => ({
         url: URL.createObjectURL(file),
@@ -143,6 +184,15 @@ export function AttachmentForm({
   const handlePengujianChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files ? Array.from(e.target.files) : [];
     pengujianPreviews.forEach((preview) => URL.revokeObjectURL(preview.url));
+    const validationError = validateFiles(files, "pengujian");
+    if (validationError) {
+      e.currentTarget.value = "";
+      setPengujianPreviews([]);
+      setPengujianError(validationError);
+      return;
+    }
+
+    setPengujianError("");
     setPengujianPreviews(
       files.map((file) => ({
         url: URL.createObjectURL(file),
@@ -159,6 +209,7 @@ export function AttachmentForm({
         accentClass="text-indigo-600"
         existingItems={existingProduk}
         selectedItems={produkPreviews}
+        error={produkError}
         onChange={handleProdukChange}
       />
 
@@ -168,6 +219,7 @@ export function AttachmentForm({
         accentClass="text-cyan-600"
         existingItems={existingPengujian}
         selectedItems={pengujianPreviews}
+        error={pengujianError}
         onChange={handlePengujianChange}
       />
     </div>

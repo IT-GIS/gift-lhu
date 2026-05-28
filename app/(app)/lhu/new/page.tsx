@@ -110,11 +110,15 @@ export default function CreateLhuPage() {
         return;
       }
 
-      const result = await createLhuAction(input);
-      if (result?.success) {
-        router.push("/lhu");
-      } else {
-        setError("Gagal menyimpan dan mempublish LHU. Silakan coba lagi.");
+      try {
+        const result = await createLhuAction(input);
+        if (result?.success) {
+          router.push("/lhu");
+        } else {
+          setError("Gagal menyimpan dan mempublish LHU. Silakan coba lagi.");
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Gagal menyimpan dan mempublish LHU.");
       }
     });
   };

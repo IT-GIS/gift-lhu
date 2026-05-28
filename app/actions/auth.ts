@@ -7,6 +7,7 @@ import { insertAuditLog } from "@/lib/db/queries/audit";
 import { requireSession } from "@/lib/auth/session";
 import {
   checkLoginRateLimit,
+  cleanupOldLoginAttempts,
   getLoginClientIp,
   recordFailedLogin,
   resetLoginAttempts,
@@ -24,6 +25,10 @@ export async function loginAction(formData: FormData) {
     }
 
     const clientIp = getLoginClientIp(await headers());
+    await cleanupOldLoginAttempts().catch((error) => {
+      console.error("[auth] Failed to cleanup old login attempts:", error);
+    });
+
     const rateLimit = await checkLoginRateLimit(email, clientIp);
     if (rateLimit.limited) {
       await insertAuditLog({
@@ -66,7 +71,9 @@ export async function loginAction(formData: FormData) {
     console.error("[auth] Login action failed:", error);
     return {
       error:
-        "Login gagal karena konfigurasi server atau database belum siap. Periksa AUTH_SECRET, DATABASE_URL, dan tabel users/sessions di production.",
+        process.env.NODE_ENV === "production"
+          ? "Login gagal karena layanan autentikasi belum siap. Silakan coba lagi atau hubungi administrator."
+          : "Login gagal karena konfigurasi server atau database belum siap. Periksa AUTH_SECRET, DATABASE_URL, dan tabel users/sessions di production.",
     };
   }
 
