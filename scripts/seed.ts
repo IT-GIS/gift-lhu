@@ -78,6 +78,12 @@ async function main() {
     process.exit(1);
   }
 
+  if (process.env.NODE_ENV === "production") {
+    console.warn(
+      "WARNING: Production seed keeps default bootstrap passwords. Change all default account passwords immediately after first login."
+    );
+  }
+
   const pool = mysql.createPool({ uri: process.env.DATABASE_URL });
   const db = drizzle(pool, { mode: "default" });
 

@@ -36,6 +36,19 @@ export const sessions = mysqlTable("sessions", {
   createdAt: datetime("created_at").notNull(),
 });
 
+export const loginAttempts = mysqlTable("login_attempts", {
+  id: varchar("id", { length: 36 }).primaryKey(),
+  attemptKey: varchar("attempt_key", { length: 64 }).notNull().unique(),
+  email: varchar("email", { length: 191 }).notNull(),
+  ipAddress: varchar("ip_address", { length: 64 }).notNull(),
+  failedCount: int("failed_count").notNull().default(0),
+  firstFailedAt: datetime("first_failed_at").notNull(),
+  lastFailedAt: datetime("last_failed_at").notNull(),
+  lockedUntil: datetime("locked_until"),
+  createdAt: datetime("created_at").notNull(),
+  updatedAt: datetime("updated_at").notNull(),
+});
+
 export const customers = mysqlTable("customers", {
   id: varchar("id", { length: 36 }).primaryKey(),
   companyName: varchar("company_name", { length: 191 }).notNull(),

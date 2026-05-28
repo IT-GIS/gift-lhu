@@ -10,9 +10,9 @@ import { jwtVerify } from "jose";
 const COOKIE_NAME = "lhuv_session";
 
 function getSecret() {
-  return new TextEncoder().encode(
-    process.env.AUTH_SECRET || "change-this-in-production"
-  );
+  const secret = process.env.AUTH_SECRET;
+  if (!secret) throw new Error("AUTH_SECRET environment variable is not set");
+  return new TextEncoder().encode(secret);
 }
 
 const protectedPatterns = [

@@ -57,11 +57,15 @@ export async function createSession(user: Omit<SessionUser, "sessionId">) {
 
   try {
     // Persist session server-side so it can be invalidated.
-    // If this fails in production, we fall back to JWT-only sessions.
     await createDbSession(user.id, sessionId);
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      console.error("[auth] Failed to persist DB session:", error);
+      throw new Error("Failed to persist session");
+    }
+
     sessionMode = "jwt";
-    console.error("[auth] Failed to persist DB session, falling back to JWT-only session:", error);
+    console.error("[auth] Failed to persist DB session, falling back to JWT-only session in development:", error);
   }
 
   const sessionUser: SessionUser = { ...user, sessionId, sessionMode };
@@ -100,6 +104,11 @@ export async function getSession(): Promise<SessionUser | null> {
   if (!payload?.sessionId) return null;
 
   if (payload.sessionMode === "jwt") {
+    if (process.env.NODE_ENV === "production") {
+      cookieStore.delete(COOKIE_NAME);
+      return null;
+    }
+
     return payload;
   }
 
@@ -115,6 +124,12 @@ export async function getSession(): Promise<SessionUser | null> {
 
     return payload;
   } catch (error) {
+    if (process.env.NODE_ENV === "production") {
+      console.error("[auth] Failed to validate DB session:", error);
+      cookieStore.delete(COOKIE_NAME);
+      return null;
+    }
+
     console.error("[auth] Failed to validate DB session, falling back to JWT session:", error);
     return payload;
   }

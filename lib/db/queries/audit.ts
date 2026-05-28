@@ -4,6 +4,8 @@ import { auditLogs } from "@/lib/db/schema";
 
 export type AuditAction =
   | "login"
+  | "login_failed"
+  | "login_locked"
   | "logout"
   | "create_draft"
   | "edit_document"

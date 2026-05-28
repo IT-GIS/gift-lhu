@@ -15,6 +15,8 @@ import {
 
 const ACTION_LABELS: Record<string, string> = {
   login: "Login",
+  login_failed: "Login Gagal",
+  login_locked: "Login Dikunci",
   logout: "Logout",
   create_draft: "Buat Draft",
   edit_document: "Edit Dokumen",

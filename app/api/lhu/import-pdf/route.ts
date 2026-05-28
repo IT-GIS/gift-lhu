@@ -4,6 +4,8 @@ import { mkdir, rm, writeFile } from "fs/promises";
 import path from "path";
 import { promisify } from "util";
 import { randomUUID } from "crypto";
+import { getSession } from "@/lib/auth/session";
+import { can } from "@/lib/auth/rbac";
 import { extractPdfDctImages, extractPdfText, parseLhuPdfText } from "@/lib/lhu/pdf-import";
 
 export const runtime = "nodejs";
@@ -80,6 +82,15 @@ async function extractPdfTextWithOcr(buffer: Buffer) {
 
 export async function POST(request: Request) {
   try {
+    const session = await getSession();
+    if (!session) {
+      return NextResponse.json({ error: "Login wajib dilakukan." }, { status: 401 });
+    }
+
+    if (!can(session.role, "createDraft")) {
+      return NextResponse.json({ error: "Akses ditolak." }, { status: 403 });
+    }
+
     const formData = await request.formData();
     const file = formData.get("file");
 

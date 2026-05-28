@@ -1,9 +1,16 @@
 "use server";
 
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { authenticate, createSession, clearSession } from "@/lib/auth/session";
 import { insertAuditLog } from "@/lib/db/queries/audit";
 import { requireSession } from "@/lib/auth/session";
+import {
+  checkLoginRateLimit,
+  getLoginClientIp,
+  recordFailedLogin,
+  resetLoginAttempts,
+} from "@/lib/auth/login-rate-limit";
 
 export async function loginAction(formData: FormData) {
   let shouldRedirect = false;
@@ -16,11 +23,33 @@ export async function loginAction(formData: FormData) {
       return { error: "Email dan password wajib diisi." };
     }
 
+    const clientIp = getLoginClientIp(await headers());
+    const rateLimit = await checkLoginRateLimit(email, clientIp);
+    if (rateLimit.limited) {
+      await insertAuditLog({
+        action: "login_locked",
+        entityType: "users",
+        entityId: "login",
+        metadata: { email, ipAddress: clientIp, retryAfterSeconds: rateLimit.retryAfterSeconds },
+      });
+      return {
+        error: "Terlalu banyak percobaan login. Coba lagi sekitar 15 menit.",
+      };
+    }
+
     const user = await authenticate(email, password);
     if (!user) {
+      const failed = await recordFailedLogin(email, clientIp);
+      await insertAuditLog({
+        action: failed.locked ? "login_locked" : "login_failed",
+        entityType: "users",
+        entityId: "login",
+        metadata: { email, ipAddress: clientIp, failedCount: failed.failedCount },
+      });
       return { error: "Email atau password salah." };
     }
 
+    await resetLoginAttempts(email, clientIp);
     await createSession(user);
 
     // Log login event (non-blocking)
