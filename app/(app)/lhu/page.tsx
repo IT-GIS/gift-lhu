@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Filter, Plus, Printer, QrCode, Search } from "lucide-react";
+import { Filter, Plus, QrCode, Search } from "lucide-react";
 import type { LhuStatus } from "@/lib/db/queries/lhu";
 import { listLhuDocuments } from "@/lib/db/queries/lhu";
 import { requireSession } from "@/lib/auth/session";
@@ -163,20 +163,12 @@ export default async function LhuIndexPage({
                           <Link href={`/lhu/${doc.id}/edit`}>Edit</Link>
                         </Button>
                         {doc.status === "published" && (
-                          <>
-                            <Button size="sm" variant="outline" className="h-8 text-xs font-semibold" asChild>
-                              <Link href={`/lhu/${doc.id}/print`}>
-                                <Printer className="mr-1.5 h-3.5 w-3.5" />
-                                Print
-                              </Link>
-                            </Button>
-                            <Button size="sm" className="h-8 bg-indigo-600 text-xs font-semibold hover:bg-indigo-700" asChild>
-                              <Link href={`/lhu/${doc.id}/publish`}>
-                                <QrCode className="mr-1.5 h-3.5 w-3.5" />
-                                QR
-                              </Link>
-                            </Button>
-                          </>
+                          <Button size="sm" className="h-8 bg-indigo-600 text-xs font-semibold hover:bg-indigo-700" asChild>
+                            <Link href={`/lhu/${doc.id}/publish`}>
+                              <QrCode className="mr-1.5 h-3.5 w-3.5" />
+                              QR
+                            </Link>
+                          </Button>
                         )}
                         {canDelete && (
                           <DeleteLhuButton
