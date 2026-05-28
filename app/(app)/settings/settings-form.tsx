@@ -236,6 +236,20 @@ export function SettingsForm({ defaultValues }: Props) {
             <div className="text-lg font-semibold text-slate-800 dark:text-slate-100">Aturan Dokumen</div>
 
             <div className="space-y-2">
+              <Label htmlFor="verification_base_url" className="dark:text-slate-300">
+                Domain Verifikasi Publik
+              </Label>
+              <Input
+                id="verification_base_url"
+                name="verification_base_url"
+                type="url"
+                defaultValue={defaultValues.verification_base_url ?? ""}
+                placeholder="https://gift-laboratory.com"
+                className="dark:bg-slate-800/50"
+              />
+            </div>
+
+            <div className="space-y-2">
               <Label htmlFor="document_footer" className="dark:text-slate-300">Footer Dokumen Legal</Label>
               <Textarea
                 id="document_footer"

@@ -3,6 +3,7 @@ import {
   type PdfDynamicImageBinding,
   type PdfDynamicTextBinding,
 } from "@/lib/pdf/lhu-template-default-map";
+import { getPublicAppUrl } from "@/lib/app-url";
 import { formatDate, getConcreteTypeLabel } from "@/lib/utils";
 
 export interface PdfLayoutAttachmentItem {
@@ -73,8 +74,7 @@ export function buildPdfLayoutRenderData(input: {
   settings: Record<string, string>;
 }): PdfLayoutRenderData {
   const { doc, settings } = input;
-  const appUrl =
-    settings.verification_base_url || process.env.APP_URL || "http://localhost:3000";
+  const appUrl = getPublicAppUrl(settings.verification_base_url);
   const activeToken = doc.activeToken?.publicToken;
   const verificationUrl = activeToken ? `${appUrl}/verify/${activeToken}` : appUrl;
   const signerName = settings.pdf_signer_name || "Penanggung Jawab";

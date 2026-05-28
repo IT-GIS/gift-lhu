@@ -6,6 +6,7 @@ import { VerificationCard } from "@/components/lhu/verification-card";
 import { PublishActions } from "./publish-actions";
 import { getConcreteTypeLabel } from "@/lib/utils";
 import { getSetting } from "@/lib/db/queries/settings";
+import { getPublicAppUrl } from "@/lib/app-url";
 
 export default async function PublishPage({
   params,
@@ -19,7 +20,7 @@ export default async function PublishPage({
   ]);
   if (!doc) return notFound();
 
-  const appUrl = verificationBaseUrl || process.env.APP_URL || "http://localhost:3000";
+  const appUrl = getPublicAppUrl(verificationBaseUrl);
   const activeToken = doc.activeToken?.publicToken ?? "";
   const isPublished = doc.status === "published";
   const displayTestingNumber =
