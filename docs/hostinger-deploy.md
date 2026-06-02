@@ -106,6 +106,10 @@ Import SQL ini lewat `phpMyAdmin` dengan urutan:
 
 1. `drizzle/0000_dazzling_the_stranger.sql`
 2. `drizzle/0001_powerful_runaways.sql`
+3. `drizzle/0002_foamy_lorna_dane.sql`
+4. `drizzle/0003_lean_prima.sql`
+
+Catatan: `npm run build` hanya menjalankan `drizzle-kit generate` untuk membuat file migrasi lokal. Command itu tidak otomatis menerapkan struktur tabel ke database Hostinger, jadi file SQL di atas tetap harus diimport ke database production.
 
 ### 3. Seed user login
 

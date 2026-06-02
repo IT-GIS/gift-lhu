@@ -29,7 +29,10 @@ export async function loginAction(formData: FormData) {
       console.error("[auth] Failed to cleanup old login attempts:", error);
     });
 
-    const rateLimit = await checkLoginRateLimit(email, clientIp);
+    const rateLimit = await checkLoginRateLimit(email, clientIp).catch((error) => {
+      console.error("[auth] Failed to check login rate limit:", error);
+      return { limited: false, retryAfterSeconds: 0 };
+    });
     if (rateLimit.limited) {
       await insertAuditLog({
         action: "login_locked",
@@ -44,7 +47,10 @@ export async function loginAction(formData: FormData) {
 
     const user = await authenticate(email, password);
     if (!user) {
-      const failed = await recordFailedLogin(email, clientIp);
+      const failed = await recordFailedLogin(email, clientIp).catch((error) => {
+        console.error("[auth] Failed to record login attempt:", error);
+        return { failedCount: 0, locked: false };
+      });
       await insertAuditLog({
         action: failed.locked ? "login_locked" : "login_failed",
         entityType: "users",
@@ -54,7 +60,9 @@ export async function loginAction(formData: FormData) {
       return { error: "Email atau password salah." };
     }
 
-    await resetLoginAttempts(email, clientIp);
+    await resetLoginAttempts(email, clientIp).catch((error) => {
+      console.error("[auth] Failed to reset login attempts:", error);
+    });
     await createSession(user);
 
     // Log login event (non-blocking)
