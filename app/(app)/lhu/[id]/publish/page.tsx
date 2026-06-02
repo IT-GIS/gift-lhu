@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { headers } from "next/headers";
 import { getLhuDocumentById } from "@/lib/db/queries/lhu";
 import { PageHeader } from "@/components/shared/page-header";
 import { Card } from "@/components/ui/card";
@@ -6,7 +7,7 @@ import { VerificationCard } from "@/components/lhu/verification-card";
 import { PublishActions } from "./publish-actions";
 import { getConcreteTypeLabel } from "@/lib/utils";
 import { getSetting } from "@/lib/db/queries/settings";
-import { getPublicAppUrl } from "@/lib/app-url";
+import { getPublicAppUrl, getRequestAppUrl } from "@/lib/app-url";
 
 export default async function PublishPage({
   params,
@@ -20,7 +21,8 @@ export default async function PublishPage({
   ]);
   if (!doc) return notFound();
 
-  const appUrl = getPublicAppUrl(verificationBaseUrl);
+  const requestAppUrl = getRequestAppUrl(await headers());
+  const appUrl = getPublicAppUrl(verificationBaseUrl, requestAppUrl);
   const activeToken = doc.activeToken?.publicToken ?? "";
   const isPublished = doc.status === "published";
   const displayTestingNumber =

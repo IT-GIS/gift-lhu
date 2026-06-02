@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { headers } from "next/headers";
 import { ArrowLeft } from "lucide-react";
 import { getLhuDocumentById } from "@/lib/db/queries/lhu";
+import { getSetting } from "@/lib/db/queries/settings";
 import { PageHeader } from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -11,6 +13,7 @@ import { ResultTable } from "@/components/lhu/result-table";
 import { AttachmentGallery } from "@/components/lhu/attachment-gallery";
 import { PrintActions } from "@/components/lhu/print-actions";
 import { DownloadableQR } from "@/components/lhu/downloadable-qr";
+import { getPublicAppUrl, getRequestAppUrl } from "@/lib/app-url";
 
 export default async function PublishedDetailPage({
   params,
@@ -18,7 +21,10 @@ export default async function PublishedDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const doc = await getLhuDocumentById(id);
+  const [doc, verificationBaseUrl] = await Promise.all([
+    getLhuDocumentById(id),
+    getSetting("verification_base_url"),
+  ]);
   if (!doc) return notFound();
 
   const customerName = doc.customer?.companyName ?? "-";
@@ -51,7 +57,8 @@ export default async function PublishedDetailPage({
     fileUrl: a.fileUrl,
   }));
 
-  const appUrl = process.env.APP_URL || "http://localhost:3000";
+  const requestAppUrl = getRequestAppUrl(await headers());
+  const appUrl = getPublicAppUrl(verificationBaseUrl, requestAppUrl);
   const publicVerifyUrl = doc.activeToken?.publicToken
     ? `${appUrl}/verify/${doc.activeToken.publicToken}`
     : null;
