@@ -7,6 +7,7 @@ import { requireSession } from "@/lib/auth/session";
 import { getPostById } from "@/lib/db/queries/posts";
 import { formatDate } from "@/lib/utils";
 import { updatePostAction } from "../actions";
+import { DeletePostButton } from "@/components/posts/delete-post-button";
 
 type Params = Promise<{ id: string }>;
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
@@ -38,6 +39,7 @@ export default async function EditPostPage({
       <PageHeader
         title={post.title}
         description={`Terakhir diperbarui ${formatDate(post.updatedAt)}.`}
+        actions={<DeletePostButton postId={post.id} postTitle={post.title} />}
       />
 
       {success && (

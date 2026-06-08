@@ -8,6 +8,7 @@ import { can } from "@/lib/auth/rbac";
 import { requireSession } from "@/lib/auth/session";
 import { listPosts } from "@/lib/db/queries/posts";
 import { formatDate } from "@/lib/utils";
+import { DeletePostButton } from "@/components/posts/delete-post-button";
 
 type SearchParams = Promise<Record<string, string | string[] | undefined>>;
 
@@ -84,7 +85,10 @@ export default async function PostsPage({ searchParams }: { searchParams: Search
                     <span>Updated: {formatDate(post.updatedAt)}</span>
                   </div>
                 </div>
-                <div className="text-sm font-semibold text-slate-500">Edit post</div>
+                <div className="flex shrink-0 items-center gap-2">
+                  <span className="text-sm font-semibold text-slate-500">Edit post</span>
+                  <DeletePostButton postId={post.id} postTitle={post.title} />
+                </div>
               </div>
             </Link>
           ))}

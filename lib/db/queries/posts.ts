@@ -25,10 +25,15 @@ const updatePostSchema = postSchema.extend({
   postId: z.string().trim().min(1),
 });
 
+function stripMs(d: Date) {
+  d.setMilliseconds(0);
+  return d;
+}
+
 function parsePublishedAt(value?: string | null) {
-  if (!value) return new Date();
+  if (!value) return stripMs(new Date());
   const parsed = new Date(value);
-  return Number.isNaN(parsed.getTime()) ? new Date() : parsed;
+  return stripMs(Number.isNaN(parsed.getTime()) ? new Date() : parsed);
 }
 
 function nullable(value?: string | null) {
@@ -96,7 +101,7 @@ export async function getPostById(id: string) {
 
 export async function createPost(input: Record<string, string>) {
   const parsed = postSchema.parse(input);
-  const now = new Date();
+  const now = stripMs(new Date());
   const id = randomUUID();
 
   await db.insert(posts).values({
@@ -117,6 +122,12 @@ export async function createPost(input: Record<string, string>) {
   return post;
 }
 
+export async function deletePost(id: string) {
+  const post = await getPostById(id);
+  if (!post) throw new Error("Post tidak ditemukan.");
+  await db.delete(posts).where(eq(posts.id, id));
+}
+
 export async function updatePost(input: Record<string, string>) {
   const parsed = updatePostSchema.parse(input);
 
@@ -130,7 +141,7 @@ export async function updatePost(input: Record<string, string>) {
       imageUrl: nullable(parsed.imageUrl),
       category: parsed.category,
       publishedAt: parsePublishedAt(parsed.publishedAt),
-      updatedAt: new Date(),
+      updatedAt: stripMs(new Date()),
     })
     .where(eq(posts.id, parsed.postId));
 

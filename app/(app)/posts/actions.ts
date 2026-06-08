@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireSession } from "@/lib/auth/session";
 import { assertPermission } from "@/lib/auth/rbac";
-import { createPost, getPostErrorMessage, updatePost } from "@/lib/db/queries/posts";
+import { createPost, deletePost, getPostErrorMessage, updatePost } from "@/lib/db/queries/posts";
 
 function getFormValues(formData: FormData) {
   return Object.fromEntries(
@@ -35,6 +35,25 @@ export async function createPostAction(formData: FormData) {
   }
 
   redirect(target);
+}
+
+export async function deletePostAction(formData: FormData) {
+  const session = await requireSession();
+  assertPermission(session, "managePosts");
+
+  const postId = formData.get("postId");
+  if (typeof postId !== "string" || !postId) {
+    redirect(withMessage("/posts", "error", "ID post tidak valid."));
+  }
+
+  try {
+    await deletePost(postId);
+    revalidatePath("/posts");
+  } catch (error) {
+    redirect(withMessage("/posts", "error", getPostErrorMessage(error)));
+  }
+
+  redirect(withMessage("/posts", "success", "Post berhasil dihapus."));
 }
 
 export async function updatePostAction(formData: FormData) {
