@@ -445,51 +445,37 @@ function WpHeader({ activePage }: { activePage: ActivePage }) {
 function WpFooter() {
   return (
     <footer data-elementor-type="wp-post" data-elementor-id="222" className="elementor elementor-222">
-      <div className="elementor-element elementor-element-b17e501 e-flex e-con-boxed e-con e-parent">
-        <div className="e-con-inner">
-          <div className="elementor-element elementor-element-e88f5ea e-flex e-con-boxed e-con e-child">
-            <div className="e-con-inner gift-wp-footer-grid">
-              <div className="elementor-element elementor-element-081556a e-con-full e-flex e-con e-child">
-                <div className="elementor-element elementor-element-fc8e9a3 wpr-logo-position-center elementor-widget elementor-widget-wpr-logo">
-                  <div className="elementor-widget-container">
-                    <Link className="wpr-logo elementor-clearfix" href="/">
-                      <picture className="wpr-logo-image">
-                        <img src="/landing/logo-gift-wide.png" alt={company.name} />
-                      </picture>
-                    </Link>
-                  </div>
-                </div>
-                <TextWidget className="elementor-element-50c6494">
-                  <p>{company.description}</p>
-                </TextWidget>
-              </div>
-              <div className="elementor-element elementor-element-6bffc18 e-con-full e-flex e-con e-child">
-                <Heading className="elementor-element-082d466">Contact Info</Heading>
-                <ul className="elementor-icon-list-items gift-wp-footer-contact">
-                  <li className="elementor-icon-list-item"><PhoneIcon /> <span className="elementor-icon-list-text">{company.phone}</span></li>
-                  <li className="elementor-icon-list-item"><MailIcon /> <span className="elementor-icon-list-text">{company.email}</span></li>
-                  <li className="elementor-icon-list-item"><MapIcon /> <span className="elementor-icon-list-text">{company.address}</span></li>
-                </ul>
-              </div>
-              <div className="elementor-element e-con-full e-flex e-con e-child">
-                <Heading className="elementor-element-082d466">Navigasi</Heading>
-                <ul className="elementor-icon-list-items gift-wp-footer-contact">
-                  {navItems.map((item) => (
-                    <li key={item.href} className="elementor-icon-list-item">
-                      <Link className="elementor-icon-list-text" href={item.href}>{item.label}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+      <div className="gift-footer-wrap">
+        <div className="gift-footer-grid">
+          <div className="gift-footer-col">
+            <Link className="wpr-logo elementor-clearfix" href="/">
+              <picture className="wpr-logo-image">
+                <img src="/landing/logo-gift-wide.png" alt={company.name} />
+              </picture>
+            </Link>
+            <p className="gift-footer-desc">{company.description}</p>
           </div>
-          <Divider className="elementor-element-d4d0b9f" />
-          <div className="elementor-element elementor-element-eb31d96 elementor-widget elementor-widget-text-editor">
-            <div className="elementor-widget-container">
-              <p>© {new Date().getFullYear()} Global Inspeksi Forensik Teknik</p>
-            </div>
+          <div className="gift-footer-col">
+            <div className="gift-footer-heading">Contact Info</div>
+            <ul className="elementor-icon-list-items gift-wp-footer-contact">
+              <li className="elementor-icon-list-item"><PhoneIcon /><span className="elementor-icon-list-text">{company.phone}</span></li>
+              <li className="elementor-icon-list-item"><MailIcon /><span className="elementor-icon-list-text">{company.email}</span></li>
+              <li className="elementor-icon-list-item"><MapIcon /><span className="elementor-icon-list-text">{company.address}</span></li>
+            </ul>
+          </div>
+          <div className="gift-footer-col">
+            <div className="gift-footer-heading">Navigasi</div>
+            <ul className="elementor-icon-list-items gift-wp-footer-contact">
+              {navItems.map((item) => (
+                <li key={item.href} className="elementor-icon-list-item">
+                  <Link className="elementor-icon-list-text" href={item.href}>{item.label}</Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
+        <hr className="gift-footer-divider" />
+        <p className="gift-footer-copy">© {new Date().getFullYear()} Global Inspeksi Forensik Teknik</p>
       </div>
     </footer>
   );

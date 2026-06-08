@@ -55,7 +55,6 @@ export function WpStyles() {
           background: #fff;
         }
         .elementor-166 .e-con-inner,
-        .elementor-222 .e-con-inner,
         .gift-wp-section > .e-con-inner,
         .elementor-section > .elementor-container {
           width: min(1200px, calc(100% - 40px));
@@ -1142,10 +1141,10 @@ export function WpStyles() {
         }
         .gift-wp-client-strip {
           padding: 100px 0;
-          background: #1c2544 url("/landing/subpage-cover.jpg") center / cover no-repeat;
+          background: #1e2a45 url("/landing/subpage-cover.jpg") center / cover no-repeat;
         }
         .gift-wp-client-strip:before {
-          background: rgba(28, 37, 68, .67);
+          background: rgba(30, 42, 69, .67);
         }
         .gift-wp-client-strip .elementor-heading-title {
           color: #b8c0dd !important;
@@ -1187,8 +1186,8 @@ export function WpStyles() {
           transform: translateY(-4px);
         }
         .gift-wp-contact-grid {
-          display: grid;
-          grid-template-columns: repeat(3, minmax(0, 1fr));
+          display: grid !important;
+          grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
           gap: 30px;
           margin-top: 34px;
         }
@@ -1247,17 +1246,19 @@ export function WpStyles() {
           font: 500 15px/1.75 Montserrat, sans-serif;
         }
         .elementor-1189 .gift-wp-contact-grid {
-          max-width: 1080px;
+          display: grid !important;
+          grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+          max-width: 1100px;
           width: 100%;
-          gap: 0;
+          gap: 22px;
           align-items: stretch;
-          justify-items: center;
+          justify-items: stretch;
           margin: 54px auto 0;
-          overflow: hidden;
-          border: 1px solid rgba(16, 42, 67, .08);
-          border-radius: 8px;
-          background: rgba(255, 255, 255, .92);
-          box-shadow: 0 22px 58px rgba(13, 45, 77, .08);
+          overflow: visible;
+          border: none;
+          border-radius: 0;
+          background: transparent;
+          box-shadow: none;
         }
         .elementor-1189 .gift-wp-contact-grid .elementor-widget-icon-box {
           width: 100%;
@@ -1274,57 +1275,60 @@ export function WpStyles() {
           box-shadow: none !important;
         }
         .elementor-1189 .elementor-icon-box-wrapper {
-          display: grid;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
           height: 100%;
-          min-height: 178px;
-          grid-template-rows: 50px auto;
-          align-items: start;
-          justify-items: center;
-          gap: 12px;
-          padding: 28px 22px 24px;
-          border: 0;
-          border-right: 1px solid rgba(16, 42, 67, .08);
-          border-radius: 0;
-          background: transparent;
-          box-shadow: none;
-          text-align: center;
-          transition: background .25s ease;
+          min-height: auto;
+          padding: 32px 30px;
+          border: 1px solid rgba(47, 155, 185, .14);
+          border-radius: 20px;
+          background: #fff;
+          box-shadow: 0 6px 28px rgba(13, 45, 77, .06), 0 1px 4px rgba(47, 155, 185, .06);
+          text-align: left;
+          transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
         }
         .elementor-1189 .gift-wp-contact-grid .elementor-widget-icon-box:last-child .elementor-icon-box-wrapper {
-          border-right: 0;
+          border-right: 1px solid rgba(47, 155, 185, .14);
         }
         .elementor-1189 .elementor-icon-box-wrapper:hover {
-          background: rgba(47, 155, 185, .06);
+          transform: translateY(-5px);
+          box-shadow: 0 20px 48px rgba(13, 45, 77, .10), 0 4px 16px rgba(47, 155, 185, .12);
+          border-color: rgba(47, 155, 185, .35);
         }
         .elementor-1189 .elementor-icon-box-content {
-          display: grid;
+          display: flex;
+          flex-direction: column;
           width: 100%;
-          grid-template-rows: 30px auto;
-          justify-items: center;
-          align-content: start;
+          gap: 5px;
+          justify-content: center;
+          align-items: flex-start;
         }
         .elementor-1189 .elementor-icon-box-icon {
           display: flex;
-          height: 50px;
+          flex-shrink: 0;
+          height: auto;
           align-items: center;
           justify-content: center;
-          margin-bottom: 0;
+          margin-bottom: 0 !important;
+          margin-right: 28px !important;
         }
         .elementor-1189 .elementor-icon {
           display: inline-flex;
-          width: 50px;
-          height: 50px;
+          width: 56px;
+          height: 56px;
+          flex-shrink: 0;
           align-items: center;
           justify-content: center;
-          border-radius: 8px;
+          border-radius: 16px;
           background: linear-gradient(135deg, #2f9bb9, #0f6d91) !important;
           color: #fff;
-          box-shadow: 0 14px 28px rgba(47, 155, 185, .24);
+          box-shadow: 0 8px 22px rgba(47, 155, 185, .32);
         }
         .elementor-1189 .elementor-icon svg {
-          width: 24px;
-          height: 24px;
-          stroke-width: 2.35;
+          width: 26px;
+          height: 26px;
+          stroke-width: 2.2;
         }
         .elementor-1189 .elementor-icon svg,
         .elementor-1189 .elementor-icon svg * {
@@ -1332,19 +1336,21 @@ export function WpStyles() {
         }
         .elementor-1189 .elementor-icon-box-title {
           margin: 0;
-          color: #12243a;
-          font: 700 20px/30px Poppins, sans-serif;
+          color: #2f9bb9;
+          font: 700 11px/1.2 Poppins, sans-serif;
+          letter-spacing: .10em;
+          text-transform: uppercase;
         }
         .elementor-1189 .elementor-icon-box-description {
-          max-width: 300px;
+          max-width: 100%;
           margin: 0;
-          color: #667789;
-          font: 500 14px/1.55 Montserrat, sans-serif;
-          text-align: center;
+          color: #12243a;
+          font: 600 15px/1.55 Montserrat, sans-serif;
+          text-align: left;
           overflow-wrap: anywhere;
         }
         .elementor-1189 .elementor-element-66ecdbf .elementor-icon-box-description {
-          white-space: nowrap;
+          white-space: normal;
         }
         .gift-wp-contact-band {
           position: relative;
@@ -1552,18 +1558,67 @@ export function WpStyles() {
           height: 480px;
           border: 0;
         }
-        .gift-wp-footer-grid {
-          display: grid !important;
-          grid-template-columns: 1.2fr 1fr 1fr;
-          gap: 40px;
+        /* ===== FOOTER ===== */
+        .elementor-222 {
+          background: #0f1729 !important;
+          width: 100% !important;
+          display: block !important;
+          color: #fff;
+        }
+        .gift-footer-wrap {
+          width: min(1200px, calc(100% - 80px));
+          margin: 0 auto;
+          padding: 60px 0 32px;
+          box-sizing: border-box;
+        }
+        .gift-footer-grid {
+          display: grid;
+          grid-template-columns: 2fr 1.5fr 1.5fr;
+          gap: 48px;
+          align-items: start;
+          padding-bottom: 40px;
+        }
+        .gift-footer-col {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          min-width: 0;
+        }
+        .gift-footer-heading {
+          font: 700 12px/1 Poppins, sans-serif;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: #fff;
+          margin-bottom: 4px;
+        }
+        .gift-footer-desc {
+          color: rgba(255, 255, 255, 0.7);
+          font-size: 14px;
+          line-height: 1.65;
+          margin: 0;
         }
         .elementor-222 .wpr-logo-image img {
-          max-width: 420px;
+          max-width: 200px;
           width: 100%;
           height: auto;
         }
         .elementor-222 a {
           text-decoration: none;
+          color: rgba(255, 255, 255, 0.75);
+        }
+        .elementor-222 a:hover {
+          color: #fff;
+        }
+        .gift-footer-divider {
+          border: none;
+          border-top: 1px solid rgba(255, 255, 255, 0.15);
+          margin: 0 0 20px;
+        }
+        .gift-footer-copy {
+          text-align: center;
+          color: rgba(255, 255, 255, 0.45);
+          font-size: 13px;
+          margin: 0;
         }
         .gift-wp-blog-index,
         .gift-wp-blog-detail {
@@ -1696,9 +1751,12 @@ export function WpStyles() {
           .gift-wp-mobile-menu {
             display: block;
           }
-          .gift-wp-two-column,
-          .gift-wp-footer-grid {
+          .gift-wp-two-column {
             grid-template-columns: 1fr;
+          }
+          .gift-footer-grid {
+            grid-template-columns: 1fr;
+            gap: 32px;
           }
           .gift-wp-facilities .gift-wp-two-column {
             gap: 36px;
@@ -1722,14 +1780,14 @@ export function WpStyles() {
           .gift-wp-quote .elementor-heading-title {
             font-size: 40px;
           }
-          .gift-wp-blog-grid,
-          .gift-wp-contact-grid {
+          .gift-wp-blog-grid {
             grid-template-columns: 1fr;
           }
           .elementor-1189 .gift-wp-contact-grid {
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            display: grid !important;
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
             max-width: 100%;
-            gap: 0;
+            gap: 18px;
           }
           .elementor-1189 .gift-wp-contact-band .gift-wp-two-column {
             grid-template-columns: minmax(0, .9fr) minmax(360px, 1.1fr);
@@ -1809,15 +1867,21 @@ export function WpStyles() {
             font-size: 14px;
           }
           .elementor-1189 .gift-wp-contact-grid {
+            display: grid !important;
+            grid-template-columns: 1fr !important;
             max-width: none;
-            margin-top: 34px;
+            margin-top: 28px;
+            gap: 14px;
           }
           .elementor-1189 .elementor-icon-box-wrapper {
-            min-height: 172px;
-            padding: 22px 10px;
+            padding: 20px 22px;
+            align-items: center;
+          }
+          .elementor-1189 .elementor-icon-box-icon {
+            margin-right: 20px !important;
           }
           .elementor-1189 .elementor-icon {
-            width: 42px;
+            width: 46px;
             height: 42px;
           }
           .elementor-1189 .elementor-icon svg {
@@ -1825,15 +1889,11 @@ export function WpStyles() {
             height: 20px;
           }
           .elementor-1189 .elementor-icon-box-title {
-            font-size: 14px;
-            line-height: 20px;
-          }
-          .elementor-1189 .elementor-icon-box-content {
-            grid-template-rows: 22px auto;
+            font-size: 10px;
           }
           .elementor-1189 .elementor-icon-box-description {
-            font-size: 11px;
-            line-height: 1.35;
+            font-size: 13px;
+            line-height: 1.45;
             overflow-wrap: anywhere;
           }
           .elementor-1189 .elementor-element-66ecdbf .elementor-icon-box-description {

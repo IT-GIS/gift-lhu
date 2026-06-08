@@ -1,4 +1,4 @@
-import { ShieldCheck, ShieldOff, ShieldX } from "lucide-react";
+import { Download, ShieldCheck, ShieldOff, ShieldX } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { AttachmentGallery } from "@/components/lhu/attachment-gallery";
 import { PublicResultTable } from "@/components/lhu/public-result-table";
@@ -155,7 +155,18 @@ export default async function VerifyDetailPage({
           <AttachmentGallery attachments={attachments} size="large" />
         </div>
 
-        <div className="pt-4 text-center text-xs text-muted-foreground">
+        <div className="flex justify-center">
+          <a
+            href={`/api/pdf/download/${token}`}
+            download
+            className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-indigo-700 active:scale-95"
+          >
+            <Download className="h-4 w-4" />
+            Unduh Dokumen PDF
+          </a>
+        </div>
+
+        <div suppressHydrationWarning className="pt-4 text-center text-xs text-muted-foreground">
           Data ditarik pada {new Date().toLocaleString("id-ID")}
         </div>
       </div>

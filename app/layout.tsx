@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
@@ -6,6 +6,11 @@ export const metadata: Metadata = {
   title: "GIFT Laboratory | LHU Verification System",
   description:
     "Landing publik PT. Global Inspeksi Forensik Teknik dan aplikasi internal verifikasi LHU.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 /**
