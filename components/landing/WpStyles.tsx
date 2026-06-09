@@ -21,10 +21,12 @@ export function WpStyles() {
           background-image: url("/landing/facility-bg.png") !important;
         }
         .elementor-1185 .elementor-element.elementor-element-8030a81,
-        .elementor-1185 .elementor-element.elementor-element-8030a81:not(.elementor-motion-effects-element-type-background),
+        .elementor-1185 .elementor-element.elementor-element-8030a81:not(.elementor-motion-effects-element-type-background) {
+          background-image: url("/landing/subpage-cover-profile.jpg") !important;
+        }
         .elementor-1156 .elementor-element.elementor-element-8030a81,
         .elementor-1156 .elementor-element.elementor-element-8030a81:not(.elementor-motion-effects-element-type-background) {
-          background-image: url("/landing/subpage-cover.jpg") !important;
+          background-image: url("/landing/subpage-cover-blog.jpg") !important;
         }
         .elementor-1189 .elementor-element.elementor-element-4e53d5c,
         .elementor-1189 .elementor-element.elementor-element-4e53d5c:not(.elementor-motion-effects-element-type-background) {
@@ -32,11 +34,11 @@ export function WpStyles() {
         }
         .elementor-1186 .elementor-element.elementor-element-0580e27,
         .elementor-1186 .elementor-element.elementor-element-0580e27:not(.elementor-motion-effects-element-type-background) {
-          background-image: url("https://gift-laboratory.com/wp-content/uploads/2025/08/konstruksi-1.png") !important;
+          background-image: url("/landing/supage-cover-service.jpg") !important;
         }
         .elementor-1185 .elementor-element.elementor-element-10b14b6,
         .elementor-1185 .elementor-element.elementor-element-10b14b6:not(.elementor-motion-effects-element-type-background) {
-          background-image: url("https://gift-laboratory.com/wp-content/uploads/2024/06/img5.jpg") !important;
+          background-image: url("/landing/blueprint.jpg") !important;
         }
         .elementor-1189 .elementor-element.elementor-element-cf5e46f,
         .elementor-1189 .elementor-element.elementor-element-cf5e46f:not(.elementor-motion-effects-element-type-background),
@@ -574,7 +576,7 @@ export function WpStyles() {
           position: relative;
           padding: 100px 0;
           overflow: hidden;
-          background-image: url("https://gift-laboratory.com/wp-content/uploads/2024/06/img5.jpg");
+          background-image: url("/landing/blueprint.jpg");
           background-position: center;
           background-size: cover;
         }
@@ -1631,11 +1633,31 @@ export function WpStyles() {
           gap: 12px;
           margin-top: 24px;
         }
-        .gift-wp-category-row span {
+        .gift-wp-category-row span,
+        .gift-wp-category-row a {
           border: 1px solid #dbe8ee;
           border-radius: 999px;
           padding: 8px 14px;
           background: #fff;
+          color: #555;
+          text-decoration: none;
+          font: inherit;
+          transition: background .18s, border-color .18s, color .18s;
+        }
+        .gift-wp-category-row a:hover {
+          border-color: #2f9bb9;
+          color: #2f9bb9;
+        }
+        .gift-wp-category-row a.gift-category-active {
+          background: #2f9bb9;
+          border-color: #2f9bb9;
+          color: #fff;
+        }
+        .gift-blog-empty {
+          text-align: center;
+          padding: 60px 0;
+          color: #607184;
+          font: 500 16px/1.6 Raleway, sans-serif;
         }
         .gift-wp-blog-grid {
           grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1744,6 +1766,293 @@ export function WpStyles() {
           border-radius: 8px;
           margin: 28px 0;
         }
+        /* ===== BLOG REDESIGN ===== */
+        .gift-blog-index {
+          padding: 80px 0 120px;
+          background: #f4f8fb;
+        }
+        .gift-blog-wrap {
+          width: min(1200px, calc(100% - 40px));
+          margin: 0 auto;
+        }
+        .gift-blog-header {
+          text-align: center;
+          margin-bottom: 60px;
+        }
+        .gift-blog-title {
+          margin: 16px 0 28px;
+          color: #0a2540;
+          font: 700 44px/1.2 Poppins, sans-serif;
+        }
+        .gift-blog-tag {
+          display: inline-flex;
+          align-items: center;
+          min-height: 24px;
+          padding: 3px 11px;
+          border-radius: 999px;
+          background: rgba(47, 155, 185, .12);
+          color: #2f9bb9;
+          font: 700 10px/1 Poppins, sans-serif;
+          text-transform: uppercase;
+          letter-spacing: .07em;
+        }
+        .gift-blog-featured {
+          display: grid;
+          grid-template-columns: 55% 1fr;
+          margin-bottom: 72px;
+          border-radius: 16px;
+          overflow: hidden;
+          background: #fff;
+          box-shadow: 0 20px 60px rgba(10, 37, 64, .09);
+          text-decoration: none;
+          color: inherit;
+          transition: transform .25s ease, box-shadow .25s ease;
+        }
+        .gift-blog-featured:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 32px 76px rgba(10, 37, 64, .14);
+        }
+        .gift-blog-featured-img {
+          overflow: hidden;
+        }
+        .gift-blog-featured-img img {
+          width: 100%;
+          height: 100%;
+          min-height: 380px;
+          object-fit: cover;
+          transition: transform .5s ease;
+        }
+        .gift-blog-featured:hover .gift-blog-featured-img img {
+          transform: scale(1.04);
+        }
+        .gift-blog-featured-body {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          gap: 18px;
+          padding: 52px 56px;
+        }
+        .gift-blog-featured-body h2 {
+          margin: 0;
+          color: #0a2540;
+          font: 700 28px/1.3 Poppins, sans-serif;
+        }
+        .gift-blog-featured-body p {
+          margin: 0;
+          color: #607184;
+          font: 500 15px/1.85 Raleway, sans-serif;
+          flex: 1;
+        }
+        .gift-blog-featured-meta {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-top: 4px;
+        }
+        .gift-blog-more-title {
+          margin: 0 0 28px;
+          color: #0a2540;
+          font: 600 22px/1.3 Poppins, sans-serif;
+          padding-bottom: 16px;
+          border-bottom: 2px solid #e0eaf2;
+        }
+        .gift-blog-grid {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 28px;
+        }
+        .gift-blog-card {
+          display: flex;
+          flex-direction: column;
+          border-radius: 12px;
+          overflow: hidden;
+          background: #fff;
+          box-shadow: 0 6px 28px rgba(10, 37, 64, .07);
+          transition: transform .25s ease, box-shadow .25s ease;
+        }
+        .gift-blog-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 20px 50px rgba(10, 37, 64, .13);
+        }
+        .gift-blog-card-img {
+          display: block;
+          overflow: hidden;
+          flex-shrink: 0;
+        }
+        .gift-blog-card-img img {
+          width: 100%;
+          height: 200px;
+          object-fit: cover;
+          transition: transform .4s ease;
+        }
+        .gift-blog-card:hover .gift-blog-card-img img {
+          transform: scale(1.06);
+        }
+        .gift-blog-card-body {
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+          gap: 10px;
+          padding: 22px 24px 24px;
+        }
+        .gift-blog-card-body h2 {
+          margin: 0;
+          font: 600 17px/1.4 Poppins, sans-serif;
+          color: #0a2540;
+        }
+        .gift-blog-card-body h2 a {
+          color: inherit;
+          text-decoration: none;
+          transition: color .2s;
+        }
+        .gift-blog-card-body h2 a:hover {
+          color: #2f9bb9;
+        }
+        .gift-blog-card-body p {
+          margin: 0;
+          flex: 1;
+          color: #607184;
+          font: 500 13px/1.8 Raleway, sans-serif;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+        .gift-blog-card-footer {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-top: 10px;
+          padding-top: 14px;
+          border-top: 1px solid #e8f0f5;
+        }
+        /* BLOG DETAIL */
+        .gift-blog-detail-hero {
+          position: relative;
+          height: 520px;
+          overflow: hidden;
+          background: #0a2540;
+        }
+        .gift-blog-detail-hero img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          opacity: .55;
+        }
+        .gift-blog-detail-hero-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to top, rgba(10, 37, 64, .88) 0%, rgba(10, 37, 64, .3) 52%, transparent 100%);
+        }
+        .gift-blog-detail-hero-content {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          padding: 52px min(80px, 5vw) 52px;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          width: min(1000px, calc(100% - 40px));
+          margin: 0 auto;
+        }
+        .gift-blog-detail-hero-content h1 {
+          margin: 0;
+          color: #fff;
+          font: 700 46px/1.2 Poppins, sans-serif;
+        }
+        .gift-blog-detail-hero-content .gift-wp-blog-meta {
+          color: rgba(255,255,255,.72);
+        }
+        .gift-blog-detail {
+          padding: 64px 0 110px;
+          background: #f4f8fb;
+        }
+        .gift-blog-detail-wrap {
+          width: min(820px, calc(100% - 40px));
+          margin: 0 auto;
+        }
+        .gift-blog-back {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          margin-bottom: 36px;
+          color: #2f9bb9;
+          text-decoration: none;
+          font: 600 13px Poppins, sans-serif;
+          transition: color .2s, gap .2s;
+        }
+        .gift-blog-back:hover {
+          color: #0a2540;
+          gap: 10px;
+        }
+        .gift-blog-article {
+          background: #fff;
+          border-radius: 16px;
+          padding: 60px 68px;
+          box-shadow: 0 8px 40px rgba(10, 37, 64, .07);
+        }
+        .gift-blog-article-header {
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+          margin-bottom: 32px;
+          padding-bottom: 28px;
+          border-bottom: 1px solid #e0eaf2;
+        }
+        .gift-blog-article-header h1 {
+          margin: 0;
+          color: #0a2540;
+          font: 700 38px/1.25 Poppins, sans-serif;
+        }
+        .gift-blog-article-cover {
+          width: 100%;
+          max-height: 460px;
+          object-fit: cover;
+          border-radius: 10px;
+          margin-bottom: 36px;
+        }
+        .gift-blog-article h2 {
+          margin: 40px 0 16px;
+          padding-top: 10px;
+          color: #0a2540;
+          font: 700 26px/1.3 Poppins, sans-serif;
+          border-top: 2px solid #e0eaf2;
+        }
+        .gift-blog-article h2:first-child {
+          margin-top: 0;
+          padding-top: 0;
+          border-top: 0;
+        }
+        .gift-blog-article h3 {
+          margin: 28px 0 12px;
+          color: #0a2540;
+          font: 600 20px/1.35 Poppins, sans-serif;
+        }
+        .gift-blog-article p {
+          margin: 0 0 18px;
+          color: #3d4f61;
+          font: 400 16px/1.95 Raleway, sans-serif;
+        }
+        .gift-blog-article ul,
+        .gift-blog-article ol {
+          margin: 0 0 22px;
+          padding-left: 24px;
+          color: #3d4f61;
+          font: 400 16px/1.9 Raleway, sans-serif;
+        }
+        .gift-blog-article li {
+          margin-bottom: 8px;
+        }
+        .gift-blog-article hr {
+          margin: 40px 0;
+          border: 0;
+          height: 1px;
+          background: linear-gradient(to right, transparent, #d0dde8, transparent);
+        }
+        .gift-blog-detail-nav {
+          margin-top: 36px;
+        }
         @media (max-width: 1024px) {
           .elementor-166 .wpr-nav-menu-container {
             display: none;
@@ -1797,6 +2106,27 @@ export function WpStyles() {
           }
           .gift-wp-blog-page .gift-wp-blog-card img {
             min-height: 240px;
+          }
+          .gift-blog-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+          .gift-blog-featured {
+            grid-template-columns: 1fr;
+          }
+          .gift-blog-featured-img img {
+            min-height: 300px;
+          }
+          .gift-blog-title {
+            font-size: 36px;
+          }
+          .gift-blog-detail-hero {
+            height: 420px;
+          }
+          .gift-blog-detail-hero-content h1 {
+            font-size: 36px;
+          }
+          .gift-blog-article {
+            padding: 44px 48px;
           }
           .elementor-1189 .elementor-element-91d42b5 {
             padding: 84px 0 92px;
@@ -2028,6 +2358,38 @@ export function WpStyles() {
           }
           .gift-wp-blog-detail h1 {
             font-size: 32px;
+          }
+          .gift-blog-grid {
+            grid-template-columns: 1fr;
+          }
+          .gift-blog-featured-body {
+            padding: 32px 28px;
+          }
+          .gift-blog-featured-body h2 {
+            font-size: 22px;
+          }
+          .gift-blog-title {
+            font-size: 28px;
+          }
+          .gift-blog-detail-hero {
+            height: 360px;
+          }
+          .gift-blog-detail-hero-content {
+            padding: 32px 20px;
+          }
+          .gift-blog-detail-hero-content h1 {
+            font-size: 26px;
+          }
+          .gift-blog-article {
+            padding: 32px 24px;
+          }
+          .gift-blog-article h2 {
+            font-size: 22px;
+          }
+          .gift-blog-article p,
+          .gift-blog-article ul,
+          .gift-blog-article ol {
+            font-size: 15px;
           }
         }
       `}</style>

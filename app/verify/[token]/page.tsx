@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Download, ShieldCheck, ShieldOff, ShieldX } from "lucide-react";
+import { ShieldCheck, ShieldOff, ShieldX } from "lucide-react";
 import { AttachmentGallery } from "@/components/lhu/attachment-gallery";
 import { PublicResultTable } from "@/components/lhu/public-result-table";
 import { Card } from "@/components/ui/card";
@@ -198,17 +198,6 @@ export default async function VerifyTokenPage({
               Lampiran
             </div>
             <AttachmentGallery attachments={attachments} size="large" />
-          </div>
-
-          <div className="flex justify-center">
-            <a
-              href={`/api/pdf/download/${token}`}
-              download
-              className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-indigo-700 active:scale-95"
-            >
-              <Download className="h-4 w-4" />
-              Unduh Dokumen PDF
-            </a>
           </div>
 
           <div suppressHydrationWarning className="break-all pt-2 text-center text-[11px] text-muted-foreground sm:pt-4 sm:text-xs">

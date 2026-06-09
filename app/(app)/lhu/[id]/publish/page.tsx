@@ -28,6 +28,20 @@ export default async function PublishPage({
   const displayTestingNumber =
     doc.projectName || doc.referenceNumber || doc.documentCode;
 
+  function toSafeFilename(text: string) {
+    return text
+      .trim()
+      .replace(/\//g, "-")
+      .replace(/[^a-zA-Z0-9\s\-_.]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 80) || "dokumen";
+  }
+  const refNum = toSafeFilename(doc.lhuNumber || doc.referenceNumber || doc.documentCode || "LHU");
+  const customer = toSafeFilename(doc.customer?.companyName || "Pelanggan");
+  const qrFileName = `${refNum}-${customer}.png`;
+
   return (
     <div className="space-y-8">
       <PageHeader
@@ -96,7 +110,7 @@ export default async function PublishPage({
           )}
         </Card>
 
-        <VerificationCard token={activeToken} appUrl={appUrl} />
+        <VerificationCard token={activeToken} appUrl={appUrl} fileName={qrFileName} />
       </div>
     </div>
   );

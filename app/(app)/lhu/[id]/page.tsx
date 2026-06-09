@@ -10,6 +10,8 @@ import { formatDate, getConcreteTypeLabel } from "@/lib/utils";
 import { ResultTable } from "@/components/lhu/result-table";
 import { AttachmentGallery } from "@/components/lhu/attachment-gallery";
 import { PrintActions } from "@/components/lhu/print-actions";
+import { DownloadableQR } from "@/components/lhu/downloadable-qr";
+import { getPublicAppUrl } from "@/lib/app-url";
 
 export default async function LhuDetailPage({
   params,
@@ -62,6 +64,25 @@ export default async function LhuDetailPage({
   ];
 
   const canEdit = true;
+
+  const publicToken = doc.activeToken?.publicToken;
+  const appUrl = getPublicAppUrl();
+  const verifyUrl = publicToken ? `${appUrl}/verify/${publicToken}` : null;
+
+  function toSafeFilename(text: string) {
+    return text
+      .trim()
+      .replace(/\//g, "-")
+      .replace(/[^a-zA-Z0-9\s\-_.]/g, "")
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 80) || "dokumen";
+  }
+
+  const refNum = toSafeFilename(doc.lhuNumber || doc.referenceNumber || doc.documentCode || "LHU");
+  const customer = toSafeFilename(doc.customer?.companyName || "Pelanggan");
+  const qrFileName = `${refNum}-${customer}.png`;
 
   return (
     <div className="space-y-8">
@@ -144,12 +165,23 @@ export default async function LhuDetailPage({
                 {doc.publishedAt ? formatDate(doc.publishedAt.toISOString()) : "-"}
               </div>
             </div>
-            <div className="rounded-2xl border border-border bg-white/70 p-4 dark:border-slate-700 dark:bg-slate-800/60">
-              <div className="text-sm text-muted-foreground">Token QR</div>
-              <div className="mt-1 break-all font-mono text-xs">
-                {doc.activeToken?.publicToken ?? "-"}
+            {verifyUrl ? (
+              <div className="rounded-2xl border border-border bg-white/70 p-4 dark:border-slate-700 dark:bg-slate-800/60">
+                <div className="mb-3 text-sm font-medium">QR Verifikasi</div>
+                <DownloadableQR
+                  url={verifyUrl}
+                  size={150}
+                  fileName={qrFileName}
+                  showPreviewBtn={true}
+                  showCopyBtn={true}
+                />
               </div>
-            </div>
+            ) : (
+              <div className="rounded-2xl border border-border bg-white/70 p-4 dark:border-slate-700 dark:bg-slate-800/60">
+                <div className="text-sm text-muted-foreground">Token QR</div>
+                <div className="mt-1 text-sm text-muted-foreground/60">Belum dipublish</div>
+              </div>
+            )}
           </div>
         </Card>
       </div>

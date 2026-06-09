@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ComponentType, ReactNode } from "react";
 import {
+  ArrowLeft,
   ArrowRight,
   Award,
   Building2,
@@ -67,14 +68,11 @@ const homeServiceSliderImages = [
 const facilityIllustration =
   "https://img.freepik.com/premium-photo/flat-2d-illustration-design_759095-88017.jpg?w=740";
 
-const profileCompanyImage =
-  "https://gift-laboratory.com/wp-content/uploads/elementor/thumbs/WhatsApp-Image-2025-09-24-at-09.12.27-1-remj6nxntomc2lyj4szlsly4lkfrvsc2z8qnikwso0.jpeg";
+const profileCompanyImage = "/landing/profile-company.jpeg";
 
-const profileVisionImage =
-  "https://gift-laboratory.com/wp-content/uploads/2025/09/Gemini_Generated_Image_8kqbf28kqbf28kqb.png";
+const profileVisionImage = "/landing/profile-vision.png";
 
-const profileMissionImage =
-  "https://gift-laboratory.com/wp-content/uploads/2025/09/WhatsApp-Image-2025-09-24-at-09.12.32-1.jpeg";
+const profileMissionImage = "/landing/profile-mission.png";
 
 const serviceElementIds = ["8bb5804", "2c75ba7", "e204c3a", "ef76db8"];
 
@@ -300,7 +298,7 @@ export function ContactLandingPage() {
 
         <section className="elementor-element elementor-element-91d42b5 e-flex e-con-boxed e-con e-parent gift-wp-section">
           <div className="e-con-inner">
-            <div className="gift-wp-contact-intro">
+            <div className="gift-wp-contact-intro gift-animate-fade-up">
               <span className="gift-wp-contact-kicker">Corporate Contact</span>
               <Heading className="elementor-element-d5fce67">Contact Info</Heading>
               <TextWidget className="elementor-element-806c177">
@@ -310,7 +308,7 @@ export function ContactLandingPage() {
                 </p>
               </TextWidget>
             </div>
-            <div className="elementor-element elementor-element-67a5229 e-grid e-con-boxed e-con e-child gift-wp-contact-grid">
+            <div className="elementor-element elementor-element-67a5229 e-grid e-con-boxed e-con e-child gift-wp-contact-grid gift-animate-fade-up">
               {contactCards.map((item, index) => (
                 <ContactIconBox
                   key={item.title}
@@ -326,7 +324,7 @@ export function ContactLandingPage() {
 
         <ContactBand />
 
-        <section className="elementor-element elementor-element-62d7e54 e-flex e-con-boxed e-con e-parent gift-wp-map">
+        <section className="elementor-element elementor-element-62d7e54 e-flex e-con-boxed e-con e-parent gift-wp-map gift-animate-fade-up">
           <iframe
             title="Ruko 91 District BSD No C5, Pagedangan, Tangerang, Banten 15339"
             src="https://maps.google.com/maps?q=Ruko%2091%20District%20BSD%20No%20C5%2C%20Pagedangan%2C%20Tangerang%2C%20Banten%2015339&t=m&z=14&output=embed&iwloc=near"
@@ -339,28 +337,80 @@ export function ContactLandingPage() {
   );
 }
 
-export function BlogLandingPage({ posts = blogPosts }: { posts?: BlogCard[] }) {
+export function BlogLandingPage({
+  posts = blogPosts,
+  selectedCategory,
+  allCategories: allCategoriesProp,
+}: {
+  posts?: BlogCard[];
+  selectedCategory?: string;
+  allCategories?: string[];
+}) {
+  const allCategories = allCategoriesProp ?? [
+    "All Posts",
+    ...Array.from(new Set(blogPosts.map((p) => p.category))),
+  ];
+  const [featured, ...rest] = posts;
+  const isFiltered = selectedCategory && selectedCategory !== "All Posts";
+
   return (
     <WpLandingShell activePage="Blog">
       <main data-elementor-type="wp-page" data-elementor-id="1156" className="elementor elementor-1156 gift-wp-blog-page">
-        <section className="elementor-element elementor-element-8030a81 e-flex e-con-boxed e-con e-parent gift-wp-subhero">
-          <div className="e-con-inner">
-            <Heading className="elementor-element-9408ba5">Blog</Heading>
-          </div>
-        </section>
-        <section className="gift-wp-section gift-wp-blog-index">
-          <div className="e-con-inner">
-            <Heading className="elementor-element-d5fce67">Blog &amp; Artikel Terkini</Heading>
-            <div className="gift-wp-category-row">
-              {blogCategories.map((category) => (
-                <span key={category}>{category}</span>
-              ))}
-            </div>
-            <div className="gift-wp-blog-grid">
-              {posts.map((post) => (
-                <BlogCard key={post.href} post={post} />
-              ))}
-            </div>
+        <SubpageHero pageId="1156" sectionClass="elementor-element-8030a81" headingClass="elementor-element-9408ba5" title="Blog" />
+
+        <section className="gift-blog-index">
+          <div className="gift-blog-wrap">
+            <header className="gift-blog-header gift-animate-fade-up">
+              <span className="gift-wp-contact-kicker">Artikel &amp; Berita</span>
+              <h2 className="gift-blog-title">Blog &amp; Artikel Terkini</h2>
+              <div className="gift-wp-category-row">
+                {allCategories.map((cat) => (
+                  <Link
+                    key={cat}
+                    href={cat === "All Posts" ? "/blog" : `/blog?category=${encodeURIComponent(cat)}`}
+                    className={
+                      cat === (selectedCategory ?? "All Posts")
+                        ? "gift-category-active"
+                        : ""
+                    }
+                  >
+                    {cat}
+                  </Link>
+                ))}
+              </div>
+            </header>
+
+            {posts.length === 0 && (
+              <p className="gift-blog-empty">Tidak ada artikel untuk kategori ini.</p>
+            )}
+
+            {featured && !isFiltered && (
+              <Link href={featured.href} className="gift-blog-featured gift-animate-slide-left">
+                <div className="gift-blog-featured-img">
+                  <img src={featured.image} alt={featured.title} />
+                </div>
+                <div className="gift-blog-featured-body">
+                  <span className="gift-blog-tag">{featured.category}</span>
+                  <h2>{featured.title}</h2>
+                  <p>{featured.excerpt}</p>
+                  <div className="gift-blog-featured-meta">
+                    <time className="gift-wp-blog-meta">{featured.date}</time>
+                    <span className="gift-wp-read-more">Baca Selengkapnya <ArrowRight size={15} /></span>
+                  </div>
+                </div>
+              </Link>
+            )}
+
+            {(isFiltered ? posts : rest).length > 0 && (
+              <>
+                {!isFiltered && <h3 className="gift-blog-more-title">Artikel Lainnya</h3>}
+                <div className="gift-blog-grid gift-animate-fade-up">
+                  {(isFiltered ? posts : rest).map((post) => (
+                    <BlogCard key={post.href} post={post} />
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         </section>
       </main>
@@ -372,15 +422,25 @@ export function BlogDetailLandingPage({ post }: { post: BlogCard & { content?: s
   return (
     <WpLandingShell activePage="Blog">
       <main data-elementor-type="wp-page" data-elementor-id="1156" className="elementor elementor-1156 gift-wp-blog-page">
-        <section className="gift-wp-section gift-wp-blog-detail">
-          <div className="e-con-inner">
-            <p className="gift-wp-blog-meta">{post.category} / {post.date}</p>
-            <h1>{post.title}</h1>
-            <img src={post.image} alt={post.title} />
-            <article>
+        <section className="gift-blog-detail">
+          <div className="gift-blog-detail-wrap">
+            <Link className="gift-blog-back" href="/blog">
+              <ArrowLeft size={15} /> Kembali ke Blog
+            </Link>
+            <article className="gift-blog-article gift-animate-fade-up">
+              <header className="gift-blog-article-header">
+                <span className="gift-blog-tag">{post.category}</span>
+                <h1>{post.title}</h1>
+                <time className="gift-wp-blog-meta">{post.date}</time>
+              </header>
+              <img src={post.image} alt={post.title} className="gift-blog-article-cover" />
               {renderArticleContent(post.content || post.excerpt)}
             </article>
-            <Link className="wpr-button" href="/blog">Kembali ke Blog</Link>
+            <div className="gift-blog-detail-nav">
+              <Link className="gift-blog-back" href="/blog">
+                <ArrowLeft size={15} /> Kembali ke Blog
+              </Link>
+            </div>
           </div>
         </section>
       </main>
@@ -588,12 +648,12 @@ function ContactBand() {
             </div>
           </div>
           <div className="gift-wp-form-row">
-            <label>Name<input className="wpr-form-field" name="name" placeholder="Nama lengkap" /></label>
-            <label>Email<input className="wpr-form-field" type="email" name="email" placeholder="nama@perusahaan.com" /></label>
+            <label>Name<input suppressHydrationWarning className="wpr-form-field" name="name" placeholder="Nama lengkap" /></label>
+            <label>Email<input suppressHydrationWarning className="wpr-form-field" type="email" name="email" placeholder="nama@perusahaan.com" /></label>
           </div>
-          <label>Company<input className="wpr-form-field" name="company" placeholder="Nama perusahaan / instansi" /></label>
-          <label>Message<textarea className="wpr-form-field" name="message" placeholder="Ceritakan kebutuhan pengujian atau inspeksi Anda" rows={7} /></label>
-          <button className="wpr-button" type="submit">Send Message <Send size={16} /></button>
+          <label>Company<input suppressHydrationWarning className="wpr-form-field" name="company" placeholder="Nama perusahaan / instansi" /></label>
+          <label>Message<textarea suppressHydrationWarning className="wpr-form-field" name="message" placeholder="Ceritakan kebutuhan pengujian atau inspeksi Anda" rows={7} /></label>
+          <button suppressHydrationWarning className="wpr-button" type="submit">Send Message <Send size={16} /></button>
         </form>
       </div>
     </section>
@@ -765,13 +825,18 @@ function ContactIconBox({
 
 function BlogCard({ post }: { post: BlogCard }) {
   return (
-    <article className="gift-wp-blog-card">
-      <Link href={post.href}><img src={post.image} alt={post.title} /></Link>
-      <div>
-        <p className="gift-wp-blog-meta">{post.category} / {post.date}</p>
+    <article className="gift-blog-card">
+      <Link href={post.href} className="gift-blog-card-img">
+        <img src={post.image} alt={post.title} />
+      </Link>
+      <div className="gift-blog-card-body">
+        <span className="gift-blog-tag">{post.category}</span>
         <h2><Link href={post.href}>{post.title}</Link></h2>
         <p>{post.excerpt}</p>
-        <Link className="gift-wp-read-more" href={post.href}>Read More <ArrowRight size={16} /></Link>
+        <div className="gift-blog-card-footer">
+          <time className="gift-wp-blog-meta">{post.date}</time>
+          <Link className="gift-wp-read-more" href={post.href}>Baca <ArrowRight size={14} /></Link>
+        </div>
       </div>
     </article>
   );

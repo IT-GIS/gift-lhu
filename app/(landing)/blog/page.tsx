@@ -49,7 +49,26 @@ async function getAllPosts() {
   return [...dbCards, ...blogPosts];
 }
 
-export default async function BlogPage() {
+export default async function BlogPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string }>;
+}) {
+  const { category } = await searchParams;
   const allPosts = await getAllPosts();
-  return <BlogLandingPage posts={allPosts} />;
+  const allCategories = [
+    "All Posts",
+    ...Array.from(new Set(allPosts.map((p) => p.category))),
+  ];
+  const filtered =
+    category && category !== "All Posts"
+      ? allPosts.filter((p) => p.category === category)
+      : allPosts;
+  return (
+    <BlogLandingPage
+      posts={filtered}
+      selectedCategory={category}
+      allCategories={allCategories}
+    />
+  );
 }
