@@ -42,7 +42,7 @@ export function VerifyListClient({ docs, token }: { docs: any[]; token: string }
           <div className="text-center py-16 px-6 text-muted-foreground bg-slate-50 border border-slate-200 border-dashed dark:bg-slate-900/30 dark:border-slate-800 rounded-2xl flex flex-col items-center">
             <Search className="h-10 w-10 text-slate-300 dark:text-slate-600 mb-3" />
             <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-200">Tidak ada kecocokan</h3>
-            <p className="mt-1 text-sm">Tidak ditemukan dokumen LHU untuk kata kunci "{search}".</p>
+            <p className="mt-1 text-sm">Tidak ditemukan dokumen LHU untuk kata kunci &quot;{search}&quot;.</p>
             <Button variant="ghost" onClick={() => setSearch("")} className="mt-2 text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50">
               Reset Pencarian
             </Button>

@@ -301,6 +301,13 @@ const NEU_CSS = `
   }
 `;
 
+function generateRayId() {
+  return `${Math.random().toString(16).substring(2, 10).toUpperCase()}-${Math.random()
+    .toString(16)
+    .substring(2, 6)
+    .toUpperCase()}`;
+}
+
 /**
  * LoginPage — Halaman login dengan desain Neumorphic Soft-UI.
  * Mempertahankan semua logika autentikasi dengan loginAction.
@@ -321,7 +328,7 @@ export default function LoginClient({
   // Cloudflare-like protection state
   const [isVerifying, setIsVerifying] = useState(true);
   const [verificationText, setVerificationText] = useState("Checking your browser...");
-  const [rayId, setRayId] = useState("");
+  const [rayId] = useState(generateRayId);
 
   // Logo yang bisa dikustomisasi dari halaman Settings
   const [logoSrc, setLogoSrc] = useState(initialLogoSrc || "/gift-logo.png");
@@ -329,9 +336,6 @@ export default function LoginClient({
 
   // Inject Google Font for Poppins
   useEffect(() => {
-    // Generate random Ray ID for simulation
-    setRayId(Math.random().toString(16).substring(2, 10).toUpperCase() + "-" + Math.random().toString(16).substring(2, 6).toUpperCase());
-
     // Fake verification steps
     const timer1 = setTimeout(() => setVerificationText("Verifying connection security..."), 1200);
     const timer2 = setTimeout(() => setVerificationText("Validating browser environment..."), 2500);

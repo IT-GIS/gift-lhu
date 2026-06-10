@@ -144,14 +144,22 @@ export function PdfLayoutEditorClient({
   const [isSaving, setIsSaving] = useState(false);
   const [isPublishingHistory, setIsPublishingHistory] = useState<string | null>(null);
   const layoutRef = useRef(layout);
+  const duplicateCounterRef = useRef(0);
   const uploadPhotoInputRef = useRef<HTMLInputElement | null>(null);
 
   const activePage = layout.pages.find((page) => page.id === activePageId) ?? layout.pages[0];
   const pageElements = layout.elements
     .filter((element) => element.pageId === activePageId)
     .sort((first, second) => first.zIndex - second.zIndex);
+  const effectiveSelectedElementId =
+    selectedElementId &&
+    layout.elements.some(
+      (element) => element.id === selectedElementId && element.pageId === activePageId,
+    )
+      ? selectedElementId
+      : pageElements[0]?.id ?? null;
   const selectedElement =
-    layout.elements.find((element) => element.id === selectedElementId) ?? null;
+    layout.elements.find((element) => element.id === effectiveSelectedElementId) ?? null;
 
   useEffect(() => {
     layoutRef.current = layout;
@@ -198,19 +206,6 @@ export function PdfLayoutEditorClient({
     setUndoStack((prev) => [...prev.slice(-(MAX_HISTORY_STEPS - 1)), current]);
     setLayout(deepClone(next));
   }
-
-  useEffect(() => {
-    if (
-      selectedElementId &&
-      layout.elements.some(
-        (element) => element.id === selectedElementId && element.pageId === activePageId,
-      )
-    ) {
-      return;
-    }
-
-    setSelectedElementId(pageElements[0]?.id ?? null);
-  }, [activePageId, layout.elements, pageElements, selectedElementId]);
 
   useEffect(() => {
     if (!dragState) return;
@@ -335,12 +330,12 @@ export function PdfLayoutEditorClient({
   }, [dragState, redoStack.length, resizeState, undoStack.length]);
 
   function updateSelectedElement(updater: (element: PdfLayoutElement) => PdfLayoutElement) {
-    if (!selectedElementId) return;
+    if (!effectiveSelectedElementId) return;
 
     applyCommittedLayout((current) => ({
       ...current,
       elements: current.elements.map((element) =>
-        element.id === selectedElementId ? updater(deepClone(element)) : element,
+        element.id === effectiveSelectedElementId ? updater(deepClone(element)) : element,
       ),
     }));
   }
@@ -385,7 +380,8 @@ export function PdfLayoutEditorClient({
     if (!selectedElement) return;
 
     const duplicated = deepClone(selectedElement);
-    duplicated.id = `${duplicated.id}-copy-${Date.now()}`;
+    duplicateCounterRef.current += 1;
+    duplicated.id = `${duplicated.id}-copy-${duplicateCounterRef.current}`;
     duplicated.name = `${duplicated.name} Copy`;
     duplicated.x += 12;
     duplicated.y += 12;
@@ -398,12 +394,12 @@ export function PdfLayoutEditorClient({
   }
 
   function handleDeleteElement() {
-    if (!selectedElementId) return;
+    if (!effectiveSelectedElementId) return;
     if (!confirm("Hapus elemen yang sedang dipilih dari layout?")) return;
 
     applyCommittedLayout((current) => ({
       ...current,
-      elements: current.elements.filter((element) => element.id !== selectedElementId),
+      elements: current.elements.filter((element) => element.id !== effectiveSelectedElementId),
     }));
   }
 
@@ -670,7 +666,7 @@ export function PdfLayoutEditorClient({
                   key={element.id}
                   type="button"
                   className={`w-full rounded-xl border px-3 py-3 text-left transition ${
-                    selectedElementId === element.id
+                    effectiveSelectedElementId === element.id
                       ? "border-indigo-500 bg-indigo-50 dark:bg-indigo-950/30"
                       : "border-slate-200 bg-white hover:border-slate-300 dark:border-slate-700 dark:bg-slate-900"
                   }`}
@@ -1168,7 +1164,7 @@ export function PdfLayoutEditorClient({
                 data={previewData}
                 pageId={activePage.id}
                 scale={scale}
-                selectedElementId={selectedElementId}
+                selectedElementId={effectiveSelectedElementId}
                 showElementFrames
                 onElementClick={(elementId) => setSelectedElementId(elementId)}
                 onElementPointerDown={handlePointerDown}

@@ -11,9 +11,9 @@ import { AttachmentForm } from "@/components/lhu/attachment-form";
 import { TestResultsForm, TestRow } from "@/components/lhu/test-results-form";
 import { updateLhuAction } from "./actions";
 
-function createEmptyRow(): TestRow {
+function createRow(id: string): TestRow {
   return {
-    id: Math.random().toString(36).substr(2, 9),
+    id,
     kodeSampel: "",
     tanggalBuat: "",
     tanggalTest: "",
@@ -27,6 +27,10 @@ function createEmptyRow(): TestRow {
     polaHancur: "",
     keterangan: "",
   };
+}
+
+function createEmptyRow(): TestRow {
+  return createRow(Math.random().toString(36).substr(2, 9));
 }
 
 export function EditLhuForm({ doc }: { doc: any }) {
@@ -50,8 +54,8 @@ export function EditLhuForm({ doc }: { doc: any }) {
 
   const initialRows: TestRow[] =
     doc.resultRows && doc.resultRows.length > 0
-      ? doc.resultRows.map((r: any) => ({
-          id: r.id || Math.random().toString(36).substr(2, 9),
+      ? doc.resultRows.map((r: any, index: number) => ({
+          id: r.id || `existing-row-${index}`,
           kodeSampel: r.sampleCode ?? "",
           tanggalBuat: r.castingDate
             ? new Date(r.castingDate).toISOString().split("T")[0]
@@ -71,7 +75,7 @@ export function EditLhuForm({ doc }: { doc: any }) {
           polaHancur: String(r.failurePattern ?? ""),
           keterangan: String(r.remarks ?? ""),
         }))
-      : [createEmptyRow()];
+      : [createRow("new-row-0")];
 
   const [rows, setRows] = useState<TestRow[]>(initialRows);
   const [isPending, startTransition] = useTransition();
