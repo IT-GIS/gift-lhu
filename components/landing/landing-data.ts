@@ -82,34 +82,70 @@ export const facilities = [
 export const services = [
   {
     title: "Uji Kuat Tekan",
+    slug: "uji-kuat-tekan",
     description:
       "Uji kuat tekan beton silinder K-300-K-500+ berstandar SNI/ASTM.",
     servicePageDescription:
       "Uji kuat tekan beton silinder K-300-K-500+ berstandar SNI.",
+    detailParagraph:
+      "Pengujian dilaksanakan mengacu pada SNI 1974:2011 menggunakan benda uji silinder beton berdiameter 152 mm dan tinggi 305 mm yang dirawat (curing) sebelum diuji pada umur 3, 7, dan 28 hari. Beban tekan diberikan secara bertahap hingga benda uji hancur, dan hasilnya dinyatakan dalam satuan MPa sebagai dasar evaluasi mutu beton sebelum digunakan pada struktur konstruksi.",
+    highlights: [
+      "Mengacu pada SNI 1974:2011 untuk benda uji silinder beton",
+      "Pengujian dilakukan pada umur 3, 7, dan 28 hari",
+      "Pembebanan bertahap 0,2-0,4 MPa/detik hingga benda uji hancur",
+      "Hasil dinyatakan dalam MPa sebagai dasar evaluasi mutu beton",
+    ],
     icon: FlaskConical,
   },
   {
     title: "Inspeksi Draught Survey",
+    slug: "inspeksi-draught-survey",
     description:
       "Penentuan berat kargo curah berdasarkan perubahan sarat kapal sebelum dan sesudah pemuatan atau pembongkaran.",
     servicePageDescription:
       "Draught Survey metode penentuan berat kargo curah berdasarkan perubahan sarat kapal sebelum dan sesudah pemuatan atau pembongkaran sesuai prinsip Hukum Archimedes, dengan pengukuran draft depan, tengah, dan belakang serta koreksi ballast, bahan bakar, dan persediaan kapal.",
+    detailParagraph:
+      "Surveyor membaca sarat kapal (draft mark) di bagian haluan, tengah, dan buritan pada sisi kanan dan kiri kapal sebelum dan sesudah proses muat atau bongkar. Hasil pembacaan kemudian dikoreksi terhadap densitas air, trim, list, serta deduksi ballast, bahan bakar, air tawar, dan perbekalan kapal sehingga diperoleh berat kargo bersih yang akurat dan dapat dipertanggungjawabkan oleh kedua belah pihak.",
+    highlights: [
+      "Berdasarkan prinsip Hukum Archimedes (perubahan displacement kapal)",
+      "Pembacaan sarat (draft) di haluan, tengah, dan buritan pada kedua sisi kapal",
+      "Koreksi densitas air, trim, list, serta deduksi ballast, BBM, dan air tawar",
+      "Cocok untuk verifikasi muatan curah: batu bara, bijih besi, gandum, dll",
+    ],
     icon: Ship,
   },
   {
     title: "Uji Material U-Ditch & Box Culvert",
+    slug: "uji-material-u-ditch-box-culvert",
     description:
       "Verifikasi dimensi, mutu beton, penempatan tulangan, dan integritas sambungan.",
     servicePageDescription:
       "Verifikasi dimensi, mutu beton, penempatan tulangan, dan integritas sambungan",
+    detailParagraph:
+      "Pengujian produk pracetak U-Ditch dan Box Culvert mengacu pada SNI 03-6966-2003 dan SNI 6880:2016, mencakup verifikasi dimensi dan toleransi ukuran, mutu beton, serta penempatan dan selimut tulangan sesuai gambar kerja. Selain itu dilakukan load test secara bertahap untuk memastikan kapasitas struktur menahan beban lalu lintas dan tanah timbunan, serta uji kekedapan sambungan mengacu SNI 6468:2000 agar tidak terjadi kebocoran saat dipasang sebagai saluran drainase.",
+    highlights: [
+      "Mengacu pada SNI 03-6966-2003 dan SNI 6880:2016",
+      "Verifikasi dimensi, toleransi, dan penempatan tulangan",
+      "Load test bertahap untuk memastikan kapasitas menahan beban",
+      "Uji kekedapan sambungan mengacu SNI 6468:2000",
+    ],
     icon: ClipboardCheck,
   },
   {
     title: "Inspeksi Container Survey",
+    slug: "inspeksi-container-survey",
     description:
       "Pemeriksaan kondisi peti kemas untuk memastikan kelayakan struktur, kebersihan, dan kepatuhan standar keselamatan.",
     servicePageDescription:
       "Container Survey pemeriksaan kondisi peti kemas untuk memastikan kelayakan struktur, kebersihan, dan kepatuhan terhadap standar keselamatan, meliputi dinding, lantai, atap, pintu, seal, dan penandaan.",
+    detailParagraph:
+      "Inspeksi dilakukan dalam bentuk on-hire survey sebelum kontainer disewa dan off-hire survey saat pengembalian, untuk mencatat kondisi awal dan mencegah sengketa kerusakan antara penyewa dan pemilik. Pemeriksaan mencakup struktur dinding, lantai, atap, pintu, dan seal, kebersihan, serta verifikasi plat CSC dan penandaan sesuai standar ISO 6346, dengan penilaian kondisi dan kebutuhan perbaikan mengacu pada kriteria Institute of International Container Lessors (IICL).",
+    highlights: [
+      "Survey on-hire dan off-hire untuk mencegah sengketa kerusakan",
+      "Pemeriksaan struktur: dinding, lantai, atap, pintu, dan seal",
+      "Verifikasi plat CSC dan marking sesuai standar ISO 6346",
+      "Penilaian kondisi mengacu kriteria perbaikan IICL",
+    ],
     icon: Truck,
   },
 ];

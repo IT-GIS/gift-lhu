@@ -265,6 +265,65 @@ export function WpStyles() {
           margin-block-start: 0 !important;
           margin-block-end: 0 !important;
         }
+        .gift-wp-service-points {
+          display: grid;
+          gap: 12px;
+          margin: 20px 0 0;
+          padding: 0;
+          list-style: none;
+        }
+        .gift-wp-service-points li {
+          display: flex;
+          align-items: flex-start;
+          gap: 10px;
+          color: #555;
+          font: 500 14px/1.75 Raleway, sans-serif;
+        }
+        .gift-wp-service-points li svg {
+          flex: 0 0 18px;
+          width: 18px;
+          height: 18px;
+          margin-top: 2px;
+          fill: #2f9bb9;
+        }
+        .gift-wp-service-cta {
+          margin-top: 28px;
+        }
+        .gift-wp-service-cta .wpr-button-wrap {
+          display: inline-flex;
+          width: auto;
+        }
+        .gift-wp-service-cta .wpr-button {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          width: auto;
+          padding: 14px 30px;
+          border-radius: 999px;
+          background: linear-gradient(135deg, #2f9bb9, #0f6d91);
+          box-shadow: 0 10px 24px rgba(47, 155, 185, .32);
+          transition: transform .25s ease, box-shadow .25s ease;
+        }
+        .gift-wp-service-cta .wpr-button:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 14px 30px rgba(47, 155, 185, .4);
+        }
+        .gift-wp-service-cta .wpr-button-content {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+        }
+        .gift-wp-service-cta .wpr-button-text {
+          width: auto;
+          color: #fff;
+          font: 600 15px Poppins, sans-serif;
+        }
+        .gift-wp-service-cta .wpr-button-icon svg {
+          width: 16px;
+          height: 16px;
+          color: #fff;
+        }
         .gift-animate-slide-left {
           animation: giftSlideLeft .85s ease both;
         }
@@ -441,7 +500,8 @@ export function WpStyles() {
           stroke: currentColor;
         }
         .gift-wp-facilities {
-          padding: 92px 0 72px;
+          margin: 0 !important;
+          padding: 100px 20px !important;
           background: #fff;
         }
         .gift-wp-facilities .gift-wp-two-column {
@@ -745,9 +805,9 @@ export function WpStyles() {
           opacity: 1 !important;
           visibility: visible !important;
           transform: none !important;
-          height: 100%;
-          min-height: 0;
-          padding: 0 28px 46px;
+          height: 100% !important;
+          min-height: 0 !important;
+          padding: 0 28px 38px !important;
           justify-content: flex-end;
           text-shadow: 0 2px 18px rgba(0, 0, 0, .72);
         }
@@ -848,129 +908,56 @@ export function WpStyles() {
           color: #333;
           font: 600 32px/1.25 Poppins, sans-serif;
         }
-        .gift-wp-home-service-slider {
-          position: relative;
+        .gift-wp-home-service-grid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 24px;
+        }
+        .gift-wp-home-service-card {
+          display: flex;
+          flex-direction: row;
+          border-radius: 12px;
           overflow: hidden;
-          background: #1c2544;
-        }
-        .gift-wp-home-service-track {
-          display: flex;
-          overflow-x: auto;
-          scroll-behavior: smooth;
-          scroll-snap-type: x mandatory;
-          scrollbar-width: none;
-        }
-        .gift-wp-home-service-track::-webkit-scrollbar {
-          display: none;
-        }
-        .gift-wp-home-service-slide {
-          position: relative;
-          flex: 0 0 100%;
-          min-height: 520px;
-          overflow: hidden;
-          scroll-margin-top: 110px;
-          scroll-snap-align: start;
-        }
-        .gift-wp-home-service-bg,
-        .gift-wp-home-service-overlay {
-          position: absolute;
-          inset: 0;
-        }
-        .gift-wp-home-service-bg {
-          background-position: center;
-          background-size: cover;
-          transform: scale(1.01);
-        }
-        .gift-wp-home-service-overlay {
-          background: rgba(0, 0, 0, .48);
-        }
-        .gift-wp-home-service-content {
-          position: relative;
-          z-index: 1;
-          display: flex;
-          min-height: 520px;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          max-width: 900px;
-          margin: 0 auto;
-          padding: 70px 82px;
-          text-align: center;
-          color: #fff;
-        }
-        .gift-wp-home-service-content h2 {
-          margin: 0;
-          color: #fff;
-          font: 600 44px/1.18 Poppins, sans-serif;
-        }
-        .gift-wp-home-service-content p {
-          max-width: 780px;
-          margin: 18px 0 28px;
-          color: #fff;
-          font: 400 17px/1.75 "Open Sans", sans-serif;
-        }
-        .gift-wp-home-service-button {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          min-height: 34px;
-          padding: 7px 16px;
-          border: 2px solid #fff;
-          color: #fff;
-          text-decoration: none;
-          font: 600 13px/1 Poppins, sans-serif;
-          white-space: nowrap;
-          transition: background .2s, border-color .2s;
-        }
-        .gift-wp-home-service-button:hover {
-          background: #2f9bb9;
-          border-color: #2f9bb9;
-        }
-        .gift-wp-home-service-arrow {
-          position: absolute;
-          top: 50%;
-          z-index: 2;
-          display: inline-flex;
-          width: 46px;
-          height: 46px;
-          align-items: center;
-          justify-content: center;
-          color: #fff;
-          text-decoration: none;
-          transform: translateY(-50%);
-          transition: background .2s, color .2s;
-        }
-        .gift-wp-home-service-arrow span {
-          font: 300 54px/1 Arial, sans-serif;
-        }
-        .gift-wp-home-service-arrow:hover {
-          background: rgba(47, 155, 185, .86);
-        }
-        .gift-wp-home-service-prev {
-          left: 22px;
-        }
-        .gift-wp-home-service-next {
-          right: 22px;
-        }
-        .gift-wp-home-service-dots {
-          position: absolute;
-          right: 0;
-          bottom: 22px;
-          left: 0;
-          z-index: 3;
-          display: flex;
-          justify-content: center;
-          gap: 9px;
-          pointer-events: none;
-        }
-        .gift-wp-home-service-dots a {
-          width: 9px;
-          height: 9px;
-          border: 1px solid #fff;
-          border-radius: 50%;
           background: #fff;
-          opacity: .72;
-          pointer-events: auto;
+          box-shadow: 0 6px 28px rgba(10, 37, 64, .07);
+          transition: transform .25s ease, box-shadow .25s ease;
+        }
+        .gift-wp-home-service-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 20px 50px rgba(10, 37, 64, .13);
+        }
+        .gift-wp-home-service-card-media {
+          flex: 0 0 42%;
+          overflow: hidden;
+        }
+        .gift-wp-home-service-card-media img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          min-height: 220px;
+          object-fit: cover;
+          transition: transform .4s ease;
+        }
+        .gift-wp-home-service-card:hover .gift-wp-home-service-card-media img {
+          transform: scale(1.06);
+        }
+        .gift-wp-home-service-card-body {
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+          justify-content: center;
+          gap: 10px;
+          padding: 28px 32px;
+        }
+        .gift-wp-home-service-card-body h3 {
+          margin: 0;
+          color: #333;
+          font: 600 22px/1.3 Poppins, sans-serif;
+        }
+        .gift-wp-home-service-card-body p {
+          margin: 0;
+          color: #607184;
+          font: 500 14px/1.75 Raleway, sans-serif;
         }
         .gift-wp-subhero {
           min-height: 351px;
@@ -1589,7 +1576,7 @@ export function WpStyles() {
           min-width: 0;
         }
         .gift-footer-heading {
-          font: 700 12px/1 Poppins, sans-serif;
+          font: 700 13px/1 Poppins, sans-serif;
           letter-spacing: 0.1em;
           text-transform: uppercase;
           color: #fff;
@@ -1597,12 +1584,12 @@ export function WpStyles() {
         }
         .gift-footer-desc {
           color: rgba(255, 255, 255, 0.7);
-          font-size: 14px;
+          font-size: 15px;
           line-height: 1.65;
           margin: 0;
         }
         .elementor-222 .wpr-logo-image img {
-          max-width: 200px;
+          max-width: 240px;
           width: 100%;
           height: auto;
         }
@@ -1621,8 +1608,11 @@ export function WpStyles() {
         .gift-footer-copy {
           text-align: center;
           color: rgba(255, 255, 255, 0.45);
-          font-size: 13px;
+          font-size: 14px;
           margin: 0;
+        }
+        .gift-wp-footer-contact li {
+          font-size: 15px;
         }
         .gift-wp-blog-index,
         .gift-wp-blog-detail {
@@ -2072,12 +2062,11 @@ export function WpStyles() {
           .gift-wp-facilities .gift-wp-two-column {
             gap: 36px;
           }
-          .gift-wp-home-service-slide,
-          .gift-wp-home-service-content {
-            min-height: 460px;
+          .gift-wp-home-service-grid {
+            grid-template-columns: 1fr;
           }
-          .gift-wp-home-service-content h2 {
-            font-size: 36px;
+          .gift-wp-home-service-card-media img {
+            min-height: 260px;
           }
           .gift-wp-service-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2160,7 +2149,7 @@ export function WpStyles() {
             max-width: 104px !important;
           }
           .gift-wp-service-grid {
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr !important;
           }
           .elementor-1186 .gift-wp-services {
             margin: 100px 0 50px;
@@ -2254,34 +2243,19 @@ export function WpStyles() {
             width: 18vw;
           }
           .gift-wp-facilities {
-            padding: 64px 0 48px;
+            padding: 64px 20px !important;
           }
           .gift-wp-home-services {
             padding: 22px 0 64px;
           }
-          .gift-wp-home-service-slide,
-          .gift-wp-home-service-content {
-            min-height: 420px;
+          .gift-wp-home-service-card {
+            flex-direction: column;
           }
-          .gift-wp-home-service-content {
-            padding: 54px 52px;
+          .gift-wp-home-service-card-media img {
+            min-height: 200px;
           }
-          .gift-wp-home-service-content h2 {
-            font-size: 28px;
-          }
-          .gift-wp-home-service-content p {
-            font-size: 14px;
-            line-height: 1.6;
-          }
-          .gift-wp-home-service-arrow {
-            width: 36px;
-            height: 36px;
-          }
-          .gift-wp-home-service-prev {
-            left: 8px;
-          }
-          .gift-wp-home-service-next {
-            right: 8px;
+          .gift-wp-home-service-card-body {
+            padding: 20px 20px 24px;
           }
           .gift-wp-hero .wpr-advanced-text-preffix,
           .gift-wp-hero .wpr-anim-text b {

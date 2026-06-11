@@ -58,13 +58,6 @@ const servicePageImages = [
   serviceImages[3],
 ];
 
-const homeServiceSliderImages = [
-  "https://gift-laboratory.com/wp-content/uploads/2025/09/Gemini_Generated_Image_r5u1jjr5u1jjr5u1.png",
-  "https://gift-laboratory.com/wp-content/uploads/2025/09/Gemini_Generated_Image_30b2z830b2z830b2.png",
-  "https://gift-laboratory.com/wp-content/uploads/2026/01/unnamed-10.jpg",
-  "https://gift-laboratory.com/wp-content/uploads/2026/01/unnamed-11.jpg",
-];
-
 const facilityIllustration =
   "https://img.freepik.com/premium-photo/flat-2d-illustration-design_759095-88017.jpg?w=740";
 
@@ -84,6 +77,14 @@ const liveOrderedServices = [
   services[1],
   services[3],
 ];
+
+export const serviceSlugs = liveOrderedServices.map((service) => service.slug);
+
+export function getServiceBySlug(slug: string) {
+  const index = liveOrderedServices.findIndex((service) => service.slug === slug);
+  if (index === -1) return null;
+  return { service: liveOrderedServices[index], image: servicePageImages[index] };
+}
 
 export function WpLandingShell({
   activePage,
@@ -283,6 +284,46 @@ export function ServicesLandingPage() {
             <Heading className="elementor-element-0091782">
               &quot;Uji Kuat Tekan &amp; Uji Material U-Ditch/Box Culvert Dengan Ahli Profesional&quot;
             </Heading>
+          </div>
+        </section>
+      </main>
+    </WpLandingShell>
+  );
+}
+
+export function ServiceDetailLandingPage({
+  service,
+  image,
+}: {
+  service: (typeof services)[number];
+  image: string;
+}) {
+  return (
+    <WpLandingShell activePage="Services">
+      <main data-elementor-type="wp-page" data-elementor-id="1186" className="elementor elementor-1186">
+        <SubpageHero pageId="1186" sectionClass="elementor-element-0580e27" headingClass="elementor-element-f1a85f1" title={service.title} />
+
+        <section className="elementor-element elementor-element-e2c4003 e-flex e-con-boxed e-con e-parent gift-wp-section">
+          <div className="e-con-inner gift-wp-two-column">
+            <div className="elementor-element elementor-element-3878c15 e-con-full e-flex e-con e-child gift-animate-slide-left">
+              <ImageWidget className="elementor-element-3edfafc" src={image} alt={service.title} />
+            </div>
+            <div className="elementor-element elementor-element-3c5575f e-con-full e-flex e-con e-child gift-animate-slide-right">
+              <Heading className="elementor-element-1b719f4">{service.title}</Heading>
+              <TextWidget className="elementor-element-84e7306">
+                <p>{service.servicePageDescription}</p>
+                <p>{service.detailParagraph}</p>
+                <ul className="gift-wp-service-points">
+                  {service.highlights.map((point) => (
+                    <li key={point}>
+                      <CheckIcon />
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </TextWidget>
+              <WpButton className="elementor-element-2e602150 gift-wp-service-cta" href="/services">To our Service</WpButton>
+            </div>
           </div>
         </section>
       </main>
@@ -543,7 +584,7 @@ function WpFooter() {
 
 function ServicesGrid({ compact = false }: { compact?: boolean }) {
   if (compact) {
-    return <HomeServicesSlider />;
+    return <HomeServicesGrid />;
   }
 
   return (
@@ -572,45 +613,26 @@ function ServicesGrid({ compact = false }: { compact?: boolean }) {
   );
 }
 
-function HomeServicesSlider() {
+function HomeServicesGrid() {
   return (
     <section className="elementor-element elementor-element-b9accca e-flex e-con-boxed e-con e-parent gift-wp-home-services">
       <div className="e-con-inner">
         <Heading className="elementor-element-36ab58f">Layanan Kami</Heading>
-        <div className="gift-wp-home-service-slider" aria-label="Layanan Kami">
-          <div className="gift-wp-home-service-track">
-            {liveOrderedServices.map((service, index) => {
-              const previous = (index + liveOrderedServices.length - 1) % liveOrderedServices.length;
-              const next = (index + 1) % liveOrderedServices.length;
-
-              return (
-                <article
-                  className="gift-wp-home-service-slide"
-                  id={`gift-service-slide-${index}`}
-                  key={service.title}
-                >
-                  <div className="gift-wp-home-service-bg" style={{ backgroundImage: `url(${homeServiceSliderImages[index]})` }} />
-                  <div className="gift-wp-home-service-overlay" />
-                  <div className="gift-wp-home-service-content">
-                    <h2>{service.title}</h2>
-                    <p>{service.description}</p>
-                    <Link className="gift-wp-home-service-button" href="/services">Lihat Selengkapnya</Link>
-                  </div>
-                  <a className="gift-wp-home-service-arrow gift-wp-home-service-prev" href={`#gift-service-slide-${previous}`} aria-label="Layanan sebelumnya">
-                    <span aria-hidden="true">‹</span>
-                  </a>
-                  <a className="gift-wp-home-service-arrow gift-wp-home-service-next" href={`#gift-service-slide-${next}`} aria-label="Layanan berikutnya">
-                    <span aria-hidden="true">›</span>
-                  </a>
-                </article>
-              );
-            })}
-          </div>
-          <div className="gift-wp-home-service-dots" aria-hidden="true">
-            {liveOrderedServices.map((service, index) => (
-              <a href={`#gift-service-slide-${index}`} key={service.title} />
-            ))}
-          </div>
+        <div className="gift-wp-home-service-grid">
+          {liveOrderedServices.map((service, index) => (
+            <article className="gift-wp-home-service-card" key={service.title}>
+              <div className="gift-wp-home-service-card-media">
+                <img src={servicePageImages[index]} alt={service.title} />
+              </div>
+              <div className="gift-wp-home-service-card-body">
+                <h3>{service.title}</h3>
+                <p>{service.description}</p>
+                <Link className="gift-wp-read-more" href={`/services/${service.slug}`}>
+                  Lihat Selengkapnya <ArrowRight size={16} />
+                </Link>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>
