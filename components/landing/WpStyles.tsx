@@ -1361,11 +1361,14 @@ export function WpStyles() {
           font: 500 15px/1.8 Montserrat, sans-serif;
         }
         .gift-wp-contact-band .elementor-element-2fa7ae0 {
-          margin-bottom: 12px;
+          margin-bottom: 20px !important;
         }
         .gift-wp-contact-band .elementor-element-2fa7ae0 .elementor-heading-title {
           color: #fff;
           font: 700 22px/1.3 Poppins, sans-serif;
+        }
+        .gift-wp-contact-band .elementor-element-8725434 > .elementor-widget-container {
+          margin-top: 0 !important;
         }
         .gift-wp-contact-band .elementor-element-8725434 .elementor-divider {
           padding: 0;
