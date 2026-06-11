@@ -19,12 +19,16 @@ export const navItems = [
 export const company = {
   name: "PT. Global Inspeksi Forensik Teknik",
   shortName: "Global Inspeksi Forensik Teknik",
-  phone: "+62 812-5065-7742",
+  phone: "+62 812-5056-7742",
+  whatsapp: "6281250567742",
   email: "globalinspeksiforensikteknik@gmail.com",
   address: "Ruko 91 District BSD No C5, Pagedangan, Tangerang, Banten 15339",
   description:
     "Laboratorium pengujian dan inspeksi material konstruksi dengan dukungan sistem LHU digital yang dapat diverifikasi publik.",
 };
+
+const whatsappMessage = "Halo, saya ingin bertanya mengenai layanan GIFT Laboratory.";
+export const whatsappLink = `https://wa.me/${company.whatsapp}?text=${encodeURIComponent(whatsappMessage)}`;
 
 export const heroLines = [
   "Sesuai Standar Nasional!",
@@ -160,11 +164,15 @@ export const contactCards = [
     title: "Office Phone",
     description: company.phone,
     icon: Phone,
+    href: whatsappLink,
+    external: true,
   },
   {
     title: "Office Location",
     description: company.address,
     icon: MapPin,
+    href: "https://share.google/AGl5avcvPFOvNL6dA",
+    external: true,
   },
 ];
 

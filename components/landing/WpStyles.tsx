@@ -324,49 +324,9 @@ export function WpStyles() {
           height: 16px;
           color: #fff;
         }
-        .gift-animate-slide-left {
-          animation: giftSlideLeft .85s ease both;
-        }
-        .gift-animate-slide-right {
-          animation: giftSlideRight .85s ease both;
-        }
-        .gift-animate-fade-left {
-          animation: giftFadeLeft .9s ease both;
-        }
-        .gift-animate-fade-right {
-          animation: giftFadeRight .9s ease both;
-        }
-        .gift-animate-fade-up {
-          animation: giftFadeUp .9s ease both;
-        }
-        @keyframes giftSlideLeft {
-          from { opacity: 0; transform: translateX(-56px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes giftSlideRight {
-          from { opacity: 0; transform: translateX(56px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes giftFadeLeft {
-          from { opacity: 0; transform: translateX(-34px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes giftFadeRight {
-          from { opacity: 0; transform: translateX(34px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes giftFadeUp {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .gift-animate-slide-left,
-          .gift-animate-slide-right,
-          .gift-animate-fade-left,
-          .gift-animate-fade-right,
-          .gift-animate-fade-up {
-            animation: none;
-          }
+        .gift-scroll-fade {
+          width: 100%;
+          min-width: 0;
         }
         .gift-wp-section img,
         .gift-wp-about img,
@@ -1251,6 +1211,9 @@ export function WpStyles() {
           background: transparent;
           box-shadow: none;
         }
+        .elementor-1189 .gift-wp-contact-grid > .gift-scroll-fade {
+          display: flex;
+        }
         .elementor-1189 .gift-wp-contact-grid .elementor-widget-icon-box {
           width: 100%;
           min-width: 0;
@@ -1286,6 +1249,11 @@ export function WpStyles() {
           transform: translateY(-5px);
           box-shadow: 0 20px 48px rgba(13, 45, 77, .10), 0 4px 16px rgba(47, 155, 185, .12);
           border-color: rgba(47, 155, 185, .35);
+        }
+        a.elementor-icon-box-wrapper {
+          text-decoration: none;
+          color: inherit;
+          cursor: pointer;
         }
         .elementor-1189 .elementor-icon-box-content {
           display: flex;
@@ -1435,6 +1403,19 @@ export function WpStyles() {
           margin-top: 3px;
           color: #82d6ed;
         }
+        .gift-wp-contact-list li > a.gift-wp-contact-link,
+        .gift-wp-footer-contact li > a.gift-wp-contact-link {
+          display: flex;
+          align-items: flex-start;
+          gap: 12px;
+          color: inherit;
+          text-decoration: none;
+          transition: color .2s ease;
+        }
+        .gift-wp-contact-list li > a.gift-wp-contact-link:hover,
+        .gift-wp-footer-contact li > a.gift-wp-contact-link:hover {
+          color: #82d6ed;
+        }
         .gift-wp-contact-credentials {
           display: flex;
           flex-wrap: wrap;
@@ -1574,6 +1555,11 @@ export function WpStyles() {
           flex-direction: column;
           gap: 16px;
           min-width: 0;
+        }
+        .gift-footer-col > .gift-scroll-fade {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
         }
         .gift-footer-heading {
           font: 700 13px/1 Poppins, sans-serif;

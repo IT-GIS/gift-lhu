@@ -30,7 +30,9 @@ import {
   navItems,
   profileParagraphs,
   services,
+  whatsappLink,
 } from "./landing-data";
+import { ScrollFade } from "./ScrollFade";
 
 type ActivePage = "Home" | "Profile" | "Services" | "Blog" | "Contact";
 
@@ -111,35 +113,41 @@ export function HomeLandingPage() {
           <div className="elementor-container elementor-column-gap-default">
             <div className="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-1d7c6cc8">
               <div className="elementor-widget-wrap elementor-element-populated">
-                <div className="elementor-element elementor-element-dc58416 elementor-widget elementor-widget-heading">
-                  <div className="elementor-widget-container">
-                    <h4 className="elementor-heading-title elementor-size-default">Pengujian Laboratorium &amp; Inspeksi Material</h4>
-                  </div>
-                </div>
-                <div className="elementor-element elementor-element-37e5df1a elementor-widget elementor-widget-wpr-advanced-text">
-                  <div className="elementor-widget-container">
-                    <div className="wpr-advanced-text">
-                      <h1 className="wpr-advanced-text-preffix">Pengujian &amp; Inspeksi</h1>
-                      <span className="wpr-anim-text">
-                        {heroLines.map((line) => (
-                          <b key={line}>{line}</b>
-                        ))}
-                      </span>
+                <ScrollFade variant="fade">
+                  <div className="elementor-element elementor-element-dc58416 elementor-widget elementor-widget-heading">
+                    <div className="elementor-widget-container">
+                      <h4 className="elementor-heading-title elementor-size-default">Pengujian Laboratorium &amp; Inspeksi Material</h4>
                     </div>
                   </div>
-                </div>
-                <Divider className="elementor-element-5b199b24" />
-                <div className="elementor-element elementor-element-5412a0f7 elementor-widget elementor-widget-text-editor">
-                  <div className="elementor-widget-container">
-                    <p>
-                      Kami menyediakan layanan pengujian laboratorium dan inspeksi yang akurat, terpercaya,
-                      dan sesuai standar nasional untuk menjamin mutu serta keamanan produk maupun material Anda.
-                    </p>
+                </ScrollFade>
+                <ScrollFade variant="up" delay={0.1}>
+                  <div className="elementor-element elementor-element-37e5df1a elementor-widget elementor-widget-wpr-advanced-text">
+                    <div className="elementor-widget-container">
+                      <div className="wpr-advanced-text">
+                        <h1 className="wpr-advanced-text-preffix">Pengujian &amp; Inspeksi</h1>
+                        <span className="wpr-anim-text">
+                          {heroLines.map((line) => (
+                            <b key={line}>{line}</b>
+                          ))}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <WpButton className="elementor-element-23044d8" href="/services">
-                  Lihat Selengkapnya
-                </WpButton>
+                </ScrollFade>
+                <ScrollFade variant="up" delay={0.2}>
+                  <Divider className="elementor-element-5b199b24" />
+                  <div className="elementor-element elementor-element-5412a0f7 elementor-widget elementor-widget-text-editor">
+                    <div className="elementor-widget-container">
+                      <p>
+                        Kami menyediakan layanan pengujian laboratorium dan inspeksi yang akurat, terpercaya,
+                        dan sesuai standar nasional untuk menjamin mutu serta keamanan produk maupun material Anda.
+                      </p>
+                    </div>
+                  </div>
+                  <WpButton className="elementor-element-23044d8" href="/services">
+                    Lihat Selengkapnya
+                  </WpButton>
+                </ScrollFade>
               </div>
             </div>
           </div>
@@ -149,21 +157,25 @@ export function HomeLandingPage() {
           <div className="elementor-container elementor-column-gap-default gift-wp-two-column">
             <div className="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-57d48a63">
               <div className="elementor-widget-wrap elementor-element-populated">
-                <ImageWidget className="elementor-element-5530ede6" src="/landing/about-building.png" alt="Gedung laboratorium GIFT" />
+                <ScrollFade variant="left">
+                  <ImageWidget className="elementor-element-5530ede6" src="/landing/about-building.png" alt="Gedung laboratorium GIFT" />
+                </ScrollFade>
               </div>
             </div>
             <div className="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-6cebff71">
               <div className="elementor-widget-wrap elementor-element-populated">
-                <Heading className="elementor-element-7d19e0" level={3}>Tentang Kami</Heading>
-                <Heading className="elementor-element-effe491">PT. Global Inspeksi Forensik Teknik</Heading>
-                <TextWidget className="elementor-element-30980496">
-                  {profileParagraphs.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
-                  ))}
-                </TextWidget>
-                <WpButton className="elementor-element-2e602150" href="/profile">
-                  Lihat Selengkapnya
-                </WpButton>
+                <ScrollFade variant="right" delay={0.1}>
+                  <Heading className="elementor-element-7d19e0" level={3}>Tentang Kami</Heading>
+                  <Heading className="elementor-element-effe491">PT. Global Inspeksi Forensik Teknik</Heading>
+                  <TextWidget className="elementor-element-30980496">
+                    {profileParagraphs.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </TextWidget>
+                  <WpButton className="elementor-element-2e602150" href="/profile">
+                    Lihat Selengkapnya
+                  </WpButton>
+                </ScrollFade>
               </div>
             </div>
           </div>
@@ -174,16 +186,20 @@ export function HomeLandingPage() {
           <div className="elementor-container elementor-column-gap-default gift-wp-two-column">
             <div className="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-7495d363">
               <div className="elementor-widget-wrap elementor-element-populated">
-                <Heading className="elementor-element-7582adce">VISI</Heading>
-                <TextWidget className="elementor-element-3a05b207">
-                  <p>Menjadi laboratorium pengujian produk beton yang paling dipercaya di Indonesia melalui hasil uji yang akurat, objektif, dan berstandar nasional maupun internasional.</p>
-                </TextWidget>
+                <ScrollFade variant="left">
+                  <Heading className="elementor-element-7582adce">VISI</Heading>
+                  <TextWidget className="elementor-element-3a05b207">
+                    <p>Menjadi laboratorium pengujian produk beton yang paling dipercaya di Indonesia melalui hasil uji yang akurat, objektif, dan berstandar nasional maupun internasional.</p>
+                  </TextWidget>
+                </ScrollFade>
               </div>
             </div>
             <div className="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-5f082e66">
               <div className="elementor-widget-wrap elementor-element-populated">
-                <Heading className="elementor-element-10daaa9">MISI</Heading>
-                <FeatureList className="elementor-element-46533381" />
+                <ScrollFade variant="right" delay={0.1}>
+                  <Heading className="elementor-element-10daaa9">MISI</Heading>
+                  <FeatureList className="elementor-element-46533381" />
+                </ScrollFade>
               </div>
             </div>
           </div>
@@ -193,16 +209,20 @@ export function HomeLandingPage() {
           <div className="elementor-container elementor-column-gap-default gift-wp-two-column">
             <div className="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-5d29a536">
               <div className="elementor-widget-wrap elementor-element-populated">
-                <ImageWidget className="elementor-element-5da5c2e gift-wp-facility-illustration" src={facilityIllustration} alt="Ilustrasi fasilitas laboratorium" />
+                <ScrollFade variant="scale">
+                  <ImageWidget className="elementor-element-5da5c2e gift-wp-facility-illustration" src={facilityIllustration} alt="Ilustrasi fasilitas laboratorium" />
+                </ScrollFade>
               </div>
             </div>
             <div className="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-32158e6e">
               <div className="elementor-widget-wrap elementor-element-populated">
-                <Heading className="elementor-element-5a5959f2" level={3}>Fasilitas dan Keunggulan</Heading>
-                <TextWidget className="elementor-element-563e6ef">
-                  <p><strong>{company.name}</strong> memiliki berbagai fasilitas unggul yang mendukung pengujian kualitas dan keamanan material konstruksi.</p>
-                </TextWidget>
-                <FacilityFeatureList />
+                <ScrollFade variant="up" delay={0.1}>
+                  <Heading className="elementor-element-5a5959f2" level={3}>Fasilitas dan Keunggulan</Heading>
+                  <TextWidget className="elementor-element-563e6ef">
+                    <p><strong>{company.name}</strong> memiliki berbagai fasilitas unggul yang mendukung pengujian kualitas dan keamanan material konstruksi.</p>
+                  </TextWidget>
+                  <FacilityFeatureList />
+                </ScrollFade>
               </div>
             </div>
           </div>
@@ -223,45 +243,55 @@ export function ProfileLandingPage() {
 
         <section className="elementor-element elementor-element-e2c4003 e-flex e-con-boxed e-con e-parent gift-wp-section gift-wp-profile-intro">
           <div className="e-con-inner gift-wp-two-column">
-            <div className="elementor-element elementor-element-3878c15 e-con-full e-flex e-con e-child gift-animate-slide-left">
-              <Heading className="elementor-element-7d19e0" level={3}>PROFIL PERUSAHAAN</Heading>
-              <Heading className="elementor-element-1b719f4">PT. Global Inspeksi Forensik Teknik</Heading>
-              <TextWidget className="elementor-element-84e7306">
-                {profileParagraphs.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
-              </TextWidget>
+            <div className="elementor-element elementor-element-3878c15 e-con-full e-flex e-con e-child">
+              <ScrollFade variant="left">
+                <Heading className="elementor-element-7d19e0" level={3}>PROFIL PERUSAHAAN</Heading>
+                <Heading className="elementor-element-1b719f4">PT. Global Inspeksi Forensik Teknik</Heading>
+                <TextWidget className="elementor-element-84e7306">
+                  {profileParagraphs.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </TextWidget>
+              </ScrollFade>
             </div>
-            <div className="elementor-element elementor-element-3c5575f e-con-full e-flex e-con e-child gift-animate-slide-right">
-              <ImageWidget className="elementor-element-6fc82a9" src={profileCompanyImage} alt="Laboratorium GIFT" />
+            <div className="elementor-element elementor-element-3c5575f e-con-full e-flex e-con e-child">
+              <ScrollFade variant="right" delay={0.1}>
+                <ImageWidget className="elementor-element-6fc82a9" src={profileCompanyImage} alt="Laboratorium GIFT" />
+              </ScrollFade>
             </div>
           </div>
         </section>
 
         <section className="elementor-element elementor-element-9657776 e-flex e-con-boxed e-con e-parent gift-wp-section gift-wp-profile-vision">
           <div className="e-con-inner gift-wp-two-column">
-            <div className="elementor-element elementor-element-751a206 e-con-full e-flex e-con e-child gift-animate-fade-left">
-              <ImageWidget className="elementor-element-fd7e273" src={profileVisionImage} alt="Gedung laboratorium" />
+            <div className="elementor-element elementor-element-751a206 e-con-full e-flex e-con e-child">
+              <ScrollFade variant="left">
+                <ImageWidget className="elementor-element-fd7e273" src={profileVisionImage} alt="Gedung laboratorium" />
+              </ScrollFade>
             </div>
-            <div className="elementor-element elementor-element-0876684 e-flex e-con-boxed e-con e-child gift-animate-slide-right">
-              <Heading className="elementor-element-3b33a34">VISI</Heading>
-              <TextWidget className="elementor-element-76264e8 gift-animate-fade-right">
-                <p>Menjadi laboratorium pengujian produk beton yang paling dipercaya di Indonesia melalui hasil uji yang akurat, objektif, dan berstandar nasional maupun internasional.</p>
-              </TextWidget>
+            <div className="elementor-element elementor-element-0876684 e-flex e-con-boxed e-con e-child">
+              <ScrollFade variant="right" delay={0.1}>
+                <Heading className="elementor-element-3b33a34">VISI</Heading>
+                <TextWidget className="elementor-element-76264e8">
+                  <p>Menjadi laboratorium pengujian produk beton yang paling dipercaya di Indonesia melalui hasil uji yang akurat, objektif, dan berstandar nasional maupun internasional.</p>
+                </TextWidget>
+              </ScrollFade>
             </div>
           </div>
         </section>
 
         <section className="elementor-element elementor-element-10b14b6 e-flex e-con-boxed e-con e-parent gift-wp-section gift-wp-profile-mission">
           <div className="e-con-inner gift-wp-two-column">
-            <div className="elementor-element elementor-element-dbdebb9 e-flex e-con-boxed e-con e-child gift-animate-slide-left">
-              <Heading className="elementor-element-35525b7">MISI</Heading>
-              <div className="gift-animate-fade-up">
+            <div className="elementor-element elementor-element-dbdebb9 e-flex e-con-boxed e-con e-child">
+              <ScrollFade variant="left">
+                <Heading className="elementor-element-35525b7">MISI</Heading>
                 <FeatureList className="elementor-element-f9309dd" />
-              </div>
+              </ScrollFade>
             </div>
-            <div className="elementor-element elementor-element-4383361 e-con-full e-flex e-con e-child gift-animate-fade-right">
-              <ImageWidget className="elementor-element-3edfafc" src={profileMissionImage} alt="Aktivitas pengujian laboratorium" />
+            <div className="elementor-element elementor-element-4383361 e-con-full e-flex e-con e-child">
+              <ScrollFade variant="right" delay={0.1}>
+                <ImageWidget className="elementor-element-3edfafc" src={profileMissionImage} alt="Aktivitas pengujian laboratorium" />
+              </ScrollFade>
             </div>
           </div>
         </section>
@@ -281,9 +311,11 @@ export function ServicesLandingPage() {
         <ServicesGrid />
         <section className="elementor-element elementor-element-785ec78 e-flex e-con-boxed e-con e-parent gift-wp-quote">
           <div className="e-con-inner">
-            <Heading className="elementor-element-0091782">
-              &quot;Uji Kuat Tekan &amp; Uji Material U-Ditch/Box Culvert Dengan Ahli Profesional&quot;
-            </Heading>
+            <ScrollFade variant="scale">
+              <Heading className="elementor-element-0091782">
+                &quot;Uji Kuat Tekan &amp; Uji Material U-Ditch/Box Culvert Dengan Ahli Profesional&quot;
+              </Heading>
+            </ScrollFade>
           </div>
         </section>
       </main>
@@ -305,24 +337,28 @@ export function ServiceDetailLandingPage({
 
         <section className="elementor-element elementor-element-e2c4003 e-flex e-con-boxed e-con e-parent gift-wp-section">
           <div className="e-con-inner gift-wp-two-column">
-            <div className="elementor-element elementor-element-3878c15 e-con-full e-flex e-con e-child gift-animate-slide-left">
-              <ImageWidget className="elementor-element-3edfafc" src={image} alt={service.title} />
+            <div className="elementor-element elementor-element-3878c15 e-con-full e-flex e-con e-child">
+              <ScrollFade variant="left">
+                <ImageWidget className="elementor-element-3edfafc" src={image} alt={service.title} />
+              </ScrollFade>
             </div>
-            <div className="elementor-element elementor-element-3c5575f e-con-full e-flex e-con e-child gift-animate-slide-right">
-              <Heading className="elementor-element-1b719f4">{service.title}</Heading>
-              <TextWidget className="elementor-element-84e7306">
-                <p>{service.servicePageDescription}</p>
-                <p>{service.detailParagraph}</p>
-                <ul className="gift-wp-service-points">
-                  {service.highlights.map((point) => (
-                    <li key={point}>
-                      <CheckIcon />
-                      <span>{point}</span>
-                    </li>
-                  ))}
-                </ul>
-              </TextWidget>
-              <WpButton className="elementor-element-2e602150 gift-wp-service-cta" href="/services">To our Service</WpButton>
+            <div className="elementor-element elementor-element-3c5575f e-con-full e-flex e-con e-child">
+              <ScrollFade variant="right" delay={0.1}>
+                <Heading className="elementor-element-1b719f4">{service.title}</Heading>
+                <TextWidget className="elementor-element-84e7306">
+                  <p>{service.servicePageDescription}</p>
+                  <p>{service.detailParagraph}</p>
+                  <ul className="gift-wp-service-points">
+                    {service.highlights.map((point) => (
+                      <li key={point}>
+                        <CheckIcon />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </TextWidget>
+                <WpButton className="elementor-element-2e602150 gift-wp-service-cta" href="/services">To our Service</WpButton>
+              </ScrollFade>
             </div>
           </div>
         </section>
@@ -339,25 +375,29 @@ export function ContactLandingPage() {
 
         <section className="elementor-element elementor-element-91d42b5 e-flex e-con-boxed e-con e-parent gift-wp-section">
           <div className="e-con-inner">
-            <div className="gift-wp-contact-intro gift-animate-fade-up">
-              <span className="gift-wp-contact-kicker">Corporate Contact</span>
-              <Heading className="elementor-element-d5fce67">Contact Info</Heading>
-              <TextWidget className="elementor-element-806c177">
-                <p>
-                  Hubungi tim kami untuk kebutuhan pengujian, inspeksi, dan verifikasi LHU.
-                  Kami siap membantu Anda dengan respons profesional dan terarah.
-                </p>
-              </TextWidget>
+            <div className="gift-wp-contact-intro">
+              <ScrollFade variant="up">
+                <Heading className="elementor-element-d5fce67">Contact Info</Heading>
+                <TextWidget className="elementor-element-806c177">
+                  <p>
+                    Hubungi tim kami untuk kebutuhan pengujian, inspeksi, dan verifikasi LHU.
+                    Kami siap membantu Anda dengan respons profesional dan terarah.
+                  </p>
+                </TextWidget>
+              </ScrollFade>
             </div>
-            <div className="elementor-element elementor-element-67a5229 e-grid e-con-boxed e-con e-child gift-wp-contact-grid gift-animate-fade-up">
+            <div className="elementor-element elementor-element-67a5229 e-grid e-con-boxed e-con e-child gift-wp-contact-grid">
               {contactCards.map((item, index) => (
-                <ContactIconBox
-                  key={item.title}
-                  className={["elementor-element-66ecdbf", "elementor-element-eccc5bd", "elementor-element-4595e59"][index]}
-                  icon={item.icon}
-                  title={item.title}
-                  description={item.description}
-                />
+                <ScrollFade key={item.title} variant="up" delay={index * 0.08}>
+                  <ContactIconBox
+                    className={["elementor-element-66ecdbf", "elementor-element-eccc5bd", "elementor-element-4595e59"][index]}
+                    icon={item.icon}
+                    title={item.title}
+                    description={item.description}
+                    href={item.href}
+                    external={item.external}
+                  />
+                </ScrollFade>
               ))}
             </div>
           </div>
@@ -365,13 +405,15 @@ export function ContactLandingPage() {
 
         <ContactBand />
 
-        <section className="elementor-element elementor-element-62d7e54 e-flex e-con-boxed e-con e-parent gift-wp-map gift-animate-fade-up">
-          <iframe
-            title="Ruko 91 District BSD No C5, Pagedangan, Tangerang, Banten 15339"
-            src="https://maps.google.com/maps?q=Ruko%2091%20District%20BSD%20No%20C5%2C%20Pagedangan%2C%20Tangerang%2C%20Banten%2015339&t=m&z=14&output=embed&iwloc=near"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
+        <section className="elementor-element elementor-element-62d7e54 e-flex e-con-boxed e-con e-parent gift-wp-map">
+          <ScrollFade variant="up">
+            <iframe
+              title="Ruko 91 District BSD No C5, Pagedangan, Tangerang, Banten 15339"
+              src="https://maps.google.com/maps?q=Ruko%2091%20District%20BSD%20No%20C5%2C%20Pagedangan%2C%20Tangerang%2C%20Banten%2015339&t=m&z=14&output=embed&iwloc=near"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </ScrollFade>
         </section>
       </main>
     </WpLandingShell>
@@ -401,24 +443,26 @@ export function BlogLandingPage({
 
         <section className="gift-blog-index">
           <div className="gift-blog-wrap">
-            <header className="gift-blog-header gift-animate-fade-up">
-              <span className="gift-wp-contact-kicker">Artikel &amp; Berita</span>
-              <h2 className="gift-blog-title">Blog &amp; Artikel Terkini</h2>
-              <div className="gift-wp-category-row">
-                {allCategories.map((cat) => (
-                  <Link
-                    key={cat}
-                    href={cat === "All Posts" ? "/blog" : `/blog?category=${encodeURIComponent(cat)}`}
-                    className={
-                      cat === (selectedCategory ?? "All Posts")
-                        ? "gift-category-active"
-                        : ""
-                    }
-                  >
-                    {cat}
-                  </Link>
-                ))}
-              </div>
+            <header className="gift-blog-header">
+              <ScrollFade variant="up">
+                <span className="gift-wp-contact-kicker">Artikel &amp; Berita</span>
+                <h2 className="gift-blog-title">Blog &amp; Artikel Terkini</h2>
+                <div className="gift-wp-category-row">
+                  {allCategories.map((cat) => (
+                    <Link
+                      key={cat}
+                      href={cat === "All Posts" ? "/blog" : `/blog?category=${encodeURIComponent(cat)}`}
+                      className={
+                        cat === (selectedCategory ?? "All Posts")
+                          ? "gift-category-active"
+                          : ""
+                      }
+                    >
+                      {cat}
+                    </Link>
+                  ))}
+                </div>
+              </ScrollFade>
             </header>
 
             {posts.length === 0 && (
@@ -426,28 +470,32 @@ export function BlogLandingPage({
             )}
 
             {featured && !isFiltered && (
-              <Link href={featured.href} className="gift-blog-featured gift-animate-slide-left">
-                <div className="gift-blog-featured-img">
-                  <img src={featured.image} alt={featured.title} />
-                </div>
-                <div className="gift-blog-featured-body">
-                  <span className="gift-blog-tag">{featured.category}</span>
-                  <h2>{featured.title}</h2>
-                  <p>{featured.excerpt}</p>
-                  <div className="gift-blog-featured-meta">
-                    <time className="gift-wp-blog-meta">{featured.date}</time>
-                    <span className="gift-wp-read-more">Baca Selengkapnya <ArrowRight size={15} /></span>
+              <ScrollFade variant="left">
+                <Link href={featured.href} className="gift-blog-featured">
+                  <div className="gift-blog-featured-img">
+                    <img src={featured.image} alt={featured.title} />
                   </div>
-                </div>
-              </Link>
+                  <div className="gift-blog-featured-body">
+                    <span className="gift-blog-tag">{featured.category}</span>
+                    <h2>{featured.title}</h2>
+                    <p>{featured.excerpt}</p>
+                    <div className="gift-blog-featured-meta">
+                      <time className="gift-wp-blog-meta">{featured.date}</time>
+                      <span className="gift-wp-read-more">Baca Selengkapnya <ArrowRight size={15} /></span>
+                    </div>
+                  </div>
+                </Link>
+              </ScrollFade>
             )}
 
             {(isFiltered ? posts : rest).length > 0 && (
               <>
                 {!isFiltered && <h3 className="gift-blog-more-title">Artikel Lainnya</h3>}
-                <div className="gift-blog-grid gift-animate-fade-up">
-                  {(isFiltered ? posts : rest).map((post) => (
-                    <BlogCard key={post.href} post={post} />
+                <div className="gift-blog-grid">
+                  {(isFiltered ? posts : rest).map((post, index) => (
+                    <ScrollFade key={post.href} variant="up" delay={index * 0.05}>
+                      <BlogCard post={post} />
+                    </ScrollFade>
                   ))}
                 </div>
               </>
@@ -468,15 +516,17 @@ export function BlogDetailLandingPage({ post }: { post: BlogCard & { content?: s
             <Link className="gift-blog-back" href="/blog">
               <ArrowLeft size={15} /> Kembali ke Blog
             </Link>
-            <article className="gift-blog-article gift-animate-fade-up">
-              <header className="gift-blog-article-header">
-                <span className="gift-blog-tag">{post.category}</span>
-                <h1>{post.title}</h1>
-                <time className="gift-wp-blog-meta">{post.date}</time>
-              </header>
-              <img src={post.image} alt={post.title} className="gift-blog-article-cover" />
-              {renderArticleContent(post.content || post.excerpt)}
-            </article>
+            <ScrollFade variant="up">
+              <article className="gift-blog-article">
+                <header className="gift-blog-article-header">
+                  <span className="gift-blog-tag">{post.category}</span>
+                  <h1>{post.title}</h1>
+                  <time className="gift-wp-blog-meta">{post.date}</time>
+                </header>
+                <img src={post.image} alt={post.title} className="gift-blog-article-cover" />
+                {renderArticleContent(post.content || post.excerpt)}
+              </article>
+            </ScrollFade>
             <div className="gift-blog-detail-nav">
               <Link className="gift-blog-back" href="/blog">
                 <ArrowLeft size={15} /> Kembali ke Blog
@@ -549,34 +599,46 @@ function WpFooter() {
       <div className="gift-footer-wrap">
         <div className="gift-footer-grid">
           <div className="gift-footer-col">
-            <Link className="wpr-logo elementor-clearfix" href="/">
-              <picture className="wpr-logo-image">
-                <img src="/landing/logo-gift-wide.png" alt={company.name} />
-              </picture>
-            </Link>
-            <p className="gift-footer-desc">{company.description}</p>
+            <ScrollFade variant="left">
+              <Link className="wpr-logo elementor-clearfix" href="/">
+                <picture className="wpr-logo-image">
+                  <img src="/landing/logo-gift-wide.png" alt={company.name} />
+                </picture>
+              </Link>
+              <p className="gift-footer-desc">{company.description}</p>
+            </ScrollFade>
           </div>
           <div className="gift-footer-col">
-            <div className="gift-footer-heading">Contact Info</div>
-            <ul className="elementor-icon-list-items gift-wp-footer-contact">
-              <li className="elementor-icon-list-item"><PhoneIcon /><span className="elementor-icon-list-text">{company.phone}</span></li>
-              <li className="elementor-icon-list-item"><MailIcon /><span className="elementor-icon-list-text">{company.email}</span></li>
-              <li className="elementor-icon-list-item"><MapIcon /><span className="elementor-icon-list-text">{company.address}</span></li>
-            </ul>
-          </div>
-          <div className="gift-footer-col">
-            <div className="gift-footer-heading">Navigasi</div>
-            <ul className="elementor-icon-list-items gift-wp-footer-contact">
-              {navItems.map((item) => (
-                <li key={item.href} className="elementor-icon-list-item">
-                  <Link className="elementor-icon-list-text" href={item.href}>{item.label}</Link>
+            <ScrollFade variant="up" delay={0.1}>
+              <div className="gift-footer-heading">Contact Info</div>
+              <ul className="elementor-icon-list-items gift-wp-footer-contact">
+                <li className="elementor-icon-list-item">
+                  <a className="gift-wp-contact-link" href={whatsappLink} target="_blank" rel="noopener noreferrer">
+                    <PhoneIcon /><span className="elementor-icon-list-text">{company.phone}</span>
+                  </a>
                 </li>
-              ))}
-            </ul>
+                <li className="elementor-icon-list-item"><MailIcon /><span className="elementor-icon-list-text">{company.email}</span></li>
+                <li className="elementor-icon-list-item"><MapIcon /><span className="elementor-icon-list-text">{company.address}</span></li>
+              </ul>
+            </ScrollFade>
+          </div>
+          <div className="gift-footer-col">
+            <ScrollFade variant="right" delay={0.2}>
+              <div className="gift-footer-heading">Navigasi</div>
+              <ul className="elementor-icon-list-items gift-wp-footer-contact">
+                {navItems.map((item) => (
+                  <li key={item.href} className="elementor-icon-list-item">
+                    <Link className="elementor-icon-list-text" href={item.href}>{item.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </ScrollFade>
           </div>
         </div>
-        <hr className="gift-footer-divider" />
-        <p className="gift-footer-copy">© {new Date().getFullYear()} Global Inspeksi Forensik Teknik</p>
+        <ScrollFade variant="fade" delay={0.3}>
+          <hr className="gift-footer-divider" />
+          <p className="gift-footer-copy">© {new Date().getFullYear()} Global Inspeksi Forensik Teknik</p>
+        </ScrollFade>
       </div>
     </footer>
   );
@@ -592,18 +654,21 @@ function ServicesGrid({ compact = false }: { compact?: boolean }) {
       <div className="elementor-container elementor-column-gap-default">
         <div className="elementor-column elementor-col-100 elementor-top-column">
           <div className="elementor-widget-wrap elementor-element-populated">
-            <Heading className="elementor-element-5c74249">
-              OUR SERVICES
-            </Heading>
+            <ScrollFade variant="up">
+              <Heading className="elementor-element-5c74249">
+                OUR SERVICES
+              </Heading>
+            </ScrollFade>
             <div className="gift-wp-service-grid">
               {liveOrderedServices.map((service, index) => (
-                <ServicePromoBox
-                  key={service.title}
-                  className={`elementor-element-${serviceElementIds[index]}`}
-                  image={servicePageImages[index]}
-                  title={service.title}
-                  description={service.servicePageDescription}
-                />
+                <ScrollFade key={service.title} variant="up" delay={index * 0.05}>
+                  <ServicePromoBox
+                    className={`elementor-element-${serviceElementIds[index]}`}
+                    image={servicePageImages[index]}
+                    title={service.title}
+                    description={service.servicePageDescription}
+                  />
+                </ScrollFade>
               ))}
             </div>
           </div>
@@ -617,21 +682,25 @@ function HomeServicesGrid() {
   return (
     <section className="elementor-element elementor-element-b9accca e-flex e-con-boxed e-con e-parent gift-wp-home-services">
       <div className="e-con-inner">
-        <Heading className="elementor-element-36ab58f">Layanan Kami</Heading>
+        <ScrollFade variant="up">
+          <Heading className="elementor-element-36ab58f">Layanan Kami</Heading>
+        </ScrollFade>
         <div className="gift-wp-home-service-grid">
           {liveOrderedServices.map((service, index) => (
-            <article className="gift-wp-home-service-card" key={service.title}>
-              <div className="gift-wp-home-service-card-media">
-                <img src={servicePageImages[index]} alt={service.title} />
-              </div>
-              <div className="gift-wp-home-service-card-body">
-                <h3>{service.title}</h3>
-                <p>{service.description}</p>
-                <Link className="gift-wp-read-more" href={`/services/${service.slug}`}>
-                  Lihat Selengkapnya <ArrowRight size={16} />
-                </Link>
-              </div>
-            </article>
+            <ScrollFade key={service.title} variant="up" delay={index * 0.06}>
+              <article className="gift-wp-home-service-card">
+                <div className="gift-wp-home-service-card-media">
+                  <img src={servicePageImages[index]} alt={service.title} />
+                </div>
+                <div className="gift-wp-home-service-card-body">
+                  <h3>{service.title}</h3>
+                  <p>{service.description}</p>
+                  <Link className="gift-wp-read-more" href={`/services/${service.slug}`}>
+                    Lihat Selengkapnya <ArrowRight size={16} />
+                  </Link>
+                </div>
+              </article>
+            </ScrollFade>
           ))}
         </div>
       </div>
@@ -643,40 +712,47 @@ function ContactBand() {
   return (
     <section className="elementor-element elementor-element-cf5e46f e-flex e-con-boxed e-con e-parent gift-wp-contact-band">
       <div className="e-con-inner gift-wp-two-column">
-        <div className="elementor-element elementor-element-5771a84 e-con-full e-flex e-con e-child gift-animate-slide-left">
-          <span className="gift-wp-contact-band-kicker">Get in touch</span>
-          <Heading className="elementor-element-5b9f1ae">Hubungi Kami!</Heading>
-          <p className="gift-wp-contact-band-copy">
-            Konsultasikan kebutuhan pengujian material konstruksi, inspeksi lapangan, atau penerbitan laporan hasil uji bersama tim GIFT Laboratory.
-          </p>
-          <Heading className="elementor-element-2fa7ae0">Main Office</Heading>
-          <Divider className="elementor-element-8725434" />
-          <ul className="elementor-icon-list-items gift-wp-contact-list">
-            <li><PhoneIcon /> <span>{company.phone}</span></li>
-            <li><MailIcon /> <span>{company.email}</span></li>
-            <li><MapIcon /> <span>{company.address}</span></li>
-          </ul>
-          <div className="gift-wp-contact-credentials" aria-label="Company credentials">
-            <span><Building2 size={16} /> PT Global Inspeksi Forensik Teknik</span>
-            <span><ShieldCheck size={16} /> SNI-oriented testing workflow</span>
-          </div>
-        </div>
-        <form className="elementor-element elementor-element-04512b7 elementor-widget elementor-widget-wpr-forms gift-wp-form gift-animate-slide-right" action={`mailto:${company.email}`} method="post">
-          <div className="gift-wp-form-header">
-            <MessageSquareText size={24} />
-            <div>
-              <strong>Kirim Pertanyaan</strong>
-              <span>Tim kami akan menindaklanjuti melalui email resmi.</span>
+        <div className="elementor-element elementor-element-5771a84 e-con-full e-flex e-con e-child">
+          <ScrollFade variant="left">
+            <span className="gift-wp-contact-band-kicker">Get in touch</span>
+            <Heading className="elementor-element-5b9f1ae">Hubungi Kami!</Heading>
+            <p className="gift-wp-contact-band-copy">
+              Konsultasikan kebutuhan pengujian material konstruksi, inspeksi lapangan, atau penerbitan laporan hasil uji bersama tim GIFT Laboratory.
+            </p>
+            <Heading className="elementor-element-2fa7ae0">Main Office</Heading>
+            <Divider className="elementor-element-8725434" />
+            <ul className="elementor-icon-list-items gift-wp-contact-list">
+              <li>
+                <a className="gift-wp-contact-link" href={whatsappLink} target="_blank" rel="noopener noreferrer">
+                  <PhoneIcon /> <span>{company.phone}</span>
+                </a>
+              </li>
+              <li><MailIcon /> <span>{company.email}</span></li>
+              <li><MapIcon /> <span>{company.address}</span></li>
+            </ul>
+            <div className="gift-wp-contact-credentials" aria-label="Company credentials">
+              <span><Building2 size={16} /> PT Global Inspeksi Forensik Teknik</span>
             </div>
-          </div>
-          <div className="gift-wp-form-row">
-            <label>Name<input suppressHydrationWarning className="wpr-form-field" name="name" placeholder="Nama lengkap" /></label>
-            <label>Email<input suppressHydrationWarning className="wpr-form-field" type="email" name="email" placeholder="nama@perusahaan.com" /></label>
-          </div>
-          <label>Company<input suppressHydrationWarning className="wpr-form-field" name="company" placeholder="Nama perusahaan / instansi" /></label>
-          <label>Message<textarea suppressHydrationWarning className="wpr-form-field" name="message" placeholder="Ceritakan kebutuhan pengujian atau inspeksi Anda" rows={7} /></label>
-          <button suppressHydrationWarning className="wpr-button" type="submit">Send Message <Send size={16} /></button>
-        </form>
+          </ScrollFade>
+        </div>
+        <ScrollFade variant="right" delay={0.1}>
+          <form className="elementor-element elementor-element-04512b7 elementor-widget elementor-widget-wpr-forms gift-wp-form" action={`mailto:${company.email}`} method="post">
+            <div className="gift-wp-form-header">
+              <MessageSquareText size={24} />
+              <div>
+                <strong>Kirim Pertanyaan</strong>
+                <span>Tim kami akan menindaklanjuti melalui email resmi.</span>
+              </div>
+            </div>
+            <div className="gift-wp-form-row">
+              <label>Name<input suppressHydrationWarning className="wpr-form-field" name="name" placeholder="Nama lengkap" /></label>
+              <label>Email<input suppressHydrationWarning className="wpr-form-field" type="email" name="email" placeholder="nama@perusahaan.com" /></label>
+            </div>
+            <label>Company<input suppressHydrationWarning className="wpr-form-field" name="company" placeholder="Nama perusahaan / instansi" /></label>
+            <label>Message<textarea suppressHydrationWarning className="wpr-form-field" name="message" placeholder="Ceritakan kebutuhan pengujian atau inspeksi Anda" rows={7} /></label>
+            <button suppressHydrationWarning className="wpr-button" type="submit">Send Message <Send size={16} /></button>
+          </form>
+        </ScrollFade>
       </div>
     </section>
   );
@@ -695,7 +771,9 @@ function SubpageHero({
   return (
     <section className={`elementor-element ${sectionClass} e-flex e-con-boxed e-con e-parent gift-wp-subhero`}>
       <div className="e-con-inner">
-        <Heading className={headingClass}>{title}</Heading>
+        <ScrollFade variant="fade">
+          <Heading className={headingClass}>{title}</Heading>
+        </ScrollFade>
       </div>
     </section>
   );
@@ -705,6 +783,7 @@ function PolicySection() {
   return (
     <section className="elementor-element elementor-element-2534f23 e-flex e-con-boxed e-con e-parent gift-wp-policy">
       <div className="e-con-inner">
+        <ScrollFade variant="up">
         <div className="gift-wp-policy-tabs">
           <input type="radio" name="profile-policy-tabs" id="policy-impartiality" defaultChecked />
           <input type="radio" name="profile-policy-tabs" id="policy-antisouap" />
@@ -747,7 +826,7 @@ function PolicySection() {
                 </p>
                 <ul className="gift-wp-policy-contact-list">
                   <li><strong>Email</strong><span>globalinspeksiforensikteknik@gmail.com</span></li>
-                  <li><strong>Telp</strong><span>+62 812-5065-7742</span></li>
+                  <li><strong>Telp</strong><span>+62 812-5056-7742</span></li>
                   <li><strong>Site web</strong><span>www.gift-laboratory.com</span></li>
                   <li><strong>Letter</strong><span>PT. Global Inspeksi Forensik Teknik</span></li>
                   <li><strong>Alamat</strong><span>District 91, No C5 BSD, Tangerang</span></li>
@@ -764,6 +843,7 @@ function PolicySection() {
             </div>
           </article>
         </div>
+        </ScrollFade>
       </div>
     </section>
   );
@@ -773,10 +853,14 @@ function ClientStrip() {
   return (
     <section className="elementor-element elementor-element-ec38abd e-flex e-con-boxed e-con e-parent gift-wp-client-strip">
       <div className="e-con-inner">
-        <Heading className="elementor-element-b891f8c">Our Clients</Heading>
-        <div className="elementor-element elementor-element-974875d e-grid e-con-boxed e-con e-child gift-animate-fade-up">
-          {clientLogos.map((logo) => (
-            <img key={logo.src} src={logo.src} alt={logo.alt} />
+        <ScrollFade variant="up">
+          <Heading className="elementor-element-b891f8c">Our Clients</Heading>
+        </ScrollFade>
+        <div className="elementor-element elementor-element-974875d e-grid e-con-boxed e-con e-child">
+          {clientLogos.map((logo, index) => (
+            <ScrollFade key={logo.src} variant="scale" delay={index * 0.04}>
+              <img src={logo.src} alt={logo.alt} />
+            </ScrollFade>
           ))}
         </div>
       </div>
@@ -822,24 +906,42 @@ function ContactIconBox({
   icon: Icon,
   title,
   description,
+  href,
+  external,
 }: {
   className: string;
   icon: ComponentType<{ className?: string }>;
   title: string;
   description: string;
+  href?: string;
+  external?: boolean;
 }) {
+  const content = (
+    <>
+      <div className="elementor-icon-box-icon">
+        <span className="elementor-icon"><Icon className="gift-wp-lucide" /></span>
+      </div>
+      <div className="elementor-icon-box-content">
+        <h3 className="elementor-icon-box-title">{title}</h3>
+        <p className="elementor-icon-box-description">{description}</p>
+      </div>
+    </>
+  );
+
   return (
     <article className={`elementor-element ${className} elementor-view-stacked elementor-position-top elementor-widget elementor-widget-icon-box`}>
       <div className="elementor-widget-container">
-        <div className="elementor-icon-box-wrapper">
-          <div className="elementor-icon-box-icon">
-            <span className="elementor-icon"><Icon className="gift-wp-lucide" /></span>
-          </div>
-          <div className="elementor-icon-box-content">
-            <h3 className="elementor-icon-box-title">{title}</h3>
-            <p className="elementor-icon-box-description">{description}</p>
-          </div>
-        </div>
+        {href ? (
+          <a
+            className="elementor-icon-box-wrapper"
+            href={href}
+            {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+          >
+            {content}
+          </a>
+        ) : (
+          <div className="elementor-icon-box-wrapper">{content}</div>
+        )}
       </div>
     </article>
   );
