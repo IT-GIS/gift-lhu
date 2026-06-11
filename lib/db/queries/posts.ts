@@ -1,7 +1,6 @@
 import { randomUUID } from "crypto";
 import { desc, eq } from "drizzle-orm";
 import { z } from "zod";
-import { blogPosts } from "@/components/landing/landing-data";
 import { db } from "@/lib/db";
 import { posts } from "@/lib/db/schema";
 
@@ -53,44 +52,7 @@ export function getPostErrorMessage(error: unknown) {
   return "Terjadi kesalahan saat menyimpan post.";
 }
 
-function slugFromHref(href: string) {
-  return href.split("/").filter(Boolean).pop() ?? "";
-}
-
-async function ensureLandingPosts() {
-  const now = new Date();
-
-  for (const post of blogPosts) {
-    const slug = slugFromHref(post.href);
-    if (!slug) continue;
-
-    const existing = await db
-      .select({ id: posts.id })
-      .from(posts)
-      .where(eq(posts.slug, slug))
-      .limit(1);
-
-    if (existing.length > 0) continue;
-
-    const publishedAt = parsePublishedAt(post.date);
-
-    await db.insert(posts).values({
-      id: randomUUID(),
-      title: post.title,
-      slug,
-      content: Array.isArray(post.content) ? post.content.join("\n\n") : post.content,
-      excerpt: post.excerpt ?? null,
-      imageUrl: post.image ?? null,
-      category: post.category ?? "Blog",
-      publishedAt,
-      createdAt: now,
-      updatedAt: now,
-    });
-  }
-}
-
 export async function listPosts() {
-  await ensureLandingPosts();
   return db.select().from(posts).orderBy(desc(posts.publishedAt), desc(posts.updatedAt));
 }
 

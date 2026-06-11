@@ -262,6 +262,8 @@ export function WpStyles() {
         }
         .gift-wp-section {
           padding: 100px 0;
+          margin-block-start: 0 !important;
+          margin-block-end: 0 !important;
         }
         .gift-animate-slide-left {
           animation: giftSlideLeft .85s ease both;
@@ -798,7 +800,7 @@ export function WpStyles() {
           display: flex;
           align-items: center;
           justify-content: center;
-          margin: 100px 0;
+          margin: 100px 0 0;
           overflow: hidden;
           background: #161c3b;
         }
@@ -1781,7 +1783,7 @@ export function WpStyles() {
         }
         .gift-blog-title {
           margin: 16px 0 28px;
-          color: #0a2540;
+          color: #334155;
           font: 700 44px/1.2 Poppins, sans-serif;
         }
         .gift-blog-tag {
@@ -2177,7 +2179,7 @@ export function WpStyles() {
           }
           .gift-wp-quote {
             min-height: 420px;
-            margin: 50px 0;
+            margin: 50px 0 0;
           }
           .gift-wp-quote .elementor-heading-title {
             font-size: 30px;
