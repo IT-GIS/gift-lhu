@@ -192,3 +192,14 @@ export const posts = mysqlTable("posts", {
   createdAt: datetime("created_at").notNull(),
   updatedAt: datetime("updated_at").notNull(),
 });
+
+export const contactMessages = mysqlTable("contact_messages", {
+  id: varchar("id", { length: 36 }).primaryKey(),
+  name: varchar("name", { length: 191 }).notNull(),
+  email: varchar("email", { length: 191 }).notNull(),
+  company: varchar("company", { length: 191 }),
+  message: text("message").notNull(),
+  sourcePage: varchar("source_page", { length: 50 }).notNull().default("home"),
+  status: mysqlEnum("status", ["new", "read"]).notNull().default("new"),
+  createdAt: datetime("created_at").notNull(),
+});

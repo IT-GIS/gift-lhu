@@ -9,10 +9,8 @@ import {
   FlaskConical,
   Handshake,
   Mail,
-  MessageSquareText,
   MapPin,
   Phone,
-  Send,
   ShieldCheck,
   Ship,
   Truck,
@@ -33,6 +31,7 @@ import {
   whatsappLink,
 } from "./landing-data";
 import { ScrollFade } from "./ScrollFade";
+import { ContactForm } from "./ContactForm";
 
 type ActivePage = "Home" | "Profile" | "Services" | "Blog" | "Contact";
 
@@ -229,7 +228,7 @@ export function HomeLandingPage() {
         </section>
 
         <ServicesGrid compact />
-        <ContactBand />
+        <ContactBand sourcePage="home" />
       </main>
     </WpLandingShell>
   );
@@ -403,7 +402,7 @@ export function ContactLandingPage() {
           </div>
         </section>
 
-        <ContactBand />
+        <ContactBand sourcePage="contact" />
 
         <section className="elementor-element elementor-element-62d7e54 e-flex e-con-boxed e-con e-parent gift-wp-map">
           <ScrollFade variant="up">
@@ -708,7 +707,7 @@ function HomeServicesGrid() {
   );
 }
 
-function ContactBand() {
+function ContactBand({ sourcePage }: { sourcePage: "home" | "contact" }) {
   return (
     <section className="elementor-element elementor-element-cf5e46f e-flex e-con-boxed e-con e-parent gift-wp-contact-band">
       <div className="e-con-inner gift-wp-two-column">
@@ -736,22 +735,7 @@ function ContactBand() {
           </ScrollFade>
         </div>
         <ScrollFade variant="right" delay={0.1}>
-          <form className="elementor-element elementor-element-04512b7 elementor-widget elementor-widget-wpr-forms gift-wp-form" action={`mailto:${company.email}`} method="post">
-            <div className="gift-wp-form-header">
-              <MessageSquareText size={24} />
-              <div>
-                <strong>Kirim Pertanyaan</strong>
-                <span>Tim kami akan menindaklanjuti melalui email resmi.</span>
-              </div>
-            </div>
-            <div className="gift-wp-form-row">
-              <label>Name<input suppressHydrationWarning className="wpr-form-field" name="name" placeholder="Nama lengkap" /></label>
-              <label>Email<input suppressHydrationWarning className="wpr-form-field" type="email" name="email" placeholder="nama@perusahaan.com" /></label>
-            </div>
-            <label>Company<input suppressHydrationWarning className="wpr-form-field" name="company" placeholder="Nama perusahaan / instansi" /></label>
-            <label>Message<textarea suppressHydrationWarning className="wpr-form-field" name="message" placeholder="Ceritakan kebutuhan pengujian atau inspeksi Anda" rows={7} /></label>
-            <button suppressHydrationWarning className="wpr-button" type="submit">Send Message <Send size={16} /></button>
-          </form>
+          <ContactForm sourcePage={sourcePage} />
         </ScrollFade>
       </div>
     </section>

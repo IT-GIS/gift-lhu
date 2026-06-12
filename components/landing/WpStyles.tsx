@@ -1523,6 +1523,27 @@ export function WpStyles() {
           background: #2f9bb9;
           transform: translateY(-1px);
         }
+        .gift-wp-form .wpr-button:disabled {
+          opacity: .7;
+          cursor: not-allowed;
+          transform: none;
+        }
+        .gift-wp-form-feedback {
+          margin: 0;
+          padding: 12px 14px;
+          border-radius: 4px;
+          font: 600 13px/1.5 Montserrat, sans-serif;
+        }
+        .gift-wp-form-feedback-success {
+          background: rgba(47, 155, 185, .12);
+          color: #12324a;
+          border: 1px solid rgba(47, 155, 185, .35);
+        }
+        .gift-wp-form-feedback-error {
+          background: rgba(220, 38, 38, .08);
+          color: #b91c1c;
+          border: 1px solid rgba(220, 38, 38, .25);
+        }
         .gift-wp-map {
           padding: 0;
           background: #fff;

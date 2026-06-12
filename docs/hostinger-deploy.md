@@ -108,6 +108,7 @@ Import SQL ini lewat `phpMyAdmin` dengan urutan:
 2. `drizzle/0001_powerful_runaways.sql`
 3. `drizzle/0002_foamy_lorna_dane.sql`
 4. `drizzle/0003_lean_prima.sql`
+5. `drizzle/0004_tranquil_proemial_gods.sql` (tabel `contact_messages` untuk fitur Pesan Masuk)
 
 Catatan: `npm run build` hanya menjalankan `drizzle-kit generate` untuk membuat file migrasi lokal. Command itu tidak otomatis menerapkan struktur tabel ke database Hostinger, jadi file SQL di atas tetap harus diimport ke database production.
 
