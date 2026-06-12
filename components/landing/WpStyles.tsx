@@ -1988,8 +1988,7 @@ export function WpStyles() {
         }
         .gift-blog-article-cover {
           width: 100%;
-          max-height: 460px;
-          object-fit: cover;
+          height: auto;
           border-radius: 10px;
           margin-bottom: 36px;
         }

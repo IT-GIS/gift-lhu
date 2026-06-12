@@ -357,7 +357,7 @@ export function ServiceDetailLandingPage({
                     ))}
                   </ul>
                 </TextWidget>
-                <WpButton className="elementor-element-2e602150 gift-wp-service-cta" href="/services">To our Service</WpButton>
+                <WpButton className="elementor-element-2e602150 gift-wp-service-cta" href="/contact">Contact Us</WpButton>
               </ScrollFade>
             </div>
           </div>
