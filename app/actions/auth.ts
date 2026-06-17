@@ -19,6 +19,7 @@ export async function loginAction(formData: FormData) {
   try {
     const email = String(formData.get("email") || "").trim();
     const password = String(formData.get("password") || "");
+    const remember = formData.get("remember") === "on";
 
     if (!email || !password) {
       return { error: "Email dan password wajib diisi." };
@@ -63,7 +64,7 @@ export async function loginAction(formData: FormData) {
     await resetLoginAttempts(email, clientIp).catch((error) => {
       console.error("[auth] Failed to reset login attempts:", error);
     });
-    await createSession(user);
+    await createSession(user, remember);
 
     // Log login event (non-blocking)
     await insertAuditLog({

@@ -8,11 +8,20 @@ import {
   Truck,
 } from "lucide-react";
 
-export const navItems = [
+type NavChild = { label: string; href: string };
+export type NavItem = { label: string; href?: string; children?: NavChild[] };
+
+export const navItems: NavItem[] = [
   { label: "Home", href: "/" },
   { label: "Profile", href: "/profile" },
   { label: "Services", href: "/services" },
-  { label: "Blog", href: "/blog" },
+  {
+    label: "Informasi",
+    children: [
+      { label: "Artikel", href: "/blog" },
+      { label: "Keluhan dan Banding", href: "/keluhan-dan-banding" },
+    ],
+  },
   { label: "Contact", href: "/contact" },
 ];
 
