@@ -28,11 +28,8 @@ vi.mock("next/headers", () => ({
   headers: vi.fn().mockResolvedValue(new Headers()),
 }));
 
-// redirect throws by design in Next.js — catch it in tests that trigger success path
 vi.mock("next/navigation", () => ({
-  redirect: vi.fn().mockImplementation((url: string) => {
-    throw new Error(`NEXT_REDIRECT:${url}`);
-  }),
+  redirect: vi.fn(),
 }));
 
 // ── Import setelah mock ───────────────────────────────────────────────────────
@@ -69,9 +66,9 @@ describe("loginAction — remember me flag", () => {
   it("calls createSession with remember=false when checkbox not sent", async () => {
     const fd = makeFormData({ email: "admin@example.com", password: "secret" });
 
-    // redirect throws — catch it so test doesn't fail
-    await loginAction(fd).catch(() => {});
+    const result = await loginAction(fd);
 
+    expect(result).toEqual({ success: true });
     expect(mockCreateSession).toHaveBeenCalledWith(fakeUser, false);
   });
 
@@ -82,8 +79,9 @@ describe("loginAction — remember me flag", () => {
       remember: "on",
     });
 
-    await loginAction(fd).catch(() => {});
+    const result = await loginAction(fd);
 
+    expect(result).toEqual({ success: true });
     expect(mockCreateSession).toHaveBeenCalledWith(fakeUser, true);
   });
 
@@ -94,8 +92,9 @@ describe("loginAction — remember me flag", () => {
       remember: "off",
     });
 
-    await loginAction(fd).catch(() => {});
+    const result = await loginAction(fd);
 
+    expect(result).toEqual({ success: true });
     expect(mockCreateSession).toHaveBeenCalledWith(fakeUser, false);
   });
 });

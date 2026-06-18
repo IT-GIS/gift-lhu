@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { loginAction } from "@/app/actions/auth";
 
 // ---------------------------------------------------------------------------
@@ -311,6 +312,7 @@ export default function LoginClient({
   initialLogoSrc?: string; 
   initialLogoScale?: number; 
 }) {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState("");
@@ -357,7 +359,11 @@ export default function LoginClient({
     startTransition(async () => {
       try {
         const result = await loginAction(formData);
-        if (result?.error) setError(result.error);
+        if (result?.error) {
+          setError(result.error);
+        } else {
+          router.push("/dashboard");
+        }
       } catch (error) {
         console.error("[login] Unexpected login error:", error);
         setError("Terjadi gangguan saat memproses login. Silakan coba lagi.");
