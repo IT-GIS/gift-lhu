@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import {
   getDashboardStats,
+  getConcreteTypeStats,
   getRecentAuditLogs,
   listLhuDocuments,
   getMonthlyChartData,
@@ -36,8 +37,9 @@ const ACTION_LABELS: Record<string, string> = {
 };
 
 export default async function DashboardPage() {
-  const [stats, recentLogs, recentDocs, monthlyData] = await Promise.all([
+  const [stats, concreteTypeStats, recentLogs, recentDocs, monthlyData] = await Promise.all([
     getDashboardStats(),
+    getConcreteTypeStats(),
     getRecentAuditLogs(8),
     listLhuDocuments({ limit: 5 }),
     getMonthlyChartData(),
@@ -76,7 +78,7 @@ export default async function DashboardPage() {
       {/* Charts */}
       <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
         <DocumentsChartCard allData={monthlyData} />
-        <StatusChartCard counts={stats} />
+        <StatusChartCard counts={concreteTypeStats} />
       </div>
 
       <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">

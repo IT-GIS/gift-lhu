@@ -4,14 +4,9 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { StatusPieChart, type StatusData } from "@/components/dashboard/charts";
 
-const STATUS_LABELS: Record<string, string> = {
-  draft: "Draft",
-  input_hasil: "Input Hasil",
-  review: "Proses",
-  revisi: "Revisi",
-  approved: "Approved",
-  published: "Published",
-  revoked: "Revoked",
+const CONCRETE_TYPE_LABELS: Record<string, string> = {
+  silinder: "Beton Silinder",
+  kubus: "Beton Kubus",
 };
 
 /**
@@ -26,7 +21,7 @@ export function StatusChartCard({ counts }: { counts?: Record<string, number> })
   const data: StatusData[] = Object.entries(counts ?? {})
     .filter(([, v]) => v > 0)
     .map(([key, value]) => ({
-      name: STATUS_LABELS[key] ?? key,
+      name: CONCRETE_TYPE_LABELS[key] ?? key,
       value,
     }));
 
