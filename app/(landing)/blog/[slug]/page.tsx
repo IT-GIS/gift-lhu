@@ -55,11 +55,7 @@ async function getPost(slug: string) {
 
     return {
       title: post.title,
-      date: new Date(post.publishedAt).toLocaleDateString("id-ID", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      }),
+      date: new Date(post.publishedAt).toISOString(),
       category: post.category || "Blog",
       image: post.imageUrl?.startsWith("/")
         ? post.imageUrl

@@ -214,6 +214,34 @@ export function WpStyles() {
           font-family: Poppins, sans-serif;
           font-weight: 500;
         }
+        .elementor-166 .elementor-element-98c3935 > .elementor-widget-container {
+          display: flex;
+          align-items: center;
+          gap: 18px;
+        }
+        .gift-lang-flag-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          align-self: flex-start;
+          flex: 0 0 auto;
+          padding: 6px;
+          border: 1px solid rgba(255, 255, 255, .28);
+          border-radius: 8px;
+          background: rgba(255, 255, 255, .12);
+          cursor: pointer;
+          transition: background .2s, border-color .2s;
+        }
+        .gift-lang-flag-btn:hover {
+          background: rgba(255, 255, 255, .18);
+          border-color: rgba(255, 255, 255, .38);
+        }
+        .gift-lang-flag-icon {
+          display: block;
+          width: 26px;
+          height: 16px;
+          border-radius: 2px;
+        }
         .gift-wp-hero {
           position: relative;
           overflow: hidden;
@@ -2165,6 +2193,14 @@ export function WpStyles() {
             justify-content: flex-end !important;
             align-items: center !important;
             width: auto !important;
+            gap: 12px !important;
+          }
+          .gift-lang-flag-icon {
+            width: 22px;
+            height: 14px;
+          }
+          .gift-lang-flag-btn {
+            align-self: center;
           }
           .gift-wp-two-column {
             grid-template-columns: 1fr;

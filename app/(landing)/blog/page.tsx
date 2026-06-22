@@ -33,11 +33,7 @@ async function getAllPosts() {
     .filter((p) => !staticSlugs.has(p.slug)) // jangan duplikat post statis
     .map((p) => ({
       title: p.title,
-      date: new Date(p.publishedAt).toLocaleDateString("id-ID", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      }),
+      date: new Date(p.publishedAt).toISOString(),
       category: p.category || "Blog",
       image: p.imageUrl?.startsWith("/") ? p.imageUrl : FALLBACK_IMAGE,
       excerpt: p.excerpt || stripHtml(p.content).slice(0, 180),

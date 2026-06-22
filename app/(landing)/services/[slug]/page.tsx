@@ -1,9 +1,6 @@
 import { notFound } from "next/navigation";
-import {
-  ServiceDetailLandingPage,
-  getServiceBySlug,
-  serviceSlugs,
-} from "@/components/landing/wp-landing";
+import { ServiceDetailLandingPage } from "@/components/landing/wp-landing";
+import { getServiceBySlug, serviceSlugs } from "@/components/landing/landing-data";
 
 export function generateStaticParams() {
   return serviceSlugs.map((slug) => ({ slug }));
@@ -36,5 +33,5 @@ export default async function ServiceDetailPage({
     notFound();
   }
 
-  return <ServiceDetailLandingPage service={found.service} image={found.image} />;
+  return <ServiceDetailLandingPage slug={slug} image={found.image} />;
 }
