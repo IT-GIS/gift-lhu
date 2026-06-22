@@ -41,15 +41,26 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-8 text-sm font-semibold text-[#333333] lg:flex">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="transition hover:text-[#2F9BB9]"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) =>
+            item.children ? (
+              <details key={item.label} className="group relative">
+                <summary className="cursor-pointer list-none transition hover:text-[#2F9BB9] [&::-webkit-details-marker]:hidden">
+                  {item.label} ▾
+                </summary>
+                <div className="absolute left-0 mt-2 grid w-52 gap-1 rounded-[6px] border border-slate-200 bg-white p-2 shadow-xl">
+                  {item.children.map((child) => (
+                    <Link key={child.href} href={child.href} className="rounded-[4px] px-3 py-2 text-sm hover:bg-[#e9f7fb] hover:text-[#2F9BB9]">
+                      {child.label}
+                    </Link>
+                  ))}
+                </div>
+              </details>
+            ) : (
+              <Link key={item.href} href={item.href!} className="transition hover:text-[#2F9BB9]">
+                {item.label}
+              </Link>
+            )
+          )}
         </nav>
 
         <div className="flex items-center gap-3">
@@ -68,15 +79,19 @@ export function SiteHeader() {
               <span className="sr-only">Menu</span>
             </summary>
             <div className="absolute right-0 mt-3 grid w-56 gap-1 rounded-[6px] border border-slate-200 bg-white p-3 text-sm font-semibold text-[#333333] shadow-xl">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="rounded-[4px] px-3 py-2 hover:bg-[#e9f7fb] hover:text-[#2F9BB9]"
-                >
-                  {item.label}
-                </Link>
-              ))}
+              {navItems.flatMap((item) =>
+                item.children
+                  ? item.children.map((child) => (
+                      <Link key={child.href} href={child.href} className="rounded-[4px] px-3 py-2 hover:bg-[#e9f7fb] hover:text-[#2F9BB9]">
+                        {child.label}
+                      </Link>
+                    ))
+                  : [
+                      <Link key={item.href} href={item.href!} className="rounded-[4px] px-3 py-2 hover:bg-[#e9f7fb] hover:text-[#2F9BB9]">
+                        {item.label}
+                      </Link>,
+                    ]
+              )}
               <Link
                 href="/login"
                 className="mt-1 rounded-[4px] bg-[#2F9BB9] px-3 py-2 text-white hover:bg-[#257f99]"
@@ -108,11 +123,19 @@ export function SiteFooter() {
         <div>
           <h3 className="font-semibold">Navigasi</h3>
           <div className="mt-4 grid gap-3 text-sm font-medium text-white/70">
-            {navItems.map((item) => (
-              <Link key={item.href} href={item.href} className="hover:text-[#5bd0ea]">
-                {item.label}
-              </Link>
-            ))}
+            {navItems.flatMap((item) =>
+              item.children
+                ? item.children.map((child) => (
+                    <Link key={child.href} href={child.href} className="hover:text-[#5bd0ea]">
+                      {child.label}
+                    </Link>
+                  ))
+                : [
+                    <Link key={item.href} href={item.href!} className="hover:text-[#5bd0ea]">
+                      {item.label}
+                    </Link>,
+                  ]
+            )}
           </div>
         </div>
         <div>

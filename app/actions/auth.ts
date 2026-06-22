@@ -14,11 +14,10 @@ import {
 } from "@/lib/auth/login-rate-limit";
 
 export async function loginAction(formData: FormData) {
-  let shouldRedirect = false;
-
   try {
     const email = String(formData.get("email") || "").trim();
     const password = String(formData.get("password") || "");
+    const remember = formData.get("remember") === "on";
 
     if (!email || !password) {
       return { error: "Email dan password wajib diisi." };
@@ -63,7 +62,7 @@ export async function loginAction(formData: FormData) {
     await resetLoginAttempts(email, clientIp).catch((error) => {
       console.error("[auth] Failed to reset login attempts:", error);
     });
-    await createSession(user);
+    await createSession(user, remember);
 
     // Log login event (non-blocking)
     await insertAuditLog({
@@ -74,7 +73,7 @@ export async function loginAction(formData: FormData) {
       metadata: { email: user.email, role: user.role },
     });
 
-    shouldRedirect = true;
+    return { success: true as const };
   } catch (error) {
     console.error("[auth] Login action failed:", error);
     return {
@@ -83,10 +82,6 @@ export async function loginAction(formData: FormData) {
           ? "Login gagal karena layanan autentikasi belum siap. Silakan coba lagi atau hubungi administrator."
           : "Login gagal karena konfigurasi server atau database belum siap. Periksa AUTH_SECRET, DATABASE_URL, dan tabel users/sessions di production.",
     };
-  }
-
-  if (shouldRedirect) {
-    redirect("/dashboard");
   }
 }
 

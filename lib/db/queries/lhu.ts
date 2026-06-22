@@ -436,6 +436,19 @@ export async function getDashboardStats() {
   return counts;
 }
 
+export async function getConcreteTypeStats() {
+  const allDocs = await db
+    .select({ concreteType: lhuDocuments.concreteType })
+    .from(lhuDocuments);
+
+  const counts: Record<string, number> = { silinder: 0, kubus: 0 };
+  for (const doc of allDocs) {
+    counts[doc.concreteType] = (counts[doc.concreteType] ?? 0) + 1;
+  }
+
+  return counts;
+}
+
 export async function getRecentAuditLogs(limit = 8) {
   const logs = await db
     .select({

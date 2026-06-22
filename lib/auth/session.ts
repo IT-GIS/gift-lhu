@@ -32,11 +32,18 @@ export type SessionUser = {
 
 // ─── Token Management ────────────────────────────────────────────────────────
 
-async function signToken(payload: SessionUser): Promise<string> {
+export function getMidnightInDays(days: number): Date {
+  const d = new Date();
+  d.setDate(d.getDate() + days);
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+async function signToken(payload: SessionUser, expiresAt: Date): Promise<string> {
   return new SignJWT({ ...payload })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setExpirationTime("7d")
+    .setExpirationTime(Math.floor(expiresAt.getTime() / 1000))
     .sign(getSecret());
 }
 
@@ -51,13 +58,19 @@ async function verifyToken(token: string): Promise<SessionUser | null> {
 
 // ─── Session CRUD ─────────────────────────────────────────────────────────────
 
-export async function createSession(user: Omit<SessionUser, "sessionId">) {
+// remember=false → expire at next midnight (reset daily at 00:00)
+// remember=true  → expire at midnight 7 days from now
+export async function createSession(
+  user: Omit<SessionUser, "sessionId">,
+  remember = false
+) {
   const sessionId = randomUUID();
   let sessionMode: SessionUser["sessionMode"] = "db";
+  const expiresAt = getMidnightInDays(remember ? 7 : 1);
 
   try {
     // Persist session server-side so it can be invalidated.
-    await createDbSession(user.id, sessionId);
+    await createDbSession(user.id, sessionId, expiresAt);
   } catch (error) {
     if (process.env.NODE_ENV === "production") {
       console.error("[auth] Failed to persist DB session:", error);
@@ -69,14 +82,15 @@ export async function createSession(user: Omit<SessionUser, "sessionId">) {
   }
 
   const sessionUser: SessionUser = { ...user, sessionId, sessionMode };
+  const maxAgeSeconds = Math.floor((expiresAt.getTime() - Date.now()) / 1000);
 
-  const token = await signToken(sessionUser);
+  const token = await signToken(sessionUser, expiresAt);
   (await cookies()).set(COOKIE_NAME, token, {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
     path: "/",
-    maxAge: 60 * 60 * 24 * 7, // 7 days
+    maxAge: maxAgeSeconds,
   });
 }
 

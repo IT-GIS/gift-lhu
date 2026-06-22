@@ -34,6 +34,7 @@ export const permissions = {
   revoke: ["super_admin"] as Role[],
   deleteLhu: ["super_admin", "admin"] as Role[],
   managePosts: ["super_admin", "admin"] as Role[],
+  viewContactMessages: ["super_admin", "admin", "frontdesk"] as Role[],
   manageUsers: ["super_admin"] as Role[],
   manageSettings: ["super_admin", "admin"] as Role[],
   viewAuditLogs: ["super_admin", "admin", "qa", "viewer"] as Role[],

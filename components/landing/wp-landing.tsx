@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Fragment } from "react";
 import type { ComponentType, ReactNode } from "react";
 import {
   ArrowLeft,
@@ -9,10 +10,8 @@ import {
   FlaskConical,
   Handshake,
   Mail,
-  MessageSquareText,
   MapPin,
   Phone,
-  Send,
   ShieldCheck,
   Ship,
   Truck,
@@ -33,8 +32,9 @@ import {
   whatsappLink,
 } from "./landing-data";
 import { ScrollFade } from "./ScrollFade";
+import { ContactForm } from "./ContactForm";
 
-type ActivePage = "Home" | "Profile" | "Services" | "Blog" | "Contact";
+type ActivePage = "Home" | "Profile" | "Services" | "Artikel" | "Keluhan dan Banding" | "Contact";
 
 type BlogCard = {
   title: string;
@@ -229,7 +229,7 @@ export function HomeLandingPage() {
         </section>
 
         <ServicesGrid compact />
-        <ContactBand />
+        <ContactBand sourcePage="home" />
       </main>
     </WpLandingShell>
   );
@@ -357,7 +357,7 @@ export function ServiceDetailLandingPage({
                     ))}
                   </ul>
                 </TextWidget>
-                <WpButton className="elementor-element-2e602150 gift-wp-service-cta" href="/services">To our Service</WpButton>
+                <WpButton className="elementor-element-2e602150 gift-wp-service-cta" href="/contact">Contact Us</WpButton>
               </ScrollFade>
             </div>
           </div>
@@ -403,7 +403,7 @@ export function ContactLandingPage() {
           </div>
         </section>
 
-        <ContactBand />
+        <ContactBand sourcePage="contact" />
 
         <section className="elementor-element elementor-element-62d7e54 e-flex e-con-boxed e-con e-parent gift-wp-map">
           <ScrollFade variant="up">
@@ -437,7 +437,7 @@ export function BlogLandingPage({
   const isFiltered = selectedCategory && selectedCategory !== "All Posts";
 
   return (
-    <WpLandingShell activePage="Blog">
+    <WpLandingShell activePage="Artikel">
       <main data-elementor-type="wp-page" data-elementor-id="1156" className="elementor elementor-1156 gift-wp-blog-page">
         <SubpageHero pageId="1156" sectionClass="elementor-element-8030a81" headingClass="elementor-element-9408ba5" title="Blog" />
 
@@ -509,7 +509,7 @@ export function BlogLandingPage({
 
 export function BlogDetailLandingPage({ post }: { post: BlogCard & { content?: string } }) {
   return (
-    <WpLandingShell activePage="Blog">
+    <WpLandingShell activePage="Artikel">
       <main data-elementor-type="wp-page" data-elementor-id="1156" className="elementor elementor-1156 gift-wp-blog-page">
         <section className="gift-blog-detail">
           <div className="gift-blog-detail-wrap">
@@ -539,6 +539,24 @@ export function BlogDetailLandingPage({ post }: { post: BlogCard & { content?: s
   );
 }
 
+export function KeluhanBandingLandingPage() {
+  return (
+    <WpLandingShell activePage="Keluhan dan Banding">
+      <main data-elementor-type="wp-page" data-elementor-id="1160" className="elementor elementor-1160">
+        <SubpageHero
+          pageId="1160"
+          sectionClass="elementor-element-4e53d5c"
+          headingClass="elementor-element-7719ecd"
+          title="Keluhan dan Banding"
+        />
+        <section className="gift-keluhan-content">
+          <div className="e-con-inner gift-keluhan-placeholder" />
+        </section>
+      </main>
+    </WpLandingShell>
+  );
+}
+
 function WpHeader({ activePage }: { activePage: ActivePage }) {
   return (
     <header data-elementor-type="wp-post" data-elementor-id="166" className="elementor elementor-166">
@@ -560,13 +578,35 @@ function WpHeader({ activePage }: { activePage: ActivePage }) {
               <div className="elementor-widget-container">
                 <nav className="wpr-nav-menu-container wpr-nav-menu-horizontal">
                   <ul id="menu-1-98c3935" className="wpr-nav-menu">
-                    {navItems.map((item) => (
-                      <li key={item.href} className={`menu-item ${item.label === activePage ? "current-menu-item current_page_item" : ""}`}>
-                        <Link className={`wpr-menu-item wpr-pointer-item ${item.label === activePage ? "wpr-active-menu-item" : ""}`} href={item.href}>
-                          {item.label}
-                        </Link>
-                      </li>
-                    ))}
+                    {navItems.map((item) => {
+                      const isActive = item.label === activePage ||
+                        item.children?.some((c) => c.label === activePage);
+                      if (item.children) {
+                        return (
+                          <li key={item.label} className={`menu-item menu-item-has-children${isActive ? " current-menu-item" : ""}`}>
+                            <details className="gift-desktop-dropdown">
+                              <summary className={`wpr-menu-item wpr-pointer-item${isActive ? " wpr-active-menu-item" : ""}`}>
+                                {item.label}
+                              </summary>
+                              <ul className="sub-menu">
+                                {item.children.map((child) => (
+                                  <li key={child.href}>
+                                    <Link href={child.href}>{child.label}</Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            </details>
+                          </li>
+                        );
+                      }
+                      return (
+                        <li key={item.href} className={`menu-item${isActive ? " current-menu-item current_page_item" : ""}`}>
+                          <Link className={`wpr-menu-item wpr-pointer-item${isActive ? " wpr-active-menu-item" : ""}`} href={item.href!}>
+                            {item.label}
+                          </Link>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </nav>
                 <details className="gift-wp-mobile-menu">
@@ -576,12 +616,20 @@ function WpHeader({ activePage }: { activePage: ActivePage }) {
                     <span />
                   </summary>
                   <div>
-                    {navItems.map((item) => (
-                      <Link key={item.href} href={item.href}>
-                        {item.label}
-                      </Link>
-                    ))}
-                    <Link href="/login">Internal LHU</Link>
+                    {navItems.map((item) =>
+                      item.children ? (
+                        <Fragment key={item.label}>
+                          <span className="gift-mobile-parent">{item.label}</span>
+                          {item.children.map((child) => (
+                            <Link key={child.href} href={child.href} className="gift-mobile-child">
+                              {child.label}
+                            </Link>
+                          ))}
+                        </Fragment>
+                      ) : (
+                        <Link key={item.href} href={item.href!}>{item.label}</Link>
+                      )
+                    )}
                   </div>
                 </details>
               </div>
@@ -626,11 +674,19 @@ function WpFooter() {
             <ScrollFade variant="right" delay={0.2}>
               <div className="gift-footer-heading">Navigasi</div>
               <ul className="elementor-icon-list-items gift-wp-footer-contact">
-                {navItems.map((item) => (
-                  <li key={item.href} className="elementor-icon-list-item">
-                    <Link className="elementor-icon-list-text" href={item.href}>{item.label}</Link>
-                  </li>
-                ))}
+                {navItems.flatMap((item) =>
+                  item.children
+                    ? item.children.map((child) => (
+                        <li key={child.href} className="elementor-icon-list-item">
+                          <Link className="elementor-icon-list-text" href={child.href}>{child.label}</Link>
+                        </li>
+                      ))
+                    : [
+                        <li key={item.href} className="elementor-icon-list-item">
+                          <Link className="elementor-icon-list-text" href={item.href!}>{item.label}</Link>
+                        </li>,
+                      ]
+                )}
               </ul>
             </ScrollFade>
           </div>
@@ -708,7 +764,7 @@ function HomeServicesGrid() {
   );
 }
 
-function ContactBand() {
+function ContactBand({ sourcePage }: { sourcePage: "home" | "contact" }) {
   return (
     <section className="elementor-element elementor-element-cf5e46f e-flex e-con-boxed e-con e-parent gift-wp-contact-band">
       <div className="e-con-inner gift-wp-two-column">
@@ -736,22 +792,7 @@ function ContactBand() {
           </ScrollFade>
         </div>
         <ScrollFade variant="right" delay={0.1}>
-          <form className="elementor-element elementor-element-04512b7 elementor-widget elementor-widget-wpr-forms gift-wp-form" action={`mailto:${company.email}`} method="post">
-            <div className="gift-wp-form-header">
-              <MessageSquareText size={24} />
-              <div>
-                <strong>Kirim Pertanyaan</strong>
-                <span>Tim kami akan menindaklanjuti melalui email resmi.</span>
-              </div>
-            </div>
-            <div className="gift-wp-form-row">
-              <label>Name<input suppressHydrationWarning className="wpr-form-field" name="name" placeholder="Nama lengkap" /></label>
-              <label>Email<input suppressHydrationWarning className="wpr-form-field" type="email" name="email" placeholder="nama@perusahaan.com" /></label>
-            </div>
-            <label>Company<input suppressHydrationWarning className="wpr-form-field" name="company" placeholder="Nama perusahaan / instansi" /></label>
-            <label>Message<textarea suppressHydrationWarning className="wpr-form-field" name="message" placeholder="Ceritakan kebutuhan pengujian atau inspeksi Anda" rows={7} /></label>
-            <button suppressHydrationWarning className="wpr-button" type="submit">Send Message <Send size={16} /></button>
-          </form>
+          <ContactForm sourcePage={sourcePage} />
         </ScrollFade>
       </div>
     </section>

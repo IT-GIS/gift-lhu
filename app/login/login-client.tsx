@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { loginAction } from "@/app/actions/auth";
 
 // ---------------------------------------------------------------------------
@@ -148,30 +149,29 @@ const NEU_CSS = `
     align-items: center;
     gap: .7rem;
     cursor: pointer;
+    user-select: none;
   }
-  .neu-checkbox-wrap input { display: none; }
-  .neu-checkbox-box {
-    width: 2rem;
-    height: 2rem;
-    border-radius: .5rem;
-    box-shadow: var(--neu-shadow);
+  .neu-cb {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--neu-dark);
+    border-radius: 5px;
+    background: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: box-shadow .3s;
-    background: var(--neu-bg);
+    flex-shrink: 0;
+    transition: background .2s, border-color .2s;
   }
-  .neu-checkbox-wrap input:checked ~ * .neu-checkbox-box {
-    box-shadow: var(--neu-inset);
+  .neu-cb--on {
+    background: var(--neu-primary);
+    border-color: var(--neu-primary);
   }
-  .neu-checkbox-check {
-    font-size: 1.2rem;
-    color: var(--neu-light-3);
+  .neu-cb span {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 900;
     line-height: 1;
-    transition: color .3s;
-  }
-  .neu-checkbox-wrap input:checked ~ * .neu-checkbox-check {
-    color: var(--neu-primary);
   }
   .neu-checkbox-label {
     color: var(--neu-dark);
@@ -319,6 +319,7 @@ export default function LoginClient({
   initialLogoSrc?: string; 
   initialLogoScale?: number; 
 }) {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState("");
@@ -362,7 +363,11 @@ export default function LoginClient({
     startTransition(async () => {
       try {
         const result = await loginAction(formData);
-        if (result?.error) setError(result.error);
+        if (result?.error) {
+          setError(result.error);
+        } else {
+          router.push("/dashboard");
+        }
       } catch (error) {
         console.error("[login] Unexpected login error:", error);
         setError("Terjadi gangguan saat memproses login. Silakan coba lagi.");
@@ -454,15 +459,13 @@ export default function LoginClient({
 
                 {/* Remember Me + Forgot */}
                 <div className="neu-row">
-                  <label className="neu-checkbox-wrap" onClick={() => setRemember(!remember)}>
-                    <input type="checkbox" readOnly checked={remember} />
-                    <span>
-                      <span className="neu-checkbox-box">
-                        <span className="neu-checkbox-check">{remember ? "✓" : ""}</span>
-                      </span>
-                    </span>
+                  <div className="neu-checkbox-wrap" onClick={() => setRemember(!remember)}>
+                    <input type="checkbox" name="remember" value="on" readOnly checked={remember} style={{ display: "none" }} />
+                    <div className={`neu-cb${remember ? " neu-cb--on" : ""}`}>
+                      {remember && <span>✓</span>}
+                    </div>
                     <span className="neu-checkbox-label">Remember me</span>
-                  </label>
+                  </div>
                   <span className="neu-forgot">Forgot?</span>
                 </div>
 

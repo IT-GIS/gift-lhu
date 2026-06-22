@@ -50,11 +50,20 @@ export function WpStyles() {
         .elementor-1189 .elementor-element.elementor-element-cf5e46f:not(.elementor-motion-effects-element-type-background) {
           background-image: url("https://gift-laboratory.com/wp-content/uploads/2024/06/home-1.jpg") !important;
         }
+        .elementor-1160 .elementor-element.elementor-element-4e53d5c,
+        .elementor-1160 .elementor-element.elementor-element-4e53d5c:not(.elementor-motion-effects-element-type-background) {
+          background-image: url("/landing/subpage-cover.jpg") !important;
+        }
+        .gift-keluhan-content { min-height: 200px; }
         .elementor-166 {
           position: sticky;
           top: 0;
           z-index: 1000;
-          background: #fff;
+          background: linear-gradient(135deg, #0d3453 0%, #1262a8 55%, #1a87c4 100%) !important;
+          backdrop-filter: blur(20px) saturate(180%) !important;
+          -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+          box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2) !important;
         }
         .elementor-166 .e-con-inner,
         .gift-wp-section > .e-con-inner,
@@ -93,6 +102,77 @@ export function WpStyles() {
         .elementor-166 .wpr-menu-item {
           text-decoration: none;
         }
+        .elementor-166 .wpr-nav-menu .wpr-menu-item,
+        .elementor-166 .wpr-nav-menu .menu-item-has-children > span.wpr-menu-item {
+          display: inline-flex;
+          align-items: center;
+          white-space: nowrap;
+          padding: 8px 16px;
+          background: transparent;
+          border: 1px solid transparent;
+          border-radius: 8px;
+          color: rgba(255, 255, 255, 0.88) !important;
+          font-family: Poppins, sans-serif;
+          font-size: 14px;
+          font-weight: 500;
+          text-shadow: none;
+          text-decoration: none;
+          transition: background 0.2s, border-color 0.2s, color 0.2s;
+        }
+        .elementor-166 .wpr-nav-menu a.wpr-menu-item:hover,
+        .elementor-166 .wpr-nav-menu .menu-item-has-children:hover > span.wpr-menu-item {
+          background: rgba(255, 255, 255, 0.12);
+          border-color: rgba(255, 255, 255, 0.28);
+          color: #fff !important;
+        }
+        .elementor-166 .wpr-nav-menu .wpr-active-menu-item {
+          background: rgba(255, 255, 255, 0.18) !important;
+          border-color: rgba(255, 255, 255, 0.38) !important;
+          color: #fff !important;
+          font-weight: 600 !important;
+        }
+        .wpr-nav-menu .menu-item-has-children { position: static; }
+        .gift-desktop-dropdown { position: relative; }
+        .gift-desktop-dropdown > summary {
+          list-style: none;
+          cursor: pointer;
+        }
+        .gift-desktop-dropdown > summary::-webkit-details-marker { display: none; }
+        .gift-desktop-dropdown > summary::marker { display: none; }
+        @keyframes gift-dropdown-in {
+          from { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+          to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        .gift-desktop-dropdown[open] > .sub-menu {
+          display: block;
+          animation: gift-dropdown-in 0.18s ease-out;
+        }
+        .wpr-nav-menu .sub-menu {
+          display: none; position: absolute; top: calc(100% + 10px); left: 50%;
+          transform: translateX(-50%); min-width: 200px; list-style: none; margin: 0; padding: 6px;
+          background: linear-gradient(145deg, rgba(10,40,68,0.97) 0%, rgba(15,75,130,0.95) 100%);
+          backdrop-filter: blur(24px) saturate(160%);
+          -webkit-backdrop-filter: blur(24px) saturate(160%);
+          border: 1px solid rgba(255,255,255,0.12);
+          border-radius: 12px;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.06);
+          z-index: 200;
+        }
+        .wpr-nav-menu .sub-menu li a {
+          display: block; padding: 10px 16px; color: rgba(255,255,255,0.82); text-decoration: none;
+          font-family: Poppins, sans-serif; font-size: 14px; border-radius: 8px;
+          white-space: nowrap; transition: background .15s, color .15s;
+        }
+        .wpr-nav-menu .sub-menu li a:hover {
+          background: rgba(255,255,255,0.12);
+          color: #fff;
+        }
+        .gift-mobile-parent {
+          display: block; padding: 10px 12px; color: #999;
+          font-family: Poppins, sans-serif; font-weight: 600;
+          font-size: 12px; text-transform: uppercase; letter-spacing: .05em;
+        }
+        .gift-mobile-child { padding-left: 24px !important; font-size: 14px !important; color: #555 !important; }
         .gift-wp-mobile-menu {
           display: none;
           position: relative;
@@ -137,6 +217,12 @@ export function WpStyles() {
         .gift-wp-hero {
           position: relative;
           overflow: hidden;
+        }
+        .elementor-1184 .gift-wp-hero {
+          margin-top: -89px;
+        }
+        .elementor-1184 .gift-wp-hero .elementor-container {
+          padding-top: 89px;
         }
         .gift-wp-hero .elementor-background-overlay,
         .gift-wp-vision .elementor-background-overlay {
@@ -920,7 +1006,8 @@ export function WpStyles() {
           font: 500 14px/1.75 Raleway, sans-serif;
         }
         .gift-wp-subhero {
-          min-height: 351px;
+          margin-top: -89px;
+          min-height: calc(351px + 89px);
           display: flex;
           align-items: center;
           background-position: center;
@@ -939,6 +1026,7 @@ export function WpStyles() {
         .gift-wp-subhero > .e-con-inner {
           position: relative;
           z-index: 1;
+          padding-top: 89px;
         }
         .gift-wp-policy {
           padding: 100px 0;
@@ -1523,6 +1611,27 @@ export function WpStyles() {
           background: #2f9bb9;
           transform: translateY(-1px);
         }
+        .gift-wp-form .wpr-button:disabled {
+          opacity: .7;
+          cursor: not-allowed;
+          transform: none;
+        }
+        .gift-wp-form-feedback {
+          margin: 0;
+          padding: 12px 14px;
+          border-radius: 4px;
+          font: 600 13px/1.5 Montserrat, sans-serif;
+        }
+        .gift-wp-form-feedback-success {
+          background: rgba(47, 155, 185, .12);
+          color: #12324a;
+          border: 1px solid rgba(47, 155, 185, .35);
+        }
+        .gift-wp-form-feedback-error {
+          background: rgba(220, 38, 38, .08);
+          color: #b91c1c;
+          border: 1px solid rgba(220, 38, 38, .25);
+        }
         .gift-wp-map {
           padding: 0;
           background: #fff;
@@ -1988,8 +2097,7 @@ export function WpStyles() {
         }
         .gift-blog-article-cover {
           width: 100%;
-          max-height: 460px;
-          object-fit: cover;
+          height: auto;
           border-radius: 10px;
           margin-bottom: 36px;
         }
@@ -2040,6 +2148,23 @@ export function WpStyles() {
           }
           .gift-wp-mobile-menu {
             display: block;
+          }
+          .elementor-166 .elementor-element-927abb3 {
+            flex: 0 0 auto !important;
+            width: auto !important;
+            flex-direction: row !important;
+            justify-content: flex-end !important;
+            align-items: center !important;
+          }
+          .elementor-166 .elementor-element-98c3935 {
+            width: auto !important;
+          }
+          .elementor-166 .elementor-element-98c3935 > .elementor-widget-container {
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: flex-end !important;
+            align-items: center !important;
+            width: auto !important;
           }
           .gift-wp-two-column {
             grid-template-columns: 1fr;
