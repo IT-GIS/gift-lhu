@@ -59,7 +59,7 @@ export function WpStyles() {
           position: sticky;
           top: 0;
           z-index: 1000;
-          background: linear-gradient(135deg, #0d3453 0%, #1262a8 55%, #1a87c4 100%) !important;
+          background: linear-gradient(135deg, #0e303a 0%, #227589 55%, #30a4c5 100%) !important;
           backdrop-filter: blur(20px) saturate(180%) !important;
           -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
           border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
@@ -150,7 +150,7 @@ export function WpStyles() {
         .wpr-nav-menu .sub-menu {
           display: none; position: absolute; top: calc(100% + 10px); left: 50%;
           transform: translateX(-50%); min-width: 200px; list-style: none; margin: 0; padding: 6px;
-          background: linear-gradient(145deg, rgba(10,40,68,0.97) 0%, rgba(15,75,130,0.95) 100%);
+          background: linear-gradient(145deg, rgba(14,48,58,0.97) 0%, rgba(34,117,137,0.95) 100%);
           backdrop-filter: blur(24px) saturate(160%);
           -webkit-backdrop-filter: blur(24px) saturate(160%);
           border: 1px solid rgba(255,255,255,0.12);
@@ -449,6 +449,11 @@ export function WpStyles() {
           height: auto;
           display: block;
           object-fit: cover;
+        }
+        .elementor-1186 .elementor-element-3edfafc img {
+          border-radius: 20px;
+          border: 1px solid rgba(48, 164, 197, 0.25);
+          box-shadow: 0 20px 50px rgba(48, 164, 197, 0.18);
         }
         .gift-wp-about .elementor-widget-image img,
         .gift-wp-facilities .elementor-widget-image img,

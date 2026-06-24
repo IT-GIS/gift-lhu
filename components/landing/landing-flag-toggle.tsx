@@ -48,6 +48,7 @@ export function LandingFlagToggle() {
       onClick={() => selectLanguage(isIndonesian ? "en" : "id")}
       aria-label={isIndonesian ? "Switch to English" : "Ganti ke Bahasa Indonesia"}
       className="gift-lang-flag-btn"
+      suppressHydrationWarning
     >
       {isIndonesian ? (
         <IndonesiaFlag className="gift-lang-flag-icon" />
