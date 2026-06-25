@@ -107,6 +107,7 @@ export type LandingDictionary = {
   };
   keluhanBanding: {
     title: string;
+    comingSoon: string;
   };
   policy: {
     tabImpartiality: string;
@@ -273,6 +274,7 @@ export const dictionary: Record<Locale, LandingDictionary> = {
     },
     keluhanBanding: {
       title: "Keluhan dan Banding",
+      comingSoon: "Segera Hadir...",
     },
     policy: {
       tabImpartiality: "Kebijakan Ketidakberpihakan",
@@ -502,6 +504,7 @@ export const dictionary: Record<Locale, LandingDictionary> = {
     },
     keluhanBanding: {
       title: "Complaints and Appeals",
+      comingSoon: "Coming Soon...",
     },
     policy: {
       tabImpartiality: "Impartiality Policy",

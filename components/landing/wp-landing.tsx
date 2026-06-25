@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { Fragment } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import type { ComponentType, ReactNode } from "react";
 import {
   ArrowLeft,
   ArrowRight,
   Award,
   Building2,
+  ChevronDown,
   Handshake,
   Mail,
   MapPin,
@@ -545,7 +546,9 @@ export function KeluhanBandingLandingPage() {
           title={content.keluhanBanding.title}
         />
         <section className="gift-keluhan-content">
-          <div className="e-con-inner gift-keluhan-placeholder" />
+          <div className="e-con-inner gift-keluhan-placeholder">
+            <p className="gift-blog-empty">{content.keluhanBanding.comingSoon}</p>
+          </div>
         </section>
       </main>
     </WpLandingShell>
@@ -555,85 +558,141 @@ export function KeluhanBandingLandingPage() {
 function WpHeader({ activePage }: { activePage: ActivePage }) {
   const { content } = useLandingLanguage();
   const navItems = getNavItems(content);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (closeTimer.current) clearTimeout(closeTimer.current);
+    };
+  }, []);
+
+  const openDropdownNow = (label: string) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setOpenDropdown(label);
+  };
+
+  const closeDropdownSoon = (label: string) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => {
+      setOpenDropdown((current) => (current === label ? null : current));
+    }, 200);
+  };
+
+  const pillSurface = isScrolled
+    ? "border-white/70 bg-white/90 shadow-glass"
+    : "border-white/40 bg-white/70 shadow-[0_12px_40px_rgba(15,23,42,0.06)]";
 
   return (
-    <header data-elementor-type="wp-post" data-elementor-id="166" className="elementor elementor-166">
-      <div className="elementor-element elementor-element-bdb4fea e-flex e-con-boxed e-con e-parent">
-        <div className="e-con-inner">
-          <div className="elementor-element elementor-element-ae590bd e-con-full e-flex e-con e-child">
-            <div className="elementor-element elementor-element-a75d576 wpr-logo-position-center elementor-widget elementor-widget-wpr-logo">
-              <div className="elementor-widget-container">
-                <Link className="wpr-logo elementor-clearfix" href="/" aria-label="GIFT Laboratory">
-                  <picture className="wpr-logo-image">
-                    <img src="/landing/logo-gift3.png" alt="GIFT Laboratory" />
-                  </picture>
-                </Link>
-              </div>
-            </div>
-          </div>
-          <div className="elementor-element elementor-element-927abb3 e-con-full e-flex e-con e-child">
-            <div className="elementor-element elementor-element-98c3935 wpr-main-menu-align-right wpr-pointer-underline wpr-pointer-line-fx wpr-nav-menu-bp-mobile wpr-mobile-toggle-v1 elementor-widget elementor-widget-wpr-nav-menu">
-              <div className="elementor-widget-container">
-                <nav className="wpr-nav-menu-container wpr-nav-menu-horizontal">
-                  <ul id="menu-1-98c3935" className="wpr-nav-menu">
-                    {navItems.map((item) => {
-                      const isActive = navItemMatches(item, activePage, content);
-                      if (item.children) {
-                        return (
-                          <li key={item.label} className={`menu-item menu-item-has-children${isActive ? " current-menu-item" : ""}`}>
-                            <details className="gift-desktop-dropdown">
-                              <summary className={`wpr-menu-item wpr-pointer-item${isActive ? " wpr-active-menu-item" : ""}`}>
-                                {item.label}
-                              </summary>
-                              <ul className="sub-menu">
-                                {item.children.map((child) => (
-                                  <li key={child.href}>
-                                    <Link href={child.href}>{child.label}</Link>
-                                  </li>
-                                ))}
-                              </ul>
-                            </details>
-                          </li>
-                        );
-                      }
-                      return (
-                        <li key={item.href} className={`menu-item${isActive ? " current-menu-item current_page_item" : ""}`}>
-                          <Link className={`wpr-menu-item wpr-pointer-item${isActive ? " wpr-active-menu-item" : ""}`} href={item.href!}>
-                            {item.label}
+    <header className="fixed inset-x-0 top-4 z-50 px-4">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-2">
+        <div
+          className={`gift-floating-nav flex min-w-0 flex-1 items-center justify-between gap-3 rounded-full border px-6 py-2.5 backdrop-blur-xl transition-all duration-300 sm:px-8 ${pillSurface}`}
+        >
+        <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label={company.shortName}>
+          <img
+            src="/landing/logo-gift3.png"
+            alt={company.shortName}
+            className="h-10 w-10 rounded-full object-contain sm:h-11 sm:w-11"
+          />
+          <span className="hidden whitespace-nowrap text-base font-bold text-slate-900 sm:inline">{company.shortName}</span>
+        </Link>
+
+        <nav className="hidden items-center gap-1 md:flex">
+          {navItems.map((item) => {
+            const isActive = navItemMatches(item, activePage, content);
+            if (item.children) {
+              const isOpen = openDropdown === item.label;
+              return (
+                <div
+                  key={item.label}
+                  className="relative"
+                  onMouseEnter={() => openDropdownNow(item.label)}
+                  onMouseLeave={() => closeDropdownSoon(item.label)}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenDropdown((current) => (current === item.label ? null : item.label))}
+                    className={`appearance-none border-0 flex items-center gap-1 whitespace-nowrap !rounded-full px-4 py-2.5 text-sm font-medium transition focus:outline-none focus-visible:outline-none focus-visible:bg-primary/10 focus-visible:text-indigo-500 ${
+                      isActive ? "bg-indigo-50 text-indigo-500 font-semibold" : isOpen ? "bg-primary/10 text-indigo-500" : "!text-slate-600 hover:bg-primary/10 hover:text-indigo-500"
+                    }`}
+                  >
+                    {item.label}
+                    <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
+                  </button>
+                  {/* Invisible hover-bridge (pt-2) keeps the cursor over a hoverable box all the way from the
+                      button into the panel below, so there's no dead gap that closes the dropdown early. */}
+                  <div
+                    className={`absolute left-1/2 top-full z-20 w-52 -translate-x-1/2 pt-2 transition-all duration-200 ease-out ${
+                      isOpen ? "translate-y-0 opacity-100 pointer-events-auto" : "-translate-y-1 opacity-0 pointer-events-none"
+                    }`}
+                  >
+                    <ul className="overflow-hidden rounded-2xl border border-slate-100 bg-white/95 p-1.5 shadow-glass backdrop-blur-xl">
+                      {item.children.map((child) => (
+                        <li key={child.href}>
+                          <Link
+                            href={child.href}
+                            onClick={() => setOpenDropdown(null)}
+                            className="block whitespace-nowrap rounded-xl px-3 py-2 text-sm text-slate-600 transition hover:bg-primary/10 hover:text-indigo-500 active:bg-secondary/80 active:text-indigo-500 focus:outline-none focus-visible:outline-none focus-visible:bg-primary/10 focus-visible:text-indigo-500"
+                          >
+                            {child.label}
                           </Link>
                         </li>
-                      );
-                    })}
-                  </ul>
-                </nav>
-                <LandingFlagToggle />
-                <details className="gift-wp-mobile-menu">
-                  <summary aria-label="Menu">
-                    <span />
-                    <span />
-                    <span />
-                  </summary>
-                  <div>
-                    {navItems.map((item) =>
-                      item.children ? (
-                        <Fragment key={item.label}>
-                          <span className="gift-mobile-parent">{item.label}</span>
-                          {item.children.map((child) => (
-                            <Link key={child.href} href={child.href} className="gift-mobile-child">
-                              {child.label}
-                            </Link>
-                          ))}
-                        </Fragment>
-                      ) : (
-                        <Link key={item.href} href={item.href!}>{item.label}</Link>
-                      )
-                    )}
+                      ))}
+                    </ul>
                   </div>
-                </details>
-              </div>
-            </div>
+                </div>
+              );
+            }
+            return (
+              <Link
+                key={item.href}
+                href={item.href!}
+                className={`whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-medium transition active:bg-secondary/80 active:text-indigo-500 focus:outline-none focus-visible:outline-none focus-visible:bg-primary/10 focus-visible:text-indigo-500 ${
+                  isActive ? "bg-indigo-50 text-indigo-500 font-semibold" : "text-slate-600 hover:bg-primary/10 hover:text-indigo-500"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+      </div>
+
+      <div className={`gift-floating-nav flex shrink-0 items-center gap-2 rounded-full border px-2.5 py-1.5 backdrop-blur-xl transition-all duration-300 ${pillSurface}`}>
+        <LandingFlagToggle />
+        <details className="gift-wp-mobile-menu group relative md:hidden">
+          <summary aria-label="Menu">
+            <span />
+            <span />
+            <span />
+          </summary>
+          <div>
+            {navItems.map((item) =>
+              item.children ? (
+                <Fragment key={item.label}>
+                  <span className="gift-mobile-parent">{item.label}</span>
+                  {item.children.map((child) => (
+                    <Link key={child.href} href={child.href} className="gift-mobile-child">
+                      {child.label}
+                    </Link>
+                  ))}
+                </Fragment>
+              ) : (
+                <Link key={item.href} href={item.href!}>{item.label}</Link>
+              )
+            )}
           </div>
-        </div>
+        </details>
+      </div>
       </div>
     </header>
   );
@@ -839,9 +898,7 @@ function SubpageHero({
   return (
     <section className={`elementor-element ${sectionClass} e-flex e-con-boxed e-con e-parent gift-wp-subhero`}>
       <div className="e-con-inner">
-        <ScrollFade variant="fade">
-          <Heading className={headingClass}>{title}</Heading>
-        </ScrollFade>
+        <Heading className={headingClass}>{title}</Heading>
       </div>
     </section>
   );
@@ -921,12 +978,12 @@ function ClientStrip() {
         <ScrollFade variant="up">
           <Heading className="elementor-element-b891f8c">{content.clients.heading}</Heading>
         </ScrollFade>
-        <div className="elementor-element elementor-element-974875d e-grid e-con-boxed e-con e-child">
-          {clientLogos.map((logo, index) => (
-            <ScrollFade key={logo.src} variant="scale" delay={index * 0.04}>
-              <img src={logo.src} alt={logo.alt} />
-            </ScrollFade>
-          ))}
+        <div className="gift-wp-client-marquee">
+          <div className="gift-wp-client-track">
+            {[...clientLogos, ...clientLogos].map((logo, index) => (
+              <img key={`${logo.src}-${index}`} src={logo.src} alt={logo.alt} />
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -55,133 +55,37 @@ export function WpStyles() {
           background-image: url("/landing/subpage-cover.jpg") !important;
         }
         .gift-keluhan-content { min-height: 200px; }
-        .elementor-166 {
-          position: sticky;
-          top: 0;
-          z-index: 1000;
-          background: linear-gradient(135deg, #0e303a 0%, #227589 55%, #30a4c5 100%) !important;
-          backdrop-filter: blur(20px) saturate(180%) !important;
-          -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
-          box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2) !important;
+        .gift-floating-nav a,
+        .gift-floating-nav button {
+          -webkit-tap-highlight-color: transparent;
         }
-        .elementor-166 .e-con-inner,
-        .gift-wp-section > .e-con-inner,
-        .elementor-section > .elementor-container {
-          width: min(1200px, calc(100% - 40px));
-          margin: 0 auto;
+        .gift-floating-nav nav button,
+        .gift-floating-nav nav a {
+          border: none !important;
         }
-        .elementor-166 .elementor-element-bdb4fea > .e-con-inner {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          min-height: 89px;
+        .gift-floating-nav nav button:focus,
+        .gift-floating-nav nav button:focus-visible,
+        .gift-floating-nav nav a:focus,
+        .gift-floating-nav nav a:focus-visible {
+          outline: none;
+          box-shadow: none;
         }
-        .elementor-166 .wpr-logo-image img {
-          display: block;
-          width: 140px !important;
-          max-width: 140px !important;
-          height: auto !important;
-          object-fit: contain;
+        .gift-floating-nav nav a:hover,
+        .gift-floating-nav nav button:hover,
+        .gift-floating-nav nav a:focus-visible,
+        .gift-floating-nav nav button:focus-visible {
+          background-color: rgba(40, 157, 185, 0.1) !important;
+          color: #289db9 !important;
         }
-        .elementor-166 .wpr-logo,
-        .elementor-166 .wpr-logo-image {
-          display: block;
-          width: 140px !important;
-          max-width: 140px !important;
-          overflow: hidden;
-        }
-        .elementor-166 .wpr-nav-menu {
-          display: flex;
-          align-items: center;
-          gap: 28px;
-          margin: 0;
-          padding: 0;
-          list-style: none;
-        }
-        .elementor-166 .wpr-menu-item {
-          text-decoration: none;
-        }
-        .elementor-166 .wpr-nav-menu .wpr-menu-item,
-        .elementor-166 .wpr-nav-menu .menu-item-has-children > span.wpr-menu-item {
-          display: inline-flex;
-          align-items: center;
-          white-space: nowrap;
-          padding: 8px 16px;
-          background: transparent;
-          border: 1px solid transparent;
-          border-radius: 8px;
-          color: rgba(255, 255, 255, 0.88) !important;
-          font-family: Poppins, sans-serif;
-          font-size: 14px;
-          font-weight: 500;
-          text-shadow: none;
-          text-decoration: none;
-          transition: background 0.2s, border-color 0.2s, color 0.2s;
-        }
-        .elementor-166 .wpr-nav-menu a.wpr-menu-item:hover,
-        .elementor-166 .wpr-nav-menu .menu-item-has-children:hover > span.wpr-menu-item {
-          background: rgba(255, 255, 255, 0.12);
-          border-color: rgba(255, 255, 255, 0.28);
-          color: #fff !important;
-        }
-        .elementor-166 .wpr-nav-menu .wpr-active-menu-item {
-          background: rgba(255, 255, 255, 0.18) !important;
-          border-color: rgba(255, 255, 255, 0.38) !important;
-          color: #fff !important;
-          font-weight: 600 !important;
-        }
-        .wpr-nav-menu .menu-item-has-children { position: static; }
-        .gift-desktop-dropdown { position: relative; }
-        .gift-desktop-dropdown > summary {
-          list-style: none;
-          cursor: pointer;
-        }
-        .gift-desktop-dropdown > summary::-webkit-details-marker { display: none; }
-        .gift-desktop-dropdown > summary::marker { display: none; }
-        @keyframes gift-dropdown-in {
-          from { opacity: 0; transform: translateX(-50%) translateY(-8px); }
-          to   { opacity: 1; transform: translateX(-50%) translateY(0); }
-        }
-        .gift-desktop-dropdown[open] > .sub-menu {
-          display: block;
-          animation: gift-dropdown-in 0.18s ease-out;
-        }
-        .wpr-nav-menu .sub-menu {
-          display: none; position: absolute; top: calc(100% + 10px); left: 50%;
-          transform: translateX(-50%); min-width: 200px; list-style: none; margin: 0; padding: 6px;
-          background: linear-gradient(145deg, rgba(14,48,58,0.97) 0%, rgba(34,117,137,0.95) 100%);
-          backdrop-filter: blur(24px) saturate(160%);
-          -webkit-backdrop-filter: blur(24px) saturate(160%);
-          border: 1px solid rgba(255,255,255,0.12);
-          border-radius: 12px;
-          box-shadow: 0 20px 60px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.06);
-          z-index: 200;
-        }
-        .wpr-nav-menu .sub-menu li a {
-          display: block; padding: 10px 16px; color: rgba(255,255,255,0.82); text-decoration: none;
-          font-family: Poppins, sans-serif; font-size: 14px; border-radius: 8px;
-          white-space: nowrap; transition: background .15s, color .15s;
-        }
-        .wpr-nav-menu .sub-menu li a:hover {
-          background: rgba(255,255,255,0.12);
-          color: #fff;
-        }
-        .gift-mobile-parent {
-          display: block; padding: 10px 12px; color: #999;
-          font-family: Poppins, sans-serif; font-weight: 600;
-          font-size: 12px; text-transform: uppercase; letter-spacing: .05em;
-        }
-        .gift-mobile-child { padding-left: 24px !important; font-size: 14px !important; color: #555 !important; }
         .gift-wp-mobile-menu {
-          display: none;
           position: relative;
         }
         .gift-wp-mobile-menu summary {
           display: grid;
           gap: 4px;
-          width: 44px;
-          height: 44px;
+          width: 40px;
+          height: 40px;
+          border-radius: 9999px;
           place-content: center;
           cursor: pointer;
           list-style: none;
@@ -191,55 +95,69 @@ export function WpStyles() {
         }
         .gift-wp-mobile-menu summary span {
           display: block;
-          width: 24px;
+          width: 20px;
           height: 2px;
-          background: #0081ff;
+          background: #1e293b;
+          border-radius: 1px;
         }
         .gift-wp-mobile-menu div {
           position: absolute;
           right: 0;
-          top: 100%;
+          top: calc(100% + 10px);
           display: grid;
           width: 220px;
-          gap: 1px;
+          gap: 2px;
           padding: 10px;
-          background: #fff;
-          border: 1px solid #e8e8e8;
-          box-shadow: 0 18px 40px rgba(0, 0, 0, .12);
+          background: rgba(255, 255, 255, 0.97);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(15, 23, 42, 0.08);
+          border-radius: 16px;
+          box-shadow: 0 18px 40px rgba(15, 23, 42, .14);
         }
         .gift-wp-mobile-menu a {
           padding: 10px 12px;
-          color: #333;
+          border-radius: 10px;
+          color: #334155;
           text-decoration: none;
           font-family: Poppins, sans-serif;
           font-weight: 500;
+          transition: background .15s, color .15s;
         }
-        .elementor-166 .elementor-element-98c3935 > .elementor-widget-container {
-          display: flex;
-          align-items: center;
-          gap: 18px;
+        .gift-wp-mobile-menu a:hover {
+          background: rgba(15, 23, 42, 0.06);
+          color: #0f172a;
         }
+        .gift-mobile-parent {
+          display: block; padding: 10px 12px; color: #94a3b8;
+          font-family: Poppins, sans-serif; font-weight: 600;
+          font-size: 12px; text-transform: uppercase; letter-spacing: .05em;
+        }
+        .gift-mobile-child { padding-left: 24px !important; font-size: 14px !important; }
         .gift-lang-flag-btn {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          align-self: flex-start;
           flex: 0 0 auto;
-          padding: 6px;
-          border: 1px solid rgba(255, 255, 255, .28);
-          border-radius: 8px;
-          background: rgba(255, 255, 255, .12);
+          padding: 7px;
+          border: none;
+          border-radius: 9999px;
+          background: transparent;
           cursor: pointer;
-          transition: background .2s, border-color .2s;
+          transition: background .2s;
         }
         .gift-lang-flag-btn:hover {
-          background: rgba(255, 255, 255, .18);
-          border-color: rgba(255, 255, 255, .38);
+          background: rgba(15, 23, 42, .06);
+        }
+        .gift-lang-flag-btn:focus,
+        .gift-lang-flag-btn:focus-visible {
+          outline: none;
+          background: rgba(15, 23, 42, .06);
         }
         .gift-lang-flag-icon {
           display: block;
-          width: 26px;
-          height: 16px;
+          width: 24px;
+          height: 15px;
           border-radius: 2px;
         }
         .gift-wp-hero {
@@ -1061,6 +979,9 @@ export function WpStyles() {
           z-index: 1;
           padding-top: 89px;
         }
+        .gift-wp-subhero .elementor-heading-title {
+          color: #fff !important;
+        }
         .gift-wp-policy {
           padding: 100px 0;
           background:
@@ -1238,24 +1159,29 @@ export function WpStyles() {
           height: 1px;
           background: #626c8d;
         }
-        .elementor-1185 .elementor-element.elementor-element-974875d {
-          display: grid;
-          grid-template-columns: repeat(6, minmax(0, 1fr));
-          gap: 50px;
-          align-items: center;
-          justify-items: center;
+        .gift-wp-client-marquee {
           margin-top: 40px;
+          overflow: hidden;
         }
-        .elementor-1185 .elementor-element.elementor-element-974875d img {
+        .gift-wp-client-track {
+          display: flex;
+          align-items: center;
+          gap: 64px;
+          width: max-content;
+          animation: gift-client-marquee 26s linear infinite;
+        }
+        .gift-wp-client-marquee:hover .gift-wp-client-track {
+          animation-play-state: paused;
+        }
+        .gift-wp-client-track img {
           max-height: 90px;
-          max-width: 100%;
+          width: auto;
+          flex-shrink: 0;
           object-fit: contain;
-          margin: 0 auto;
-          transition: transform .25s ease, opacity .25s ease;
         }
-        .elementor-1185 .elementor-element.elementor-element-974875d img:hover {
-          opacity: .92;
-          transform: translateY(-4px);
+        @keyframes gift-client-marquee {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
         }
         .gift-wp-contact-grid {
           display: grid !important;
@@ -2088,7 +2014,7 @@ export function WpStyles() {
           color: rgba(255,255,255,.72);
         }
         .gift-blog-detail {
-          padding: 64px 0 110px;
+          padding: 89px 0 110px;
           background: #f4f8fb;
         }
         .gift-blog-detail-wrap {
@@ -2176,37 +2102,6 @@ export function WpStyles() {
           margin-top: 36px;
         }
         @media (max-width: 1024px) {
-          .elementor-166 .wpr-nav-menu-container {
-            display: none;
-          }
-          .gift-wp-mobile-menu {
-            display: block;
-          }
-          .elementor-166 .elementor-element-927abb3 {
-            flex: 0 0 auto !important;
-            width: auto !important;
-            flex-direction: row !important;
-            justify-content: flex-end !important;
-            align-items: center !important;
-          }
-          .elementor-166 .elementor-element-98c3935 {
-            width: auto !important;
-          }
-          .elementor-166 .elementor-element-98c3935 > .elementor-widget-container {
-            display: flex !important;
-            flex-direction: row !important;
-            justify-content: flex-end !important;
-            align-items: center !important;
-            width: auto !important;
-            gap: 12px !important;
-          }
-          .gift-lang-flag-icon {
-            width: 22px;
-            height: 14px;
-          }
-          .gift-lang-flag-btn {
-            align-self: center;
-          }
           .gift-wp-two-column {
             grid-template-columns: 1fr;
           }
@@ -2289,20 +2184,8 @@ export function WpStyles() {
           .gift-wp-contact-band .elementor-element-5771a84 {
             padding: 0;
           }
-          .elementor-1185 .elementor-element.elementor-element-974875d {
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-          }
         }
         @media (max-width: 767px) {
-          .elementor-166 .elementor-element-bdb4fea > .e-con-inner {
-            min-height: 76px;
-          }
-          .elementor-166 .wpr-logo,
-          .elementor-166 .wpr-logo-image,
-          .elementor-166 .wpr-logo-image img {
-            width: 104px !important;
-            max-width: 104px !important;
-          }
           .gift-wp-service-grid {
             grid-template-columns: 1fr !important;
           }
@@ -2328,10 +2211,6 @@ export function WpStyles() {
           .gift-wp-quote .elementor-heading-title {
             font-size: 30px;
             line-height: 1.1;
-          }
-          .elementor-1185 .elementor-element.elementor-element-974875d {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 30px 24px;
           }
           .gift-wp-contact-intro {
             text-align: left;
