@@ -85,12 +85,6 @@ export function WpStyles() {
           color: #0a2540;
           font: 700 34px/1.2 Poppins, sans-serif;
         }
-        .gift-appeal-grid {
-          display: grid;
-          grid-template-columns: minmax(0, 1fr);
-          gap: 40px;
-          align-items: start;
-        }
         .gift-appeal-flow-wrap {
           border-radius: 28px;
           background: linear-gradient(165deg, #0a2540, #0f3a5c);
@@ -105,12 +99,19 @@ export function WpStyles() {
         }
         .gift-appeal-flow-item {
           display: flex;
-          align-items: flex-start;
-          gap: 14px;
-          padding: 18px 20px;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          gap: 10px;
+          padding: 20px 22px;
           border-radius: 16px;
           background: #fff;
           box-shadow: 0 10px 28px rgba(0, 0, 0, .18);
+          transition: transform .25s ease, box-shadow .25s ease;
+        }
+        .gift-appeal-flow-item:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 16px 36px rgba(0, 0, 0, .26);
         }
         .gift-appeal-flow-arrow {
           display: flex;
@@ -147,74 +148,100 @@ export function WpStyles() {
         }
         .gift-appeal-flow-content {
           display: grid;
-          gap: 3px;
-        }
-        .gift-appeal-flow-role {
-          color: #2f9bb9;
-          font: 800 10px/1.2 Poppins, sans-serif;
-          text-transform: uppercase;
-          letter-spacing: .08em;
+          justify-items: center;
+          text-align: center;
+          gap: 4px;
         }
         .gift-appeal-flow-title {
           margin: 0;
           color: #0a2540;
-          font: 700 15px/1.3 Poppins, sans-serif;
+          font: 700 22px/1.3 Poppins, sans-serif;
         }
-        .gift-appeal-flow-desc {
-          margin: 2px 0 0;
-          color: #64748b;
-          font: 500 13px/1.6 Raleway, sans-serif;
+        .gift-appeal-cta-card {
+          width: fit-content;
+          max-width: 100%;
+          margin: 24px auto 0;
+          padding: 18px 28px;
         }
-        .gift-appeal-accordion {
-          border: 1px solid rgba(15, 23, 42, .08);
-          border-radius: 20px;
-          background: #fff;
-          box-shadow: 0 16px 40px rgba(10, 37, 64, .08);
-          overflow: hidden;
+        @media (max-width: 640px) {
+          .gift-appeal-cta-card {
+            padding: 14px 18px;
+          }
         }
-        .gift-appeal-accordion-item {
-          border-bottom: 1px solid rgba(15, 23, 42, .08);
+        .gift-appeal-cta-row {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: center;
+          gap: 20px;
         }
-        .gift-appeal-accordion-item:last-child {
-          border-bottom: none;
+        .gift-appeal-cta-btn {
+          margin-block-end: 0 !important;
         }
-        .gift-appeal-accordion-summary {
+        .gift-appeal-cta-btn .wpr-button-wrap {
+          display: inline-flex;
+          width: auto;
+        }
+        .gift-appeal-cta-btn .wpr-button {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          width: auto;
+          padding: 14px 30px;
+          border-radius: 999px;
+          background: linear-gradient(135deg, #2f9bb9, #0f6d91);
+          box-shadow: 0 10px 24px rgba(47, 155, 185, .32);
+          transition: transform .25s ease, box-shadow .25s ease;
+        }
+        .gift-appeal-cta-btn .wpr-button:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 14px 30px rgba(47, 155, 185, .4);
+        }
+        .gift-appeal-cta-btn .wpr-button-content {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+        }
+        .gift-appeal-cta-btn .wpr-button-text {
+          width: auto;
+          color: #fff;
+          font: 600 15px Poppins, sans-serif;
+        }
+        .gift-appeal-cta-btn .wpr-button-icon svg {
+          width: 16px;
+          height: 16px;
+          color: #fff;
+        }
+        .gift-appeal-cta-social {
           display: flex;
           align-items: center;
-          justify-content: space-between;
-          gap: 12px;
-          padding: 16px 20px;
-          cursor: pointer;
-          list-style: none;
-          color: #0a2540;
-          font: 700 14px/1.3 Poppins, sans-serif;
+          gap: 14px;
         }
-        .gift-appeal-accordion-summary::-webkit-details-marker {
-          display: none;
+        .gift-appeal-cta-icon {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          color: #fff;
+          box-shadow: 0 10px 22px rgba(10, 37, 64, .18);
+          transition: transform .25s ease, box-shadow .25s ease;
         }
-        .gift-appeal-accordion-chevron {
-          flex: 0 0 auto;
-          width: 18px;
-          height: 18px;
-          color: #2f9bb9;
-          transition: transform .25s ease;
+        .gift-appeal-cta-icon:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 14px 28px rgba(10, 37, 64, .26);
         }
-        .gift-appeal-accordion-item[open] .gift-appeal-accordion-chevron {
-          transform: rotate(180deg);
+        .gift-appeal-cta-icon svg {
+          width: 22px;
+          height: 22px;
         }
-        .gift-appeal-accordion-body {
-          padding: 0 20px 18px;
-          color: #555;
-          font: 500 14px/1.75 Raleway, sans-serif;
+        .gift-appeal-cta-icon-wa {
+          background: #25d366;
         }
-        .gift-appeal-accordion-body p {
-          margin: 0;
-        }
-        .gift-appeal-accordion-body ul {
-          display: grid;
-          gap: 8px;
-          margin: 0;
-          padding: 0 0 0 18px;
+        .gift-appeal-cta-icon-mail {
+          background: linear-gradient(135deg, #2f9bb9, #0f6d91);
         }
         .gift-floating-nav a,
         .gift-floating-nav button {
@@ -244,8 +271,8 @@ export function WpStyles() {
         .gift-wp-mobile-menu summary {
           display: grid;
           gap: 4px;
-          width: 40px;
-          height: 40px;
+          width: 48px;
+          height: 48px;
           border-radius: 9999px;
           place-content: center;
           cursor: pointer;
@@ -256,8 +283,8 @@ export function WpStyles() {
         }
         .gift-wp-mobile-menu summary span {
           display: block;
-          width: 20px;
-          height: 2px;
+          width: 24px;
+          height: 2.5px;
           background: #1e293b;
           border-radius: 1px;
         }
@@ -277,7 +304,7 @@ export function WpStyles() {
           box-shadow: 0 18px 40px rgba(15, 23, 42, .14);
         }
         .gift-wp-mobile-menu a {
-          padding: 10px 12px;
+          padding: 12px 14px;
           border-radius: 10px;
           color: #334155;
           text-decoration: none;
@@ -290,7 +317,7 @@ export function WpStyles() {
           color: #0f172a;
         }
         .gift-mobile-parent {
-          display: block; padding: 10px 12px; color: #94a3b8;
+          display: block; padding: 12px 14px; color: #94a3b8;
           font-family: Poppins, sans-serif; font-weight: 600;
           font-size: 12px; text-transform: uppercase; letter-spacing: .05em;
         }
@@ -300,7 +327,7 @@ export function WpStyles() {
           align-items: center;
           justify-content: center;
           flex: 0 0 auto;
-          padding: 7px;
+          padding: 9px;
           border: none;
           border-radius: 9999px;
           background: transparent;
@@ -317,8 +344,8 @@ export function WpStyles() {
         }
         .gift-lang-flag-icon {
           display: block;
-          width: 24px;
-          height: 15px;
+          width: 30px;
+          height: 19px;
           border-radius: 2px;
         }
         .gift-wp-hero {
@@ -1627,6 +1654,12 @@ export function WpStyles() {
         .gift-wp-footer-contact li > a.gift-wp-contact-link:hover {
           color: #82d6ed;
         }
+        .gift-wp-footer-contact li {
+          align-items: center;
+        }
+        .gift-wp-footer-contact li > a.gift-wp-contact-link {
+          align-items: center;
+        }
         .gift-wp-contact-credentials {
           display: flex;
           flex-wrap: wrap;
@@ -1794,10 +1827,10 @@ export function WpStyles() {
           gap: 16px;
         }
         .gift-footer-heading {
-          font: 700 13px/1 Poppins, sans-serif;
+          font: 700 12px/1 Poppins, sans-serif;
           letter-spacing: 0.1em;
           text-transform: uppercase;
-          color: #fff;
+          color: #94a3b8;
           margin-bottom: 4px;
         }
         .gift-footer-desc {
@@ -1805,6 +1838,32 @@ export function WpStyles() {
           font-size: 15px;
           line-height: 1.65;
           margin: 0;
+        }
+        .gift-footer-social {
+          display: flex;
+          gap: 10px;
+          margin-top: 4px;
+        }
+        .gift-footer-social-link {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          border: 1px solid rgba(255, 255, 255, .16);
+          background: rgba(255, 255, 255, .06);
+          color: rgba(255, 255, 255, .75);
+          transition: color .2s ease, background .2s ease, transform .2s ease;
+        }
+        .gift-footer-social-link:hover {
+          color: #82d6ed;
+          background: rgba(130, 214, 237, .14);
+          transform: translateY(-2px);
+        }
+        .gift-footer-social-link svg {
+          width: 18px;
+          height: 18px;
         }
         .elementor-222 .wpr-logo-image img {
           max-width: 240px;
@@ -1817,6 +1876,15 @@ export function WpStyles() {
         }
         .elementor-222 a:hover {
           color: #fff;
+        }
+        .elementor-222 a.elementor-icon-list-text {
+          transition: color .2s ease;
+        }
+        .elementor-222 a.elementor-icon-list-text:hover {
+          color: #82d6ed;
+        }
+        .gift-footer-grid > .gift-footer-col:last-child .gift-wp-footer-contact {
+          gap: 8px;
         }
         .gift-footer-divider {
           border: none;

@@ -14,6 +14,7 @@ import {
   FileCheck,
   FileSearch,
   Handshake,
+  Instagram,
   Mail,
   MapPin,
   Phone,
@@ -559,21 +560,20 @@ export function KeluhanBandingLandingPage() {
 const APPEAL_FLOW_ICONS = [UserRound, ClipboardCheck, Users, FileSearch, FileCheck, Mail];
 
 function AppealHandlingSection() {
-  const { content } = useLandingLanguage();
+  const { content, language } = useLandingLanguage();
   const { keluhanBanding } = content;
+  const whatsappLink = getWhatsappLink(language);
 
   return (
     <section className="gift-wp-section gift-appeal-section">
       <div className="e-con-inner">
         <ScrollFade variant="up">
           <div className="gift-appeal-header">
-            <span className="gift-blog-tag">{keluhanBanding.documentLabel}</span>
             <h2 className="gift-appeal-title">{keluhanBanding.sectionTitle}</h2>
           </div>
         </ScrollFade>
-        <div className="gift-appeal-card">
-        <div className="gift-appeal-grid">
-          <ScrollFade variant="left">
+        <ScrollFade variant="left">
+          <div className="gift-appeal-card">
             <div className="gift-appeal-flow-wrap">
               <ul className="gift-appeal-flow">
                 {keluhanBanding.flow.map((step, index) => {
@@ -586,9 +586,7 @@ function AppealHandlingSection() {
                           <Icon className="gift-wp-lucide" />
                         </div>
                         <div className="gift-appeal-flow-content">
-                          <span className="gift-appeal-flow-role">{step.role}</span>
                           <h3 className="gift-appeal-flow-title">{step.title}</h3>
-                          <p className="gift-appeal-flow-desc">{step.description}</p>
                         </div>
                       </li>
                       {!isLast && (
@@ -602,32 +600,35 @@ function AppealHandlingSection() {
                 })}
               </ul>
             </div>
-          </ScrollFade>
-          <ScrollFade variant="right">
-            <div className="gift-appeal-accordion">
-              {keluhanBanding.accordion.map((item) => (
-                <details key={item.label} className="gift-appeal-accordion-item">
-                  <summary className="gift-appeal-accordion-summary">
-                    {item.label}
-                    <ChevronDown className="gift-appeal-accordion-chevron" />
-                  </summary>
-                  <div className="gift-appeal-accordion-body">
-                    {item.items.length > 1 ? (
-                      <ul>
-                        {item.items.map((line) => (
-                          <li key={line}>{line}</li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p>{item.items[0]}</p>
-                    )}
-                  </div>
-                </details>
-              ))}
+          </div>
+        </ScrollFade>
+        <ScrollFade variant="up">
+          <div className="gift-appeal-card gift-appeal-cta-card">
+            <div className="gift-appeal-cta-row">
+              <WpButton className="elementor-element-appeal-cta gift-appeal-cta-btn" href="/contact">
+                {content.servicesSection.contactCta}
+              </WpButton>
+              <div className="gift-appeal-cta-social">
+                <a
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="gift-appeal-cta-icon gift-appeal-cta-icon-wa"
+                  aria-label="WhatsApp"
+                >
+                  <WhatsAppIcon />
+                </a>
+                <a
+                  href={`mailto:${company.email}`}
+                  className="gift-appeal-cta-icon gift-appeal-cta-icon-mail"
+                  aria-label="Email"
+                >
+                  <Mail className="gift-wp-lucide" />
+                </a>
+              </div>
             </div>
-          </ScrollFade>
-        </div>
-        </div>
+          </div>
+        </ScrollFade>
       </div>
     </section>
   );
@@ -673,15 +674,15 @@ function WpHeader({ activePage }: { activePage: ActivePage }) {
     <header className="fixed inset-x-0 top-4 z-50 px-4">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-2">
         <div
-          className={`gift-floating-nav flex min-w-0 flex-1 items-center justify-between gap-3 rounded-full border px-6 py-2.5 backdrop-blur-xl transition-all duration-300 sm:px-8 ${pillSurface}`}
+          className={`gift-floating-nav flex min-w-0 flex-1 items-center justify-between gap-3 rounded-full border px-7 py-3 backdrop-blur-xl transition-all duration-300 sm:px-9 ${pillSurface}`}
         >
-        <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label={company.shortName}>
+        <Link href="/" className="flex shrink-0 items-center gap-3" aria-label={company.shortName}>
           <img
             src="/landing/logo-gift3.png"
             alt={company.shortName}
-            className="h-10 w-10 rounded-full object-contain sm:h-11 sm:w-11"
+            className="h-12 w-12 rounded-full object-contain sm:h-14 sm:w-14"
           />
-          <span className="hidden whitespace-nowrap text-base font-bold text-slate-900 sm:inline">{company.shortName}</span>
+          <span className="hidden whitespace-nowrap text-lg font-bold text-slate-900 sm:inline sm:text-xl">{company.shortName}</span>
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
@@ -745,7 +746,7 @@ function WpHeader({ activePage }: { activePage: ActivePage }) {
         </nav>
       </div>
 
-      <div className={`gift-floating-nav flex shrink-0 items-center gap-2 rounded-full border px-2.5 py-1.5 backdrop-blur-xl transition-all duration-300 ${pillSurface}`}>
+      <div className={`gift-floating-nav flex shrink-0 items-center gap-2 rounded-full border px-3 py-2 backdrop-blur-xl transition-all duration-300 ${pillSurface}`}>
         <LandingFlagToggle />
         <details className="gift-wp-mobile-menu group relative md:hidden">
           <summary aria-label="Menu">
@@ -808,6 +809,17 @@ function WpFooter() {
                 </picture>
               </Link>
               <p className="gift-footer-desc">{content.companyDescription}</p>
+              <div className="gift-footer-social">
+                <a
+                  href="https://www.instagram.com/ptglobalinspeksiforensikteknik/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="gift-footer-social-link"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="gift-wp-lucide" />
+                </a>
+              </div>
             </ScrollFade>
           </div>
           <div className="gift-footer-col">
@@ -1302,6 +1314,14 @@ function CheckIcon({ className }: { className?: string } = {}) {
   return (
     <svg aria-hidden="true" className={`e-font-icon-svg e-fas-check${className ? ` ${className}` : ""}`} viewBox="0 0 512 512">
       <path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z" />
+    </svg>
+  );
+}
+
+function WhatsAppIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.149-.149.298-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.371-.05-.52-.099-.149-.668-1.612-.917-2.207-.242-.579-.487-.5-.668-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.03 3.1 4.927 4.224 2.898 1.123 2.898.748 3.421.7.523-.049 1.758-.72 2.006-1.413.247-.694.247-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.05 21.785h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.981.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885zm8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 0 0 5.741 1.464h.005c6.554 0 11.89-5.336 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
     </svg>
   );
 }

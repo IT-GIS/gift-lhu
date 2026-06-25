@@ -47,6 +47,7 @@ const contactCardsBase = [
     key: "email" as const,
     description: company.email,
     icon: Mail,
+    href: `mailto:${company.email}`,
   },
   {
     key: "phone" as const,
