@@ -54,7 +54,168 @@ export function WpStyles() {
         .elementor-1160 .elementor-element.elementor-element-4e53d5c:not(.elementor-motion-effects-element-type-background) {
           background-image: url("/landing/subpage-cover.jpg") !important;
         }
-        .gift-keluhan-content { min-height: 200px; }
+        .gift-appeal-section {
+          background: #fff;
+        }
+        .gift-appeal-section .e-con-inner {
+          width: min(1100px, calc(100% - 40px));
+          margin: 0 auto;
+        }
+        .gift-appeal-card {
+          border: 1px solid rgba(15, 23, 42, .08);
+          border-radius: 24px;
+          background: #fff;
+          box-shadow: 0 20px 60px rgba(10, 37, 64, .08);
+          padding: 32px;
+        }
+        @media (max-width: 640px) {
+          .gift-appeal-card {
+            padding: 20px;
+          }
+        }
+        .gift-appeal-header {
+          display: grid;
+          justify-items: center;
+          gap: 12px;
+          margin-bottom: 48px;
+          text-align: center;
+        }
+        .gift-appeal-title {
+          margin: 0;
+          color: #0a2540;
+          font: 700 34px/1.2 Poppins, sans-serif;
+        }
+        .gift-appeal-grid {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr);
+          gap: 40px;
+          align-items: start;
+        }
+        .gift-appeal-flow-wrap {
+          border-radius: 28px;
+          background: linear-gradient(165deg, #0a2540, #0f3a5c);
+          padding: 32px;
+        }
+        .gift-appeal-flow {
+          display: grid;
+          gap: 4px;
+          margin: 0;
+          padding: 0;
+          list-style: none;
+        }
+        .gift-appeal-flow-item {
+          display: flex;
+          align-items: flex-start;
+          gap: 14px;
+          padding: 18px 20px;
+          border-radius: 16px;
+          background: #fff;
+          box-shadow: 0 10px 28px rgba(0, 0, 0, .18);
+        }
+        .gift-appeal-flow-arrow {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 4px 0;
+          color: rgba(255, 255, 255, .85);
+        }
+        .gift-appeal-flow-arrow-line {
+          width: 2px;
+          height: 20px;
+          background: rgba(255, 255, 255, .4);
+        }
+        .gift-appeal-flow-arrow svg {
+          width: 28px;
+          height: 28px;
+          margin-top: -2px;
+        }
+        .gift-appeal-flow-icon-inner {
+          flex: 0 0 auto;
+          display: inline-flex;
+          width: 38px;
+          height: 38px;
+          align-items: center;
+          justify-content: center;
+          border-radius: 10px;
+          background: rgba(47, 155, 185, .12);
+          color: #2f9bb9;
+        }
+        .gift-appeal-flow-icon-inner svg {
+          width: 18px;
+          height: 18px;
+          stroke-width: 2;
+        }
+        .gift-appeal-flow-content {
+          display: grid;
+          gap: 3px;
+        }
+        .gift-appeal-flow-role {
+          color: #2f9bb9;
+          font: 800 10px/1.2 Poppins, sans-serif;
+          text-transform: uppercase;
+          letter-spacing: .08em;
+        }
+        .gift-appeal-flow-title {
+          margin: 0;
+          color: #0a2540;
+          font: 700 15px/1.3 Poppins, sans-serif;
+        }
+        .gift-appeal-flow-desc {
+          margin: 2px 0 0;
+          color: #64748b;
+          font: 500 13px/1.6 Raleway, sans-serif;
+        }
+        .gift-appeal-accordion {
+          border: 1px solid rgba(15, 23, 42, .08);
+          border-radius: 20px;
+          background: #fff;
+          box-shadow: 0 16px 40px rgba(10, 37, 64, .08);
+          overflow: hidden;
+        }
+        .gift-appeal-accordion-item {
+          border-bottom: 1px solid rgba(15, 23, 42, .08);
+        }
+        .gift-appeal-accordion-item:last-child {
+          border-bottom: none;
+        }
+        .gift-appeal-accordion-summary {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          padding: 16px 20px;
+          cursor: pointer;
+          list-style: none;
+          color: #0a2540;
+          font: 700 14px/1.3 Poppins, sans-serif;
+        }
+        .gift-appeal-accordion-summary::-webkit-details-marker {
+          display: none;
+        }
+        .gift-appeal-accordion-chevron {
+          flex: 0 0 auto;
+          width: 18px;
+          height: 18px;
+          color: #2f9bb9;
+          transition: transform .25s ease;
+        }
+        .gift-appeal-accordion-item[open] .gift-appeal-accordion-chevron {
+          transform: rotate(180deg);
+        }
+        .gift-appeal-accordion-body {
+          padding: 0 20px 18px;
+          color: #555;
+          font: 500 14px/1.75 Raleway, sans-serif;
+        }
+        .gift-appeal-accordion-body p {
+          margin: 0;
+        }
+        .gift-appeal-accordion-body ul {
+          display: grid;
+          gap: 8px;
+          margin: 0;
+          padding: 0 0 0 18px;
+        }
         .gift-floating-nav a,
         .gift-floating-nav button {
           -webkit-tap-highlight-color: transparent;

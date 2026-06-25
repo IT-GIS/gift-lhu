@@ -4,17 +4,22 @@ import Link from "next/link";
 import { Fragment, useEffect, useRef, useState } from "react";
 import type { ComponentType, ReactNode } from "react";
 import {
+  ArrowDown,
   ArrowLeft,
   ArrowRight,
   Award,
   Building2,
   ChevronDown,
+  ClipboardCheck,
+  FileCheck,
+  FileSearch,
   Handshake,
   Mail,
   MapPin,
   Phone,
   ShieldCheck,
   UserRound,
+  Users,
   FlaskConical,
 } from "lucide-react";
 import {
@@ -545,13 +550,86 @@ export function KeluhanBandingLandingPage() {
           headingClass="elementor-element-7719ecd"
           title={content.keluhanBanding.title}
         />
-        <section className="gift-keluhan-content">
-          <div className="e-con-inner gift-keluhan-placeholder">
-            <p className="gift-blog-empty">{content.keluhanBanding.comingSoon}</p>
-          </div>
-        </section>
+        <AppealHandlingSection />
       </main>
     </WpLandingShell>
+  );
+}
+
+const APPEAL_FLOW_ICONS = [UserRound, ClipboardCheck, Users, FileSearch, FileCheck, Mail];
+
+function AppealHandlingSection() {
+  const { content } = useLandingLanguage();
+  const { keluhanBanding } = content;
+
+  return (
+    <section className="gift-wp-section gift-appeal-section">
+      <div className="e-con-inner">
+        <ScrollFade variant="up">
+          <div className="gift-appeal-header">
+            <span className="gift-blog-tag">{keluhanBanding.documentLabel}</span>
+            <h2 className="gift-appeal-title">{keluhanBanding.sectionTitle}</h2>
+          </div>
+        </ScrollFade>
+        <div className="gift-appeal-card">
+        <div className="gift-appeal-grid">
+          <ScrollFade variant="left">
+            <div className="gift-appeal-flow-wrap">
+              <ul className="gift-appeal-flow">
+                {keluhanBanding.flow.map((step, index) => {
+                  const Icon = APPEAL_FLOW_ICONS[index] ?? UserRound;
+                  const isLast = index === keluhanBanding.flow.length - 1;
+                  return (
+                    <Fragment key={step.title}>
+                      <li className="gift-appeal-flow-item">
+                        <div className="gift-appeal-flow-icon-inner">
+                          <Icon className="gift-wp-lucide" />
+                        </div>
+                        <div className="gift-appeal-flow-content">
+                          <span className="gift-appeal-flow-role">{step.role}</span>
+                          <h3 className="gift-appeal-flow-title">{step.title}</h3>
+                          <p className="gift-appeal-flow-desc">{step.description}</p>
+                        </div>
+                      </li>
+                      {!isLast && (
+                        <li className="gift-appeal-flow-arrow" aria-hidden="true">
+                          <span className="gift-appeal-flow-arrow-line" />
+                          <ArrowDown />
+                        </li>
+                      )}
+                    </Fragment>
+                  );
+                })}
+              </ul>
+            </div>
+          </ScrollFade>
+          <ScrollFade variant="right">
+            <div className="gift-appeal-accordion">
+              {keluhanBanding.accordion.map((item) => (
+                <details key={item.label} className="gift-appeal-accordion-item">
+                  <summary className="gift-appeal-accordion-summary">
+                    {item.label}
+                    <ChevronDown className="gift-appeal-accordion-chevron" />
+                  </summary>
+                  <div className="gift-appeal-accordion-body">
+                    {item.items.length > 1 ? (
+                      <ul>
+                        {item.items.map((line) => (
+                          <li key={line}>{line}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p>{item.items[0]}</p>
+                    )}
+                  </div>
+                </details>
+              ))}
+            </div>
+          </ScrollFade>
+        </div>
+        </div>
+      </div>
+    </section>
   );
 }
 

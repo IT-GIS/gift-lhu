@@ -107,7 +107,10 @@ export type LandingDictionary = {
   };
   keluhanBanding: {
     title: string;
-    comingSoon: string;
+    documentLabel: string;
+    sectionTitle: string;
+    flow: { role: string; title: string; formNumber: string; description: string }[];
+    accordion: { label: string; items: string[] }[];
   };
   policy: {
     tabImpartiality: string;
@@ -274,7 +277,88 @@ export const dictionary: Record<Locale, LandingDictionary> = {
     },
     keluhanBanding: {
       title: "Keluhan dan Banding",
-      comingSoon: "Segera Hadir...",
+      documentLabel: "GIFT-QMS-GPR-006 | Rev. 00 | 28 Oktober 2024",
+      sectionTitle: "Penanganan Banding",
+      flow: [
+        {
+          role: "Klien",
+          title: "Mengajukan Banding",
+          formNumber: "GIFT-QMS-FRM-006.1",
+          description:
+            "Klien mengajukan banding secara tertulis dengan menjelaskan alasan spesifik yang didukung bukti relevan.",
+        },
+        {
+          role: "Manager",
+          title: "Rekaman Pengajuan Banding",
+          formNumber: "GIFT-QMS-FRM-006.2",
+          description: "Banding yang diterima dilaporkan ke Manager dan diregistrasi oleh QMS Staff.",
+        },
+        {
+          role: "Manager",
+          title: "Membentuk Tim Banding",
+          formNumber: "GIFT-QMS-FRM-006.3",
+          description:
+            "Manager membentuk tim banding untuk melakukan investigasi melalui Surat Tugas Tim Banding.",
+        },
+        {
+          role: "Tim Banding",
+          title: "Melakukan Investigasi",
+          formNumber: "GIFT-QMS-FRM-006.4",
+          description:
+            "Tim mengumpulkan dan memverifikasi bukti objektif, termasuk kunjungan ke lokasi klien jika diperlukan.",
+        },
+        {
+          role: "Tim Banding",
+          title: "Berita Acara Banding",
+          formNumber: "GIFT-QMS-FRM-006.5",
+          description:
+            "Tim menetapkan keputusan hasil investigasi. Keputusan tim banding merupakan keputusan akhir.",
+        },
+        {
+          role: "Manager Mutu",
+          title: "Konfirmasi Kepada Klien",
+          formNumber: "",
+          description:
+            "Manager memberitahukan secara tertulis kepada klien terkait keputusan banding yang telah ditetapkan.",
+        },
+      ],
+      accordion: [
+        {
+          label: "Definisi",
+          items: [
+            "Banding adalah proses dimana pemohon atau klien tidak menyetujui hasil keputusan laporan hasil pengujian.",
+          ],
+        },
+        {
+          label: "Tujuan",
+          items: [
+            "Prosedur ini mendefinisikan penanganan banding untuk menyelesaikan permasalahan yang muncul sebagai akibat ketidakpuasan dari klien atau pemohon.",
+          ],
+        },
+        {
+          label: "Ruang Lingkup",
+          items: [
+            "Prosedur ini mencakup penanganan banding berdasarkan pengaduan pemohon atau klien yang terjadi pada Sistem Manajemen Mutu PT Global Inspeksi Forensik Teknik.",
+          ],
+        },
+        {
+          label: "Penanggung Jawab",
+          items: ["Manager Laboratorium PT Global Inspeksi Forensik Teknik."],
+        },
+        {
+          label: "Referensi",
+          items: ["Manual Mutu klausul 7.9 Keluhan"],
+        },
+        {
+          label: "Keterangan Tambahan",
+          items: [
+            "Tim banding minimal 3 orang (kepala + anggota), bukan personel yang terlibat dalam proses pengujian klien yang mengajukan banding.",
+            "Pengajuan, investigasi, dan keputusan banding tidak diskriminatif.",
+            "PT Global Inspeksi Forensik Teknik bertanggung jawab atas semua keputusan di semua tingkat proses penanganan banding.",
+            "Pengaduan terkait pekerjaan lebih dari 3 bulan sebelumnya tidak wajib ditindaklanjuti, kecuali terbukti ada kesalahan.",
+          ],
+        },
+      ],
     },
     policy: {
       tabImpartiality: "Kebijakan Ketidakberpihakan",
@@ -504,7 +588,86 @@ export const dictionary: Record<Locale, LandingDictionary> = {
     },
     keluhanBanding: {
       title: "Complaints and Appeals",
-      comingSoon: "Coming Soon...",
+      documentLabel: "GIFT-QMS-GPR-006 | Rev. 00 | October 28, 2024",
+      sectionTitle: "Appeal Handling",
+      flow: [
+        {
+          role: "Client",
+          title: "Submitting an Appeal",
+          formNumber: "GIFT-QMS-FRM-006.1",
+          description:
+            "The client submits a written appeal explaining the specific reason supported by relevant evidence.",
+        },
+        {
+          role: "Manager",
+          title: "Appeal Submission Record",
+          formNumber: "GIFT-QMS-FRM-006.2",
+          description: "Accepted appeals are reported to the Manager and registered by QMS Staff.",
+        },
+        {
+          role: "Manager",
+          title: "Forming the Appeal Team",
+          formNumber: "GIFT-QMS-FRM-006.3",
+          description:
+            "The Manager forms an appeal team to conduct the investigation through an Appeal Team Assignment Letter.",
+        },
+        {
+          role: "Appeal Team",
+          title: "Conducting the Investigation",
+          formNumber: "GIFT-QMS-FRM-006.4",
+          description:
+            "The team gathers and verifies objective evidence, including a visit to the client's site if necessary.",
+        },
+        {
+          role: "Appeal Team",
+          title: "Appeal Report",
+          formNumber: "GIFT-QMS-FRM-006.5",
+          description: "The team determines the outcome of the investigation. The appeal team's decision is final.",
+        },
+        {
+          role: "Quality Manager",
+          title: "Confirmation to the Client",
+          formNumber: "",
+          description: "The Manager notifies the client in writing of the appeal decision that has been made.",
+        },
+      ],
+      accordion: [
+        {
+          label: "Definition",
+          items: [
+            "An appeal is a process in which an applicant or client disagrees with the decision on a test report result.",
+          ],
+        },
+        {
+          label: "Purpose",
+          items: [
+            "This procedure defines the handling of appeals to resolve issues arising from client or applicant dissatisfaction.",
+          ],
+        },
+        {
+          label: "Scope",
+          items: [
+            "This procedure covers the handling of appeals based on complaints from applicants or clients occurring within the Quality Management System of PT Global Inspeksi Forensik Teknik.",
+          ],
+        },
+        {
+          label: "Responsible Party",
+          items: ["Laboratory Manager of PT Global Inspeksi Forensik Teknik."],
+        },
+        {
+          label: "Reference",
+          items: ["Quality Manual clause 7.9 Complaints"],
+        },
+        {
+          label: "Additional Notes",
+          items: [
+            "The appeal team consists of at least 3 people (lead + members), none of whom were involved in the testing process for the client filing the appeal.",
+            "The submission, investigation, and decision of appeals are non-discriminatory.",
+            "PT Global Inspeksi Forensik Teknik is responsible for all decisions at every stage of the appeal handling process.",
+            "Complaints relating to work performed more than 3 months prior are not obligated to be followed up, unless an error is proven.",
+          ],
+        },
+      ],
     },
     policy: {
       tabImpartiality: "Impartiality Policy",
