@@ -187,7 +187,7 @@ export const posts = mysqlTable("posts", {
   slug: varchar("slug", { length: 255 }).notNull().unique(),
   content: longtext("content").notNull(),
   excerpt: text("excerpt"),
-  imageUrl: mediumtext("image_url"),
+  imageUrl: longtext("image_url"),
   category: varchar("category", { length: 191 }),
   publishedAt: datetime("published_at").notNull(),
   createdAt: datetime("created_at").notNull(),

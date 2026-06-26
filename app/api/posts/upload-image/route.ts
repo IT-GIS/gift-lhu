@@ -1,4 +1,7 @@
 import { NextResponse } from "next/server";
+import { writeFileSync, mkdirSync } from "fs";
+import { join } from "path";
+import { randomUUID } from "crypto";
 import { getSession } from "@/lib/auth/session";
 import { can } from "@/lib/auth/rbac";
 
@@ -6,7 +9,7 @@ export const runtime = "nodejs";
 
 const MAX_SIZE = 5 * 1024 * 1024;
 const ALLOWED_TYPES: Record<string, string> = {
-  "image/jpeg": "jpeg",
+  "image/jpeg": "jpg",
   "image/png": "png",
   "image/webp": "webp",
 };
@@ -36,8 +39,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Ukuran file maksimal 5 MB." }, { status: 400 });
     }
 
-    const dataUri = `data:${file.type};base64,${buffer.toString("base64")}`;
-    return NextResponse.json({ url: dataUri });
+    const ext = ALLOWED_TYPES[file.type];
+    const filename = `${randomUUID()}.${ext}`;
+    const uploadDir = join(process.cwd(), "public", "uploads", "posts");
+    mkdirSync(uploadDir, { recursive: true });
+    writeFileSync(join(uploadDir, filename), buffer);
+
+    return NextResponse.json({ url: `/uploads/posts/${filename}` });
   } catch (error) {
     console.error("Gagal memproses gambar post:", error);
     return NextResponse.json({ error: "Gagal memproses gambar." }, { status: 500 });
