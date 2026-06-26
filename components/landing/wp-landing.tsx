@@ -1122,7 +1122,12 @@ function ClientStrip() {
         <div className="gift-wp-client-marquee">
           <div className="gift-wp-client-track">
             {[...clientLogos, ...clientLogos].map((logo, index) => (
-              <img key={`${logo.src}-${index}`} src={logo.src} alt={logo.alt} />
+              <img
+                key={`${logo.src}-${index}`}
+                src={logo.src}
+                alt={logo.alt}
+                style={logo.large ? { maxHeight: "130px" } : undefined}
+              />
             ))}
           </div>
         </div>

@@ -49,8 +49,8 @@ function CoverUploader({ defaultUrl }: { defaultUrl?: string | null }) {
       setError("Hanya JPEG, PNG, atau WebP yang diizinkan.");
       return;
     }
-    if (file.size > 4 * 1024 * 1024) {
-      setError("Ukuran file maksimal 4 MB.");
+    if (file.size > 5 * 1024 * 1024) {
+      setError("Ukuran file maksimal 5 MB.");
       return;
     }
 
@@ -116,7 +116,14 @@ function CoverUploader({ defaultUrl }: { defaultUrl?: string | null }) {
                 Drag &amp; drop atau{" "}
                 <span className="text-indigo-600 dark:text-indigo-400">pilih file</span>
               </p>
-              <p className="text-[11px] text-slate-400">JPEG · PNG · WebP · Maks 4 MB</p>
+              <div className="flex items-center gap-1.5">
+                {["JPG", "PNG", "WebP"].map((fmt) => (
+                  <span key={fmt} className="rounded bg-slate-200 px-2 py-0.5 text-[11px] font-semibold text-slate-600 dark:bg-slate-700 dark:text-slate-300">
+                    {fmt}
+                  </span>
+                ))}
+                <span className="text-[11px] text-slate-400">· Maks 5 MB</span>
+              </div>
             </>
           )}
         </div>
