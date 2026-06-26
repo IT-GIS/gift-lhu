@@ -325,7 +325,7 @@ export default function LoginClient({
   const [rayId, setRayId] = useState("");
 
   // Logo yang bisa dikustomisasi dari halaman Settings
-  const [logoSrc, setLogoSrc] = useState(initialLogoSrc || "/gift-logo.png");
+  const [logoSrc, setLogoSrc] = useState(initialLogoSrc || "/brand/logo-gift.png");
   const [logoScale, setLogoScale] = useState(initialLogoScale || 80);
 
   // Inject Google Font for Poppins

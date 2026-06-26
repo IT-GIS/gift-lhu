@@ -16,7 +16,7 @@ const postSchema = z.object({
   category: z.string().trim().min(2, "Kategori wajib diisi.").max(191),
   excerpt: z.string().trim().max(1000).optional().or(z.literal("")),
   content: z.string().trim().min(10, "Konten minimal 10 karakter."),
-  imageUrl: z.string().trim().max(255).optional().or(z.literal("")),
+  imageUrl: z.string().trim().optional().or(z.literal("")),
   publishedAt: z.string().trim().optional().or(z.literal("")),
 });
 
