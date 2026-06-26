@@ -1,9 +1,21 @@
+import { redirect } from "next/navigation";
+import { getSession } from "@/lib/auth/session";
 import { getSettings } from "@/lib/db/queries/settings";
 import LoginClient from "./login-client";
 
 export const dynamic = "force-dynamic";
 
-export default async function LoginPage() {
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ from?: string }>;
+}) {
+  const session = await getSession();
+  if (session) {
+    const { from } = await searchParams;
+    redirect(from && from.startsWith("/") ? from : "/dashboard");
+  }
+
   let settings: Record<string, string> = {};
 
   try {

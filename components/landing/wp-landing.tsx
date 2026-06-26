@@ -1,40 +1,46 @@
+"use client";
+
 import Link from "next/link";
-import { Fragment } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import type { ComponentType, ReactNode } from "react";
 import {
+  ArrowDown,
   ArrowLeft,
   ArrowRight,
   Award,
   Building2,
+  ChevronDown,
   ClipboardCheck,
-  FlaskConical,
+  FileCheck,
+  FileSearch,
   Handshake,
+  Instagram,
   Mail,
   MapPin,
   Phone,
   ShieldCheck,
-  Ship,
-  Truck,
   UserRound,
+  Users,
+  FlaskConical,
 } from "lucide-react";
 import {
-  blogCategories,
   blogPosts,
   clientLogos,
   company,
-  contactCards,
-  facilities,
-  heroLines,
-  missionItems,
-  navItems,
-  profileParagraphs,
-  services,
-  whatsappLink,
+  getContactCards,
+  getNavItems,
+  getOrderedServices,
+  getWhatsappLink,
+  type NavItem,
 } from "./landing-data";
+import { useLandingLanguage } from "./landing-language-provider";
+import type { LandingDictionary, Locale } from "./i18n/dictionary";
 import { ScrollFade } from "./ScrollFade";
 import { ContactForm } from "./ContactForm";
+import { LandingFlagToggle } from "./landing-flag-toggle";
+import { ContactFab } from "./contact-fab";
 
-type ActivePage = "Home" | "Profile" | "Services" | "Artikel" | "Keluhan dan Banding" | "Contact";
+type ActivePage = "home" | "profile" | "services" | "artikel" | "keluhan-dan-banding" | "contact";
 
 type BlogCard = {
   title: string;
@@ -46,22 +52,7 @@ type BlogCard = {
   href: string;
 };
 
-const serviceImages = [
-  "/landing/service-uji-kuat-tekan.png",
-  "/landing/service-draught-survey.jpg",
-  "/landing/service-uditch-box-culvert.png",
-  "/landing/service-container-survey.jpg",
-];
-
-const servicePageImages = [
-  serviceImages[0],
-  serviceImages[2],
-  serviceImages[1],
-  serviceImages[3],
-];
-
-const facilityIllustration =
-  "https://img.freepik.com/premium-photo/flat-2d-illustration-design_759095-88017.jpg?w=740";
+const facilityIllustration = "/landing/logo-gift3.png";
 
 const profileCompanyImage = "/landing/profile-company.jpeg";
 
@@ -72,21 +63,6 @@ const profileMissionImage = "/landing/profile-mission.png";
 const serviceElementIds = ["8bb5804", "2c75ba7", "e204c3a", "ef76db8"];
 
 const facilityIcons = [UserRound, Award, FlaskConical];
-
-const liveOrderedServices = [
-  services[0],
-  services[2],
-  services[1],
-  services[3],
-];
-
-export const serviceSlugs = liveOrderedServices.map((service) => service.slug);
-
-export function getServiceBySlug(slug: string) {
-  const index = liveOrderedServices.findIndex((service) => service.slug === slug);
-  if (index === -1) return null;
-  return { service: liveOrderedServices[index], image: servicePageImages[index] };
-}
 
 export function WpLandingShell({
   activePage,
@@ -99,14 +75,17 @@ export function WpLandingShell({
     <>
       <WpHeader activePage={activePage} />
       {children}
+      <ContactFab />
       <WpFooter />
     </>
   );
 }
 
 export function HomeLandingPage() {
+  const { content } = useLandingLanguage();
+
   return (
-    <WpLandingShell activePage="Home">
+    <WpLandingShell activePage="home">
       <main data-elementor-type="wp-page" data-elementor-id="1184" className="elementor elementor-1184">
         <section className="elementor-section elementor-top-section elementor-element elementor-element-3a538e800 elementor-section-boxed elementor-section-height-default elementor-section-height-default gift-wp-hero">
           <div className="elementor-background-overlay" />
@@ -116,7 +95,7 @@ export function HomeLandingPage() {
                 <ScrollFade variant="fade">
                   <div className="elementor-element elementor-element-dc58416 elementor-widget elementor-widget-heading">
                     <div className="elementor-widget-container">
-                      <h4 className="elementor-heading-title elementor-size-default">Pengujian Laboratorium &amp; Inspeksi Material</h4>
+                      <h4 className="elementor-heading-title elementor-size-default">{content.hero.title}</h4>
                     </div>
                   </div>
                 </ScrollFade>
@@ -124,9 +103,9 @@ export function HomeLandingPage() {
                   <div className="elementor-element elementor-element-37e5df1a elementor-widget elementor-widget-wpr-advanced-text">
                     <div className="elementor-widget-container">
                       <div className="wpr-advanced-text">
-                        <h1 className="wpr-advanced-text-preffix">Pengujian &amp; Inspeksi</h1>
+                        <h1 className="wpr-advanced-text-preffix">{content.hero.prefix}</h1>
                         <span className="wpr-anim-text">
-                          {heroLines.map((line) => (
+                          {content.hero.lines.map((line) => (
                             <b key={line}>{line}</b>
                           ))}
                         </span>
@@ -138,14 +117,11 @@ export function HomeLandingPage() {
                   <Divider className="elementor-element-5b199b24" />
                   <div className="elementor-element elementor-element-5412a0f7 elementor-widget elementor-widget-text-editor">
                     <div className="elementor-widget-container">
-                      <p>
-                        Kami menyediakan layanan pengujian laboratorium dan inspeksi yang akurat, terpercaya,
-                        dan sesuai standar nasional untuk menjamin mutu serta keamanan produk maupun material Anda.
-                      </p>
+                      <p>{content.hero.description}</p>
                     </div>
                   </div>
                   <WpButton className="elementor-element-23044d8" href="/services">
-                    Lihat Selengkapnya
+                    {content.hero.cta}
                   </WpButton>
                 </ScrollFade>
               </div>
@@ -165,15 +141,15 @@ export function HomeLandingPage() {
             <div className="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-6cebff71">
               <div className="elementor-widget-wrap elementor-element-populated">
                 <ScrollFade variant="right" delay={0.1}>
-                  <Heading className="elementor-element-7d19e0" level={3}>Tentang Kami</Heading>
-                  <Heading className="elementor-element-effe491">PT. Global Inspeksi Forensik Teknik</Heading>
+                  <Heading className="elementor-element-7d19e0" level={3}>{content.about.kicker}</Heading>
+                  <Heading className="elementor-element-effe491">{company.name}</Heading>
                   <TextWidget className="elementor-element-30980496">
-                    {profileParagraphs.map((paragraph) => (
+                    {content.about.paragraphs.map((paragraph) => (
                       <p key={paragraph}>{paragraph}</p>
                     ))}
                   </TextWidget>
                   <WpButton className="elementor-element-2e602150" href="/profile">
-                    Lihat Selengkapnya
+                    {content.about.cta}
                   </WpButton>
                 </ScrollFade>
               </div>
@@ -187,9 +163,9 @@ export function HomeLandingPage() {
             <div className="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-7495d363">
               <div className="elementor-widget-wrap elementor-element-populated">
                 <ScrollFade variant="left">
-                  <Heading className="elementor-element-7582adce">VISI</Heading>
+                  <Heading className="elementor-element-7582adce">{content.vision.heading}</Heading>
                   <TextWidget className="elementor-element-3a05b207">
-                    <p>Menjadi laboratorium pengujian produk beton yang paling dipercaya di Indonesia melalui hasil uji yang akurat, objektif, dan berstandar nasional maupun internasional.</p>
+                    <p>{content.vision.text}</p>
                   </TextWidget>
                 </ScrollFade>
               </div>
@@ -197,8 +173,8 @@ export function HomeLandingPage() {
             <div className="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-5f082e66">
               <div className="elementor-widget-wrap elementor-element-populated">
                 <ScrollFade variant="right" delay={0.1}>
-                  <Heading className="elementor-element-10daaa9">MISI</Heading>
-                  <FeatureList className="elementor-element-46533381" />
+                  <Heading className="elementor-element-10daaa9">{content.mission.heading}</Heading>
+                  <FeatureList className="elementor-element-46533381" items={content.mission.items} />
                 </ScrollFade>
               </div>
             </div>
@@ -217,11 +193,11 @@ export function HomeLandingPage() {
             <div className="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-32158e6e">
               <div className="elementor-widget-wrap elementor-element-populated">
                 <ScrollFade variant="up" delay={0.1}>
-                  <Heading className="elementor-element-5a5959f2" level={3}>Fasilitas dan Keunggulan</Heading>
+                  <Heading className="elementor-element-5a5959f2" level={3}>{content.facilities.heading}</Heading>
                   <TextWidget className="elementor-element-563e6ef">
-                    <p><strong>{company.name}</strong> memiliki berbagai fasilitas unggul yang mendukung pengujian kualitas dan keamanan material konstruksi.</p>
+                    <p><strong>{company.name}</strong> {content.facilities.intro}</p>
                   </TextWidget>
-                  <FacilityFeatureList />
+                  <FacilityFeatureList items={content.facilities.items} />
                 </ScrollFade>
               </div>
             </div>
@@ -236,19 +212,21 @@ export function HomeLandingPage() {
 }
 
 export function ProfileLandingPage() {
+  const { content } = useLandingLanguage();
+
   return (
-    <WpLandingShell activePage="Profile">
+    <WpLandingShell activePage="profile">
       <main data-elementor-type="wp-page" data-elementor-id="1185" className="elementor elementor-1185">
-        <SubpageHero pageId="1185" sectionClass="elementor-element-8030a81" headingClass="elementor-element-9408ba5" title="Profile" />
+        <SubpageHero pageId="1185" sectionClass="elementor-element-8030a81" headingClass="elementor-element-9408ba5" title={content.nav.profile} />
 
         <section className="elementor-element elementor-element-e2c4003 e-flex e-con-boxed e-con e-parent gift-wp-section gift-wp-profile-intro">
           <div className="e-con-inner gift-wp-two-column">
             <div className="elementor-element elementor-element-3878c15 e-con-full e-flex e-con e-child">
               <ScrollFade variant="left">
-                <Heading className="elementor-element-7d19e0" level={3}>PROFIL PERUSAHAAN</Heading>
-                <Heading className="elementor-element-1b719f4">PT. Global Inspeksi Forensik Teknik</Heading>
+                <Heading className="elementor-element-7d19e0" level={3}>{content.profile.kicker}</Heading>
+                <Heading className="elementor-element-1b719f4">{company.name}</Heading>
                 <TextWidget className="elementor-element-84e7306">
-                  {profileParagraphs.map((paragraph) => (
+                  {content.about.paragraphs.map((paragraph) => (
                     <p key={paragraph}>{paragraph}</p>
                   ))}
                 </TextWidget>
@@ -271,9 +249,9 @@ export function ProfileLandingPage() {
             </div>
             <div className="elementor-element elementor-element-0876684 e-flex e-con-boxed e-con e-child">
               <ScrollFade variant="right" delay={0.1}>
-                <Heading className="elementor-element-3b33a34">VISI</Heading>
+                <Heading className="elementor-element-3b33a34">{content.vision.heading}</Heading>
                 <TextWidget className="elementor-element-76264e8">
-                  <p>Menjadi laboratorium pengujian produk beton yang paling dipercaya di Indonesia melalui hasil uji yang akurat, objektif, dan berstandar nasional maupun internasional.</p>
+                  <p>{content.vision.text}</p>
                 </TextWidget>
               </ScrollFade>
             </div>
@@ -284,8 +262,8 @@ export function ProfileLandingPage() {
           <div className="e-con-inner gift-wp-two-column">
             <div className="elementor-element elementor-element-dbdebb9 e-flex e-con-boxed e-con e-child">
               <ScrollFade variant="left">
-                <Heading className="elementor-element-35525b7">MISI</Heading>
-                <FeatureList className="elementor-element-f9309dd" />
+                <Heading className="elementor-element-35525b7">{content.mission.heading}</Heading>
+                <FeatureList className="elementor-element-f9309dd" items={content.mission.items} />
               </ScrollFade>
             </div>
             <div className="elementor-element elementor-element-4383361 e-con-full e-flex e-con e-child">
@@ -304,17 +282,17 @@ export function ProfileLandingPage() {
 }
 
 export function ServicesLandingPage() {
+  const { content } = useLandingLanguage();
+
   return (
-    <WpLandingShell activePage="Services">
+    <WpLandingShell activePage="services">
       <main data-elementor-type="wp-page" data-elementor-id="1186" className="elementor elementor-1186">
-        <SubpageHero pageId="1186" sectionClass="elementor-element-0580e27" headingClass="elementor-element-f1a85f1" title="Services" />
+        <SubpageHero pageId="1186" sectionClass="elementor-element-0580e27" headingClass="elementor-element-f1a85f1" title={content.nav.services} />
         <ServicesGrid />
         <section className="elementor-element elementor-element-785ec78 e-flex e-con-boxed e-con e-parent gift-wp-quote">
           <div className="e-con-inner">
             <ScrollFade variant="scale">
-              <Heading className="elementor-element-0091782">
-                &quot;Uji Kuat Tekan &amp; Uji Material U-Ditch/Box Culvert Dengan Ahli Profesional&quot;
-              </Heading>
+              <Heading className="elementor-element-0091782">{content.servicesSection.quote}</Heading>
             </ScrollFade>
           </div>
         </section>
@@ -324,14 +302,19 @@ export function ServicesLandingPage() {
 }
 
 export function ServiceDetailLandingPage({
-  service,
+  slug,
   image,
 }: {
-  service: (typeof services)[number];
+  slug: string;
   image: string;
 }) {
+  const { content } = useLandingLanguage();
+  const service = content.services.find((s) => s.slug === slug);
+
+  if (!service) return null;
+
   return (
-    <WpLandingShell activePage="Services">
+    <WpLandingShell activePage="services">
       <main data-elementor-type="wp-page" data-elementor-id="1186" className="elementor elementor-1186">
         <SubpageHero pageId="1186" sectionClass="elementor-element-0580e27" headingClass="elementor-element-f1a85f1" title={service.title} />
 
@@ -357,7 +340,7 @@ export function ServiceDetailLandingPage({
                     ))}
                   </ul>
                 </TextWidget>
-                <WpButton className="elementor-element-2e602150 gift-wp-service-cta" href="/contact">Contact Us</WpButton>
+                <WpButton className="elementor-element-2e602150 gift-wp-service-cta" href="/contact">{content.servicesSection.contactCta}</WpButton>
               </ScrollFade>
             </div>
           </div>
@@ -368,33 +351,34 @@ export function ServiceDetailLandingPage({
 }
 
 export function ContactLandingPage() {
+  const { content, language } = useLandingLanguage();
+  const whatsappLink = getWhatsappLink(language);
+  const contactCards = getContactCards(content);
+
   return (
-    <WpLandingShell activePage="Contact">
+    <WpLandingShell activePage="contact">
       <main data-elementor-type="wp-page" data-elementor-id="1189" className="elementor elementor-1189">
-        <SubpageHero pageId="1189" sectionClass="elementor-element-4e53d5c" headingClass="elementor-element-7719ecd" title="Contact" />
+        <SubpageHero pageId="1189" sectionClass="elementor-element-4e53d5c" headingClass="elementor-element-7719ecd" title={content.nav.contact} />
 
         <section className="elementor-element elementor-element-91d42b5 e-flex e-con-boxed e-con e-parent gift-wp-section">
           <div className="e-con-inner">
             <div className="gift-wp-contact-intro">
               <ScrollFade variant="up">
-                <Heading className="elementor-element-d5fce67">Contact Info</Heading>
+                <Heading className="elementor-element-d5fce67">{content.contactPage.kicker}</Heading>
                 <TextWidget className="elementor-element-806c177">
-                  <p>
-                    Hubungi tim kami untuk kebutuhan pengujian, inspeksi, dan verifikasi LHU.
-                    Kami siap membantu Anda dengan respons profesional dan terarah.
-                  </p>
+                  <p>{content.contactPage.intro}</p>
                 </TextWidget>
               </ScrollFade>
             </div>
             <div className="elementor-element elementor-element-67a5229 e-grid e-con-boxed e-con e-child gift-wp-contact-grid">
               {contactCards.map((item, index) => (
-                <ScrollFade key={item.title} variant="up" delay={index * 0.08}>
+                <ScrollFade key={item.key} variant="up" delay={index * 0.08}>
                   <ContactIconBox
                     className={["elementor-element-66ecdbf", "elementor-element-eccc5bd", "elementor-element-4595e59"][index]}
                     icon={item.icon}
                     title={item.title}
                     description={item.description}
-                    href={item.href}
+                    href={item.key === "phone" ? whatsappLink : item.href}
                     external={item.external}
                   />
                 </ScrollFade>
@@ -403,12 +387,60 @@ export function ContactLandingPage() {
           </div>
         </section>
 
+        {/* ===== Office Location Section ===== */}
+        <section className="gift-wp-office-location">
+          <div className="gift-wp-office-wrap">
+            <ScrollFade variant="up">
+              <div className="gift-wp-office-header">
+                <div className="gift-wp-office-header-left">
+                  <h2 className="gift-wp-office-heading">
+                    Kunjungi kantor Global Inspeksi Forensik Teknik.
+                  </h2>
+                </div>
+                <div className="gift-wp-office-header-right">
+                  <p className="gift-wp-office-desc">
+                    PT Global Inspeksi Forensik Teknik adalah laboratorium pengujian
+                    konstruksi yang mendukung program pemerintah dalam penerapan
+                    Standar Nasional Indonesia (SNI). Kunjungi kantor kami untuk
+                    konsultasi pengujian, koordinasi proyek, atau informasi
+                    mengenai layanan sertifikasi kami.
+                  </p>
+                </div>
+              </div>
+            </ScrollFade>
+
+            <ScrollFade variant="up" delay={0.12}>
+              <div className="gift-wp-office-card">
+                <div className="gift-wp-office-card-overlay" />
+                <div className="gift-wp-office-card-content">
+                  <span className="gift-wp-office-pill">HEAD OFFICE</span>
+                  <h3 className="gift-wp-office-city">Tangerang</h3>
+                  <ul className="gift-wp-office-info-list">
+                    <li>
+                      <Phone className="gift-wp-lucide" />
+                      <span>{company.phone}</span>
+                    </li>
+                    <li>
+                      <Mail className="gift-wp-lucide" />
+                      <span>{company.email}</span>
+                    </li>
+                    <li>
+                      <MapPin className="gift-wp-lucide" />
+                      <span>{company.address}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </ScrollFade>
+          </div>
+        </section>
+
         <ContactBand sourcePage="contact" />
 
         <section className="elementor-element elementor-element-62d7e54 e-flex e-con-boxed e-con e-parent gift-wp-map">
           <ScrollFade variant="up">
             <iframe
-              title="Ruko 91 District BSD No C5, Pagedangan, Tangerang, Banten 15339"
+              title={company.address}
               src="https://maps.google.com/maps?q=Ruko%2091%20District%20BSD%20No%20C5%2C%20Pagedangan%2C%20Tangerang%2C%20Banten%2015339&t=m&z=14&output=embed&iwloc=near"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
@@ -420,6 +452,21 @@ export function ContactLandingPage() {
   );
 }
 
+function categoryLabel(category: string, content: LandingDictionary) {
+  return category === "All Posts" ? content.blog.allCategoriesLabel : category;
+}
+
+/** Posts pass an ISO date string; format it for display in the active locale. */
+function formatBlogDate(value: string, language: Locale) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return date.toLocaleDateString(language === "en" ? "en-US" : "id-ID", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
 export function BlogLandingPage({
   posts = blogPosts,
   selectedCategory,
@@ -429,6 +476,7 @@ export function BlogLandingPage({
   selectedCategory?: string;
   allCategories?: string[];
 }) {
+  const { content, language } = useLandingLanguage();
   const allCategories = allCategoriesProp ?? [
     "All Posts",
     ...Array.from(new Set(blogPosts.map((p) => p.category))),
@@ -437,16 +485,16 @@ export function BlogLandingPage({
   const isFiltered = selectedCategory && selectedCategory !== "All Posts";
 
   return (
-    <WpLandingShell activePage="Artikel">
+    <WpLandingShell activePage="artikel">
       <main data-elementor-type="wp-page" data-elementor-id="1156" className="elementor elementor-1156 gift-wp-blog-page">
-        <SubpageHero pageId="1156" sectionClass="elementor-element-8030a81" headingClass="elementor-element-9408ba5" title="Blog" />
+        <SubpageHero pageId="1156" sectionClass="elementor-element-8030a81" headingClass="elementor-element-9408ba5" title={content.nav.artikel} />
 
         <section className="gift-blog-index">
           <div className="gift-blog-wrap">
             <header className="gift-blog-header">
               <ScrollFade variant="up">
-                <span className="gift-wp-contact-kicker">Artikel &amp; Berita</span>
-                <h2 className="gift-blog-title">Blog &amp; Artikel Terkini</h2>
+                <span className="gift-wp-contact-kicker">{content.blog.kicker}</span>
+                <h2 className="gift-blog-title">{content.blog.heading}</h2>
                 <div className="gift-wp-category-row">
                   {allCategories.map((cat) => (
                     <Link
@@ -458,7 +506,7 @@ export function BlogLandingPage({
                           : ""
                       }
                     >
-                      {cat}
+                      {categoryLabel(cat, content)}
                     </Link>
                   ))}
                 </div>
@@ -466,7 +514,7 @@ export function BlogLandingPage({
             </header>
 
             {posts.length === 0 && (
-              <p className="gift-blog-empty">Tidak ada artikel untuk kategori ini.</p>
+              <p className="gift-blog-empty">{content.blog.emptyMessage}</p>
             )}
 
             {featured && !isFiltered && (
@@ -480,8 +528,8 @@ export function BlogLandingPage({
                     <h2>{featured.title}</h2>
                     <p>{featured.excerpt}</p>
                     <div className="gift-blog-featured-meta">
-                      <time className="gift-wp-blog-meta">{featured.date}</time>
-                      <span className="gift-wp-read-more">Baca Selengkapnya <ArrowRight size={15} /></span>
+                      <time className="gift-wp-blog-meta">{formatBlogDate(featured.date, language)}</time>
+                      <span className="gift-wp-read-more">{content.blog.readMoreFeatured} <ArrowRight size={15} /></span>
                     </div>
                   </div>
                 </Link>
@@ -490,7 +538,7 @@ export function BlogLandingPage({
 
             {(isFiltered ? posts : rest).length > 0 && (
               <>
-                {!isFiltered && <h3 className="gift-blog-more-title">Artikel Lainnya</h3>}
+                {!isFiltered && <h3 className="gift-blog-more-title">{content.blog.moreArticles}</h3>}
                 <div className="gift-blog-grid">
                   {(isFiltered ? posts : rest).map((post, index) => (
                     <ScrollFade key={post.href} variant="up" delay={index * 0.05}>
@@ -508,20 +556,22 @@ export function BlogLandingPage({
 }
 
 export function BlogDetailLandingPage({ post }: { post: BlogCard & { content?: string } }) {
+  const { content, language } = useLandingLanguage();
+
   return (
-    <WpLandingShell activePage="Artikel">
+    <WpLandingShell activePage="artikel">
       <main data-elementor-type="wp-page" data-elementor-id="1156" className="elementor elementor-1156 gift-wp-blog-page">
         <section className="gift-blog-detail">
           <div className="gift-blog-detail-wrap">
             <Link className="gift-blog-back" href="/blog">
-              <ArrowLeft size={15} /> Kembali ke Blog
+              <ArrowLeft size={15} /> {content.blog.backToBlog}
             </Link>
             <ScrollFade variant="up">
               <article className="gift-blog-article">
                 <header className="gift-blog-article-header">
                   <span className="gift-blog-tag">{post.category}</span>
                   <h1>{post.title}</h1>
-                  <time className="gift-wp-blog-meta">{post.date}</time>
+                  <time className="gift-wp-blog-meta">{formatBlogDate(post.date, language)}</time>
                 </header>
                 <img src={post.image} alt={post.title} className="gift-blog-article-cover" />
                 {renderArticleContent(post.content || post.excerpt)}
@@ -529,7 +579,7 @@ export function BlogDetailLandingPage({ post }: { post: BlogCard & { content?: s
             </ScrollFade>
             <div className="gift-blog-detail-nav">
               <Link className="gift-blog-back" href="/blog">
-                <ArrowLeft size={15} /> Kembali ke Blog
+                <ArrowLeft size={15} /> {content.blog.backToBlog}
               </Link>
             </div>
           </div>
@@ -540,108 +590,263 @@ export function BlogDetailLandingPage({ post }: { post: BlogCard & { content?: s
 }
 
 export function KeluhanBandingLandingPage() {
+  const { content } = useLandingLanguage();
+
   return (
-    <WpLandingShell activePage="Keluhan dan Banding">
+    <WpLandingShell activePage="keluhan-dan-banding">
       <main data-elementor-type="wp-page" data-elementor-id="1160" className="elementor elementor-1160">
         <SubpageHero
           pageId="1160"
           sectionClass="elementor-element-4e53d5c"
           headingClass="elementor-element-7719ecd"
-          title="Keluhan dan Banding"
+          title={content.keluhanBanding.title}
         />
-        <section className="gift-keluhan-content">
-          <div className="e-con-inner gift-keluhan-placeholder" />
-        </section>
+        <AppealHandlingSection />
       </main>
     </WpLandingShell>
   );
 }
 
-function WpHeader({ activePage }: { activePage: ActivePage }) {
+const APPEAL_FLOW_ICONS = [UserRound, ClipboardCheck, Users, FileSearch, FileCheck, Mail];
+
+function AppealHandlingSection() {
+  const { content, language } = useLandingLanguage();
+  const { keluhanBanding } = content;
+  const whatsappLink = getWhatsappLink(language);
+
   return (
-    <header data-elementor-type="wp-post" data-elementor-id="166" className="elementor elementor-166">
-      <div className="elementor-element elementor-element-bdb4fea e-flex e-con-boxed e-con e-parent">
-        <div className="e-con-inner">
-          <div className="elementor-element elementor-element-ae590bd e-con-full e-flex e-con e-child">
-            <div className="elementor-element elementor-element-a75d576 wpr-logo-position-center elementor-widget elementor-widget-wpr-logo">
-              <div className="elementor-widget-container">
-                <Link className="wpr-logo elementor-clearfix" href="/" aria-label="GIFT Laboratory">
-                  <picture className="wpr-logo-image">
-                    <img src="/landing/logo-gift3.png" alt="GIFT Laboratory" />
-                  </picture>
-                </Link>
+    <section className="gift-wp-section gift-appeal-section">
+      <div className="e-con-inner">
+        <ScrollFade variant="up">
+          <div className="gift-appeal-header">
+            <h2 className="gift-appeal-title">{keluhanBanding.sectionTitle}</h2>
+          </div>
+        </ScrollFade>
+        <ScrollFade variant="left">
+          <div className="gift-appeal-card">
+            <div className="gift-appeal-flow-wrap">
+              <ul className="gift-appeal-flow">
+                {keluhanBanding.flow.map((step, index) => {
+                  const Icon = APPEAL_FLOW_ICONS[index] ?? UserRound;
+                  const isLast = index === keluhanBanding.flow.length - 1;
+                  return (
+                    <Fragment key={step.title}>
+                      <li className="gift-appeal-flow-item">
+                        <div className="gift-appeal-flow-icon-inner">
+                          <Icon className="gift-wp-lucide" />
+                        </div>
+                        <div className="gift-appeal-flow-content">
+                          <h3 className="gift-appeal-flow-title">{step.title}</h3>
+                        </div>
+                      </li>
+                      {!isLast && (
+                        <li className="gift-appeal-flow-arrow" aria-hidden="true">
+                          <span className="gift-appeal-flow-arrow-line" />
+                          <ArrowDown />
+                        </li>
+                      )}
+                    </Fragment>
+                  );
+                })}
+              </ul>
+            </div>
+          </div>
+        </ScrollFade>
+        <ScrollFade variant="up">
+          <div className="gift-appeal-card gift-appeal-cta-card">
+            <div className="gift-appeal-cta-row">
+              <WpButton className="elementor-element-appeal-cta gift-appeal-cta-btn" href="/contact">
+                {content.servicesSection.contactCta}
+              </WpButton>
+              <div className="gift-appeal-cta-social">
+                <a
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="gift-appeal-cta-icon gift-appeal-cta-icon-wa"
+                  aria-label="WhatsApp"
+                >
+                  <WhatsAppIcon />
+                </a>
+                <a
+                  href={`mailto:${company.email}`}
+                  className="gift-appeal-cta-icon gift-appeal-cta-icon-mail"
+                  aria-label="Email"
+                >
+                  <Mail className="gift-wp-lucide" />
+                </a>
               </div>
             </div>
           </div>
-          <div className="elementor-element elementor-element-927abb3 e-con-full e-flex e-con e-child">
-            <div className="elementor-element elementor-element-98c3935 wpr-main-menu-align-right wpr-pointer-underline wpr-pointer-line-fx wpr-nav-menu-bp-mobile wpr-mobile-toggle-v1 elementor-widget elementor-widget-wpr-nav-menu">
-              <div className="elementor-widget-container">
-                <nav className="wpr-nav-menu-container wpr-nav-menu-horizontal">
-                  <ul id="menu-1-98c3935" className="wpr-nav-menu">
-                    {navItems.map((item) => {
-                      const isActive = item.label === activePage ||
-                        item.children?.some((c) => c.label === activePage);
-                      if (item.children) {
-                        return (
-                          <li key={item.label} className={`menu-item menu-item-has-children${isActive ? " current-menu-item" : ""}`}>
-                            <details className="gift-desktop-dropdown">
-                              <summary className={`wpr-menu-item wpr-pointer-item${isActive ? " wpr-active-menu-item" : ""}`}>
-                                {item.label}
-                              </summary>
-                              <ul className="sub-menu">
-                                {item.children.map((child) => (
-                                  <li key={child.href}>
-                                    <Link href={child.href}>{child.label}</Link>
-                                  </li>
-                                ))}
-                              </ul>
-                            </details>
-                          </li>
-                        );
-                      }
-                      return (
-                        <li key={item.href} className={`menu-item${isActive ? " current-menu-item current_page_item" : ""}`}>
-                          <Link className={`wpr-menu-item wpr-pointer-item${isActive ? " wpr-active-menu-item" : ""}`} href={item.href!}>
-                            {item.label}
+        </ScrollFade>
+      </div>
+    </section>
+  );
+}
+
+function WpHeader({ activePage }: { activePage: ActivePage }) {
+  const { content } = useLandingLanguage();
+  const navItems = getNavItems(content);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (closeTimer.current) clearTimeout(closeTimer.current);
+    };
+  }, []);
+
+  const openDropdownNow = (label: string) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setOpenDropdown(label);
+  };
+
+  const closeDropdownSoon = (label: string) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => {
+      setOpenDropdown((current) => (current === label ? null : current));
+    }, 200);
+  };
+
+  const pillSurface = isScrolled
+    ? "border-white/70 bg-white/90 shadow-glass"
+    : "border-white/40 bg-white/70 shadow-[0_12px_40px_rgba(15,23,42,0.06)]";
+
+  return (
+    <header className="fixed inset-x-0 top-4 z-50 px-4">
+      <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-2 px-4">
+        <div
+          className={`gift-floating-nav flex min-w-0 flex-1 items-center justify-between gap-3 rounded-full border px-7 py-3 backdrop-blur-xl transition-all duration-300 sm:px-9 ${pillSurface}`}
+        >
+        <Link href="/" className="flex shrink-0 items-center gap-3" aria-label={company.shortName}>
+          <img
+            src="/landing/logo-gift3.png"
+            alt={company.shortName}
+            className="h-12 w-12 rounded-full object-contain sm:h-14 sm:w-14"
+          />
+          <span className="hidden whitespace-nowrap text-xl font-bold text-slate-900 sm:inline sm:text-2xl">{company.shortName}</span>
+        </Link>
+
+        <nav className="hidden items-center gap-2 md:flex">
+          {navItems.map((item) => {
+            const isActive = navItemMatches(item, activePage, content);
+            if (item.children) {
+              const isOpen = openDropdown === item.label;
+              return (
+                <div
+                  key={item.label}
+                  className="relative"
+                  onMouseEnter={() => openDropdownNow(item.label)}
+                  onMouseLeave={() => closeDropdownSoon(item.label)}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenDropdown((current) => (current === item.label ? null : item.label))}
+                    className={`appearance-none border-0 flex items-center gap-1 whitespace-nowrap !rounded-full px-4 py-2.5 text-lg !font-semibold transition focus:outline-none focus-visible:outline-none focus-visible:bg-primary/10 focus-visible:text-primary ${
+                      isActive ? "bg-primary/10 text-primary font-semibold" : isOpen ? "bg-primary/10 text-primary font-semibold" : "!text-slate-600 font-semibold hover:bg-primary/10 hover:text-primary"
+                    }`}
+                  >
+                    {item.label}
+                    <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
+                  </button>
+                  {/* Invisible hover-bridge (pt-2) keeps the cursor over a hoverable box all the way from the
+                      button into the panel below, so there's no dead gap that closes the dropdown early. */}
+                  <div
+                    className={`absolute left-1/2 top-full z-20 w-52 -translate-x-1/2 pt-2 transition-all duration-200 ease-out ${
+                      isOpen ? "translate-y-0 opacity-100 pointer-events-auto" : "-translate-y-1 opacity-0 pointer-events-none"
+                    }`}
+                  >
+                    <ul className="overflow-hidden rounded-2xl border border-slate-100 bg-white/95 p-1.5 shadow-glass backdrop-blur-xl">
+                      {item.children.map((child) => (
+                        <li key={child.href}>
+                          <Link
+                            href={child.href}
+                            onClick={() => setOpenDropdown(null)}
+                            className="block whitespace-nowrap rounded-xl px-3 py-2 text-base font-semibold text-slate-600 transition hover:bg-primary/10 hover:text-primary active:bg-secondary/80 active:text-primary focus:outline-none focus-visible:outline-none focus-visible:bg-primary/10 focus-visible:text-primary"
+                          >
+                            {child.label}
                           </Link>
                         </li>
-                      );
-                    })}
-                  </ul>
-                </nav>
-                <details className="gift-wp-mobile-menu">
-                  <summary aria-label="Menu">
-                    <span />
-                    <span />
-                    <span />
-                  </summary>
-                  <div>
-                    {navItems.map((item) =>
-                      item.children ? (
-                        <Fragment key={item.label}>
-                          <span className="gift-mobile-parent">{item.label}</span>
-                          {item.children.map((child) => (
-                            <Link key={child.href} href={child.href} className="gift-mobile-child">
-                              {child.label}
-                            </Link>
-                          ))}
-                        </Fragment>
-                      ) : (
-                        <Link key={item.href} href={item.href!}>{item.label}</Link>
-                      )
-                    )}
+                      ))}
+                    </ul>
                   </div>
-                </details>
-              </div>
-            </div>
+                </div>
+              );
+            }
+            return (
+              <Link
+                key={item.href}
+                href={item.href!}
+                className={`whitespace-nowrap rounded-full px-4 py-2.5 text-lg font-semibold transition active:bg-secondary/80 active:text-indigo-500 focus:outline-none focus-visible:outline-none focus-visible:bg-primary/10 focus-visible:text-indigo-500 ${
+                  isActive ? "bg-indigo-50 text-indigo-500 font-semibold" : "text-slate-600 hover:bg-primary/10 hover:text-indigo-500"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+      </div>
+
+      <div className={`gift-floating-nav flex shrink-0 items-center gap-2 rounded-full border px-3 py-2 backdrop-blur-xl transition-all duration-300 ${pillSurface}`}>
+        <LandingFlagToggle />
+        <details className="gift-wp-mobile-menu group relative md:hidden">
+          <summary aria-label="Menu">
+            <span />
+            <span />
+            <span />
+          </summary>
+          <div>
+            {navItems.map((item) =>
+              item.children ? (
+                <Fragment key={item.label}>
+                  <span className="gift-mobile-parent">{item.label}</span>
+                  {item.children.map((child) => (
+                    <Link key={child.href} href={child.href} className="gift-mobile-child">
+                      {child.label}
+                    </Link>
+                  ))}
+                </Fragment>
+              ) : (
+                <Link key={item.href} href={item.href!}>{item.label}</Link>
+              )
+            )}
           </div>
-        </div>
+        </details>
+      </div>
       </div>
     </header>
   );
 }
 
+/** Maps a translated nav label back to its stable page key so the active-link
+ * highlight keeps working regardless of the current language. */
+function navItemMatches(item: NavItem, activePage: ActivePage, content: LandingDictionary) {
+  const keyByLabel: Record<string, ActivePage> = {
+    [content.nav.home]: "home",
+    [content.nav.profile]: "profile",
+    [content.nav.services]: "services",
+    [content.nav.artikel]: "artikel",
+    [content.nav.keluhanDanBanding]: "keluhan-dan-banding",
+    [content.nav.contact]: "contact",
+  };
+  if (keyByLabel[item.label] === activePage) return true;
+  return item.children?.some((c) => keyByLabel[c.label] === activePage) ?? false;
+}
+
 function WpFooter() {
+  const { content, language } = useLandingLanguage();
+  const navItems = getNavItems(content);
+  const whatsappLink = getWhatsappLink(language);
+
   return (
     <footer data-elementor-type="wp-post" data-elementor-id="222" className="elementor elementor-222">
       <div className="gift-footer-wrap">
@@ -653,12 +858,23 @@ function WpFooter() {
                   <img src="/landing/logo-gift-wide.png" alt={company.name} />
                 </picture>
               </Link>
-              <p className="gift-footer-desc">{company.description}</p>
+              <p className="gift-footer-desc">{content.companyDescription}</p>
+              <div className="gift-footer-social">
+                <a
+                  href="https://www.instagram.com/ptglobalinspeksiforensikteknik/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="gift-footer-social-link"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="gift-wp-lucide" />
+                </a>
+              </div>
             </ScrollFade>
           </div>
           <div className="gift-footer-col">
             <ScrollFade variant="up" delay={0.1}>
-              <div className="gift-footer-heading">Contact Info</div>
+              <div className="gift-footer-heading">{content.footer.contactInfo}</div>
               <ul className="elementor-icon-list-items gift-wp-footer-contact">
                 <li className="elementor-icon-list-item">
                   <a className="gift-wp-contact-link" href={whatsappLink} target="_blank" rel="noopener noreferrer">
@@ -672,7 +888,7 @@ function WpFooter() {
           </div>
           <div className="gift-footer-col">
             <ScrollFade variant="right" delay={0.2}>
-              <div className="gift-footer-heading">Navigasi</div>
+              <div className="gift-footer-heading">{content.footer.navigation}</div>
               <ul className="elementor-icon-list-items gift-wp-footer-contact">
                 {navItems.flatMap((item) =>
                   item.children
@@ -705,6 +921,9 @@ function ServicesGrid({ compact = false }: { compact?: boolean }) {
     return <HomeServicesGrid />;
   }
 
+  const { content } = useLandingLanguage();
+  const orderedServices = getOrderedServices(content);
+
   return (
     <section className="elementor-section elementor-top-section elementor-element elementor-element-7d185f5 elementor-section-boxed elementor-section-height-default gift-wp-services">
       <div className="elementor-container elementor-column-gap-default">
@@ -712,17 +931,18 @@ function ServicesGrid({ compact = false }: { compact?: boolean }) {
           <div className="elementor-widget-wrap elementor-element-populated">
             <ScrollFade variant="up">
               <Heading className="elementor-element-5c74249">
-                OUR SERVICES
+                {content.servicesSection.heading}
               </Heading>
             </ScrollFade>
             <div className="gift-wp-service-grid">
-              {liveOrderedServices.map((service, index) => (
+              {orderedServices.map((service, index) => (
                 <ScrollFade key={service.title} variant="up" delay={index * 0.05}>
                   <ServicePromoBox
                     className={`elementor-element-${serviceElementIds[index]}`}
-                    image={servicePageImages[index]}
+                    image={service.image}
                     title={service.title}
                     description={service.servicePageDescription}
+                    cta={content.servicesSection.promoCta}
                   />
                 </ScrollFade>
               ))}
@@ -735,24 +955,27 @@ function ServicesGrid({ compact = false }: { compact?: boolean }) {
 }
 
 function HomeServicesGrid() {
+  const { content } = useLandingLanguage();
+  const orderedServices = getOrderedServices(content);
+
   return (
     <section className="elementor-element elementor-element-b9accca e-flex e-con-boxed e-con e-parent gift-wp-home-services">
       <div className="e-con-inner">
         <ScrollFade variant="up">
-          <Heading className="elementor-element-36ab58f">Layanan Kami</Heading>
+          <Heading className="elementor-element-36ab58f">{content.homeServices.heading}</Heading>
         </ScrollFade>
         <div className="gift-wp-home-service-grid">
-          {liveOrderedServices.map((service, index) => (
+          {orderedServices.map((service, index) => (
             <ScrollFade key={service.title} variant="up" delay={index * 0.06}>
               <article className="gift-wp-home-service-card">
                 <div className="gift-wp-home-service-card-media">
-                  <img src={servicePageImages[index]} alt={service.title} />
+                  <img src={service.image} alt={service.title} />
                 </div>
                 <div className="gift-wp-home-service-card-body">
                   <h3>{service.title}</h3>
                   <p>{service.description}</p>
                   <Link className="gift-wp-read-more" href={`/services/${service.slug}`}>
-                    Lihat Selengkapnya <ArrowRight size={16} />
+                    {content.homeServices.readMore} <ArrowRight size={16} />
                   </Link>
                 </div>
               </article>
@@ -765,17 +988,20 @@ function HomeServicesGrid() {
 }
 
 function ContactBand({ sourcePage }: { sourcePage: "home" | "contact" }) {
+  const { content, language } = useLandingLanguage();
+  const whatsappLink = getWhatsappLink(language);
+
   return (
     <section className="elementor-element elementor-element-cf5e46f e-flex e-con-boxed e-con e-parent gift-wp-contact-band">
       <div className="e-con-inner gift-wp-two-column">
         <div className="elementor-element elementor-element-5771a84 e-con-full e-flex e-con e-child">
           <ScrollFade variant="left">
-            <span className="gift-wp-contact-band-kicker">Get in touch</span>
-            <Heading className="elementor-element-5b9f1ae">Hubungi Kami!</Heading>
+            <span className="gift-wp-contact-band-kicker">{content.contactBand.kicker}</span>
+            <Heading className="elementor-element-5b9f1ae">{content.contactBand.heading}</Heading>
             <p className="gift-wp-contact-band-copy">
-              Konsultasikan kebutuhan pengujian material konstruksi, inspeksi lapangan, atau penerbitan laporan hasil uji bersama tim GIFT Laboratory.
+              {content.contactBand.copy}
             </p>
-            <Heading className="elementor-element-2fa7ae0">Main Office</Heading>
+            <Heading className="elementor-element-2fa7ae0">{content.contactBand.officeHeading}</Heading>
             <Divider className="elementor-element-8725434" />
             <ul className="elementor-icon-list-items gift-wp-contact-list">
               <li>
@@ -812,15 +1038,16 @@ function SubpageHero({
   return (
     <section className={`elementor-element ${sectionClass} e-flex e-con-boxed e-con e-parent gift-wp-subhero`}>
       <div className="e-con-inner">
-        <ScrollFade variant="fade">
-          <Heading className={headingClass}>{title}</Heading>
-        </ScrollFade>
+        <Heading className={headingClass}>{title}</Heading>
       </div>
     </section>
   );
 }
 
 function PolicySection() {
+  const { content } = useLandingLanguage();
+  const { policy } = content;
+
   return (
     <section className="elementor-element elementor-element-2534f23 e-flex e-con-boxed e-con e-parent gift-wp-policy">
       <div className="e-con-inner">
@@ -831,24 +1058,22 @@ function PolicySection() {
           <div className="gift-wp-policy-tab-nav">
             <label htmlFor="policy-impartiality">
               <ShieldCheck className="gift-wp-lucide" />
-              <span>Kebijakan Ketidakberpihakan</span>
+              <span>{policy.tabImpartiality}</span>
             </label>
             <label htmlFor="policy-antisouap">
               <Handshake className="gift-wp-lucide" />
-              <span>Komitmen Anti Suap</span>
+              <span>{policy.tabAntiBribery}</span>
             </label>
           </div>
           <article className="gift-wp-policy-panel gift-wp-policy-impartiality">
             <div className="gift-wp-policy-content">
               <div className="gift-wp-policy-copy-column">
-                <span className="gift-wp-policy-kicker">Kebijakan</span>
-                <h2>Ketidakberpihakan</h2>
-                <p>
-                  PT Global Inspeksi Forensik Teknik berkomitmen untuk menjaga ketidakberpihakan, independensi, objektivitas, dan integritas dalam seluruh kegiatan pengujian laboratorium dan inspeksi. Seluruh layanan pengujian dan inspeksi dilaksanakan secara profesional, bebas dari tekanan komersial, keuangan, hubungan pribadi, hubungan organisasi, maupun tekanan lain yang dapat mempengaruhi hasil pengujian dan/atau inspeksi. Manajemen puncak memastikan bahwa setiap personel yang terlibat dalam kegiatan pengujian dan inspeksi wajib menjaga objektivitas, menghindari konflik kepentingan, serta tidak menerima intervensi dalam proses maupun hasil pekerjaan. PT Global Inspeksi Forensik Teknik mengidentifikasi, mengevaluasi, mengendalikan, dan meninjau risiko ketidakberpihakan secara berkala untuk memastikan hasil pengujian dan inspeksi tetap akurat, objektif, dan dapat dipercaya.
-                </p>
-                <p>Tangerang, 7 Mei 2026<br />PT Global Inspeksi Forensik Teknik</p>
+                <span className="gift-wp-policy-kicker">{policy.impartialityKicker}</span>
+                <h2>{policy.impartialityTitle}</h2>
+                <p>{policy.impartialityBody}</p>
+                <p>{policy.signatureLocationDate}<br />PT Global Inspeksi Forensik Teknik</p>
                 <div className="gift-wp-policy-signature">
-                  <strong>Director</strong>
+                  <strong>{policy.directorLabel}</strong>
                   <span>Vera Marini</span>
                 </div>
               </div>
@@ -857,27 +1082,21 @@ function PolicySection() {
           <article className="gift-wp-policy-panel gift-wp-policy-antisouap">
             <div className="gift-wp-policy-content">
               <div className="gift-wp-policy-copy-column">
-                <span className="gift-wp-policy-kicker">Komitmen</span>
-                <h2>Anti Suap</h2>
-                <p>
-                  PT Global Inspeksi Forensik Teknik berkomitmen untuk menjalankan seluruh kegiatan pengujian laboratorium dan inspeksi secara jujur, profesional, transparan, independen, dan bebas dari praktik suap. Seluruh personel dilarang meminta, menerima, memberikan, atau menjanjikan uang, hadiah, gratifikasi, fasilitas, atau bentuk imbalan lainnya yang dapat mempengaruhi objektivitas, ketidakberpihakan, dan hasil pengujian maupun inspeksi. Setiap dugaan pelanggaran, benturan kepentingan, gratifikasi, atau praktik suap dapat dilaporkan kepada manajemen perusahaan untuk ditindaklanjuti secara rahasia, objektif, dan bertanggung jawab.
-                </p>
-                <p>
-                  Pelaporan ini dilakukan dengan dukungan data yang relevan dan dimaksudkan untuk kepentingan Perusahaan, tidak dimaksudkan untuk memaksakan seseorang. Pelaporan dapat disampaikan kepada Direktur Global Inspeksi Forensik Teknik atau Bagian Informasi Umum, melalui informasi sebagai berikut:
-                </p>
+                <span className="gift-wp-policy-kicker">{policy.antiBriberyKicker}</span>
+                <h2>{policy.antiBriberyTitle}</h2>
+                <p>{policy.antiBriberyBody1}</p>
+                <p>{policy.antiBriberyBody2}</p>
                 <ul className="gift-wp-policy-contact-list">
-                  <li><strong>Email</strong><span>globalinspeksiforensikteknik@gmail.com</span></li>
-                  <li><strong>Telp</strong><span>+62 812-5056-7742</span></li>
-                  <li><strong>Site web</strong><span>www.gift-laboratory.com</span></li>
-                  <li><strong>Letter</strong><span>PT. Global Inspeksi Forensik Teknik</span></li>
-                  <li><strong>Alamat</strong><span>District 91, No C5 BSD, Tangerang</span></li>
-                  <li><strong>Alamat</strong><span>Foresta Business Loft 2, Unit 16, Jl.BSD Raya Utama, Tangerang 15339</span></li>
+                  <li><strong>{policy.contactLabels.email}</strong><span>globalinspeksiforensikteknik@gmail.com</span></li>
+                  <li><strong>{policy.contactLabels.phone}</strong><span>+62 812-5056-7742</span></li>
+                  <li><strong>{policy.contactLabels.website}</strong><span>www.gift-laboratory.com</span></li>
+                  <li><strong>{policy.contactLabels.letter}</strong><span>PT. Global Inspeksi Forensik Teknik</span></li>
+                  <li><strong>{policy.contactLabels.address}</strong><span>District 91, No C5 BSD, Tangerang</span></li>
+                  <li><strong>{policy.contactLabels.address}</strong><span>Foresta Business Loft 2, Unit 16, Jl.BSD Raya Utama, Tangerang 15339</span></li>
                 </ul>
-                <p>
-                  Pelapor harus memberikan identitas mereka dalam melaporkan keluhan dan memastikan bahwa setiap informasi tentang identitas pihak pelapor dan laporannya dijaga kerahasiaannya. Pelaporan dilakukan di bawah prinsip anonim, rahasia dan independen.
-                </p>
+                <p>{policy.closingNote}</p>
                 <div className="gift-wp-policy-signature">
-                  <strong>Director</strong>
+                  <strong>{policy.directorLabel}</strong>
                   <span>Vera marini</span>
                 </div>
               </div>
@@ -891,18 +1110,20 @@ function PolicySection() {
 }
 
 function ClientStrip() {
+  const { content } = useLandingLanguage();
+
   return (
     <section className="elementor-element elementor-element-ec38abd e-flex e-con-boxed e-con e-parent gift-wp-client-strip">
       <div className="e-con-inner">
         <ScrollFade variant="up">
-          <Heading className="elementor-element-b891f8c">Our Clients</Heading>
+          <Heading className="elementor-element-b891f8c">{content.clients.heading}</Heading>
         </ScrollFade>
-        <div className="elementor-element elementor-element-974875d e-grid e-con-boxed e-con e-child">
-          {clientLogos.map((logo, index) => (
-            <ScrollFade key={logo.src} variant="scale" delay={index * 0.04}>
-              <img src={logo.src} alt={logo.alt} />
-            </ScrollFade>
-          ))}
+        <div className="gift-wp-client-marquee">
+          <div className="gift-wp-client-track">
+            {[...clientLogos, ...clientLogos].map((logo, index) => (
+              <img key={`${logo.src}-${index}`} src={logo.src} alt={logo.alt} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -914,11 +1135,13 @@ function ServicePromoBox({
   image,
   title,
   description,
+  cta,
 }: {
   className: string;
   image: string;
   title: string;
   description: string;
+  cta: string;
 }) {
   return (
     <article className={`elementor-element ${className} wpr-promo-box-style-cover elementor-widget elementor-widget-wpr-promo-box gift-wp-service-card-anim`}>
@@ -932,7 +1155,7 @@ function ServicePromoBox({
             <h3 className="wpr-promo-box-title"><span>{title}</span></h3>
             <div className="wpr-promo-box-description"><p>{description}</p></div>
             <Link className="wpr-promo-box-btn" href="/contact">
-              <span className="wpr-promo-box-btn-text">Hubungi kami</span>
+              <span className="wpr-promo-box-btn-text">{cta}</span>
               <span className="wpr-promo-box-btn-icon"><Phone size={14} /></span>
             </Link>
           </div>
@@ -989,6 +1212,8 @@ function ContactIconBox({
 }
 
 function BlogCard({ post }: { post: BlogCard }) {
+  const { content, language } = useLandingLanguage();
+
   return (
     <article className="gift-blog-card">
       <Link href={post.href} className="gift-blog-card-img">
@@ -999,21 +1224,21 @@ function BlogCard({ post }: { post: BlogCard }) {
         <h2><Link href={post.href}>{post.title}</Link></h2>
         <p>{post.excerpt}</p>
         <div className="gift-blog-card-footer">
-          <time className="gift-wp-blog-meta">{post.date}</time>
-          <Link className="gift-wp-read-more" href={post.href}>Baca <ArrowRight size={14} /></Link>
+          <time className="gift-wp-blog-meta">{formatBlogDate(post.date, language)}</time>
+          <Link className="gift-wp-read-more" href={post.href}>{content.blog.readMoreCard} <ArrowRight size={14} /></Link>
         </div>
       </div>
     </article>
   );
 }
 
-function FeatureList({ className }: { className: string }) {
+function FeatureList({ className, items }: { className: string; items: { title: string; description: string }[] }) {
   return (
     <div className={`elementor-element ${className} wpr-feature-list-left wpr-feature-list-square wpr-feature-list-line-yes elementor-widget elementor-widget-wpr-feature-list`}>
       <div className="elementor-widget-container">
         <div className="wpr-feature-list-wrap">
           <ul className="wpr-feature-list">
-            {missionItems.map((mission) => (
+            {items.map((mission) => (
               <li key={mission.title} className="wpr-feature-list-item">
                 <div className="wpr-feature-list-icon-wrap">
                   <span className="wpr-feature-list-line" />
@@ -1032,13 +1257,13 @@ function FeatureList({ className }: { className: string }) {
   );
 }
 
-function FacilityFeatureList() {
+function FacilityFeatureList({ items }: { items: { title: string; description: string }[] }) {
   return (
     <div className="elementor-element elementor-element-1a8878c4 wpr-feature-list-left wpr-feature-list-square wpr-feature-list-line-yes elementor-widget elementor-widget-wpr-feature-list">
       <div className="elementor-widget-container">
         <div className="wpr-feature-list-wrap">
           <ul className="wpr-feature-list">
-            {facilities.map((facility, index) => {
+            {items.map((facility, index) => {
               const Icon = facilityIcons[index] ?? CheckIcon;
 
               return (
@@ -1139,6 +1364,14 @@ function CheckIcon({ className }: { className?: string } = {}) {
   return (
     <svg aria-hidden="true" className={`e-font-icon-svg e-fas-check${className ? ` ${className}` : ""}`} viewBox="0 0 512 512">
       <path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z" />
+    </svg>
+  );
+}
+
+function WhatsAppIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.149-.149.298-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.371-.05-.52-.099-.149-.668-1.612-.917-2.207-.242-.579-.487-.5-.668-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.03 3.1 4.927 4.224 2.898 1.123 2.898.748 3.421.7.523-.049 1.758-.72 2.006-1.413.247-.694.247-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.05 21.785h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.981.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.885-9.885 9.885zm8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 0 0 5.741 1.464h.005c6.554 0 11.89-5.336 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
     </svg>
   );
 }

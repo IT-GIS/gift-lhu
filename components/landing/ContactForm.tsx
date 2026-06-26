@@ -4,20 +4,23 @@ import { useActionState, useEffect, useRef } from "react";
 import { useFormStatus } from "react-dom";
 import { MessageSquareText, Send } from "lucide-react";
 import { submitContactMessageAction, type ContactFormState } from "@/lib/actions/contact";
+import { useLandingLanguage } from "./landing-language-provider";
 
 const initialState: ContactFormState = { status: "idle" };
 
-function SubmitButton() {
+function SubmitButton({ sendLabel, sendingLabel }: { sendLabel: string; sendingLabel: string }) {
   const { pending } = useFormStatus();
 
   return (
     <button suppressHydrationWarning className="wpr-button" type="submit" disabled={pending}>
-      {pending ? "Mengirim..." : "Send Message"} <Send size={16} />
+      {pending ? sendingLabel : sendLabel} <Send size={16} />
     </button>
   );
 }
 
 export function ContactForm({ sourcePage }: { sourcePage: "home" | "contact" }) {
+  const { content } = useLandingLanguage();
+  const { contactForm } = content;
   const [state, formAction] = useActionState(submitContactMessageAction, initialState);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -36,21 +39,21 @@ export function ContactForm({ sourcePage }: { sourcePage: "home" | "contact" }) 
       <div className="gift-wp-form-header">
         <MessageSquareText size={24} />
         <div>
-          <strong>Kirim Pertanyaan</strong>
-          <span>Tim kami akan menindaklanjuti melalui email resmi.</span>
+          <strong>{contactForm.eyebrow}</strong>
+          <span>{contactForm.subtitle}</span>
         </div>
       </div>
       <input type="hidden" name="sourcePage" value={sourcePage} />
       <div className="gift-wp-form-row">
-        <label>Name<input suppressHydrationWarning className="wpr-form-field" name="name" placeholder="Nama lengkap" required /></label>
-        <label>Email<input suppressHydrationWarning className="wpr-form-field" type="email" name="email" placeholder="nama@perusahaan.com" required /></label>
+        <label>{contactForm.nameLabel}<input suppressHydrationWarning className="wpr-form-field" name="name" placeholder={contactForm.namePlaceholder} required /></label>
+        <label>{contactForm.emailLabel}<input suppressHydrationWarning className="wpr-form-field" type="email" name="email" placeholder={contactForm.emailPlaceholder} required /></label>
       </div>
-      <label>Company<input suppressHydrationWarning className="wpr-form-field" name="company" placeholder="Nama perusahaan / instansi" /></label>
-      <label>Message<textarea suppressHydrationWarning className="wpr-form-field" name="message" placeholder="Ceritakan kebutuhan pengujian atau inspeksi Anda" rows={7} required /></label>
-      <SubmitButton />
+      <label>{contactForm.companyLabel}<input suppressHydrationWarning className="wpr-form-field" name="company" placeholder={contactForm.companyPlaceholder} /></label>
+      <label>{contactForm.messageLabel}<textarea suppressHydrationWarning className="wpr-form-field" name="message" placeholder={contactForm.messagePlaceholder} rows={7} required /></label>
+      <SubmitButton sendLabel={contactForm.sendLabel} sendingLabel={contactForm.sendingLabel} />
       {state.status === "success" && (
         <p className="gift-wp-form-feedback gift-wp-form-feedback-success">
-          Terima kasih, pesan Anda berhasil terkirim. Tim kami akan segera menindaklanjuti.
+          {contactForm.successMessage}
         </p>
       )}
       {state.status === "error" && (

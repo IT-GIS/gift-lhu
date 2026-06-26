@@ -54,134 +54,226 @@ export function WpStyles() {
         .elementor-1160 .elementor-element.elementor-element-4e53d5c:not(.elementor-motion-effects-element-type-background) {
           background-image: url("/landing/subpage-cover.jpg") !important;
         }
-        .gift-keluhan-content { min-height: 200px; }
-        .elementor-166 {
-          position: sticky;
-          top: 0;
-          z-index: 1000;
-          background: linear-gradient(135deg, #0d3453 0%, #1262a8 55%, #1a87c4 100%) !important;
-          backdrop-filter: blur(20px) saturate(180%) !important;
-          -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
-          box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2) !important;
+        .gift-appeal-section {
+          background: #fff;
         }
-        .elementor-166 .e-con-inner,
-        .gift-wp-section > .e-con-inner,
-        .elementor-section > .elementor-container {
-          width: min(1200px, calc(100% - 40px));
+        .gift-appeal-section .e-con-inner {
+          width: min(1100px, calc(100% - 40px));
           margin: 0 auto;
         }
-        .elementor-166 .elementor-element-bdb4fea > .e-con-inner {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          min-height: 89px;
+        .gift-appeal-card {
+          border: 1px solid rgba(15, 23, 42, .08);
+          border-radius: 24px;
+          background: #fff;
+          box-shadow: 0 20px 60px rgba(10, 37, 64, .08);
+          padding: 32px;
         }
-        .elementor-166 .wpr-logo-image img {
-          display: block;
-          width: 140px !important;
-          max-width: 140px !important;
-          height: auto !important;
-          object-fit: contain;
+        @media (max-width: 640px) {
+          .gift-appeal-card {
+            padding: 20px;
+          }
         }
-        .elementor-166 .wpr-logo,
-        .elementor-166 .wpr-logo-image {
-          display: block;
-          width: 140px !important;
-          max-width: 140px !important;
-          overflow: hidden;
+        .gift-appeal-header {
+          display: grid;
+          justify-items: center;
+          gap: 12px;
+          margin-bottom: 48px;
+          text-align: center;
         }
-        .elementor-166 .wpr-nav-menu {
-          display: flex;
-          align-items: center;
-          gap: 28px;
+        .gift-appeal-title {
+          margin: 0;
+          color: #0a2540;
+          font: 700 34px/1.2 Poppins, sans-serif;
+        }
+        .gift-appeal-flow-wrap {
+          border-radius: 28px;
+          background: linear-gradient(165deg, #0a2540, #0f3a5c);
+          padding: 32px;
+        }
+        .gift-appeal-flow {
+          display: grid;
+          gap: 4px;
           margin: 0;
           padding: 0;
           list-style: none;
         }
-        .elementor-166 .wpr-menu-item {
-          text-decoration: none;
+        .gift-appeal-flow-item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          gap: 10px;
+          padding: 20px 22px;
+          border-radius: 16px;
+          background: #fff;
+          box-shadow: 0 10px 28px rgba(0, 0, 0, .18);
+          transition: transform .25s ease, box-shadow .25s ease;
         }
-        .elementor-166 .wpr-nav-menu .wpr-menu-item,
-        .elementor-166 .wpr-nav-menu .menu-item-has-children > span.wpr-menu-item {
+        .gift-appeal-flow-item:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 16px 36px rgba(0, 0, 0, .26);
+        }
+        .gift-appeal-flow-arrow {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 4px 0;
+          color: rgba(255, 255, 255, .85);
+        }
+        .gift-appeal-flow-arrow-line {
+          width: 2px;
+          height: 20px;
+          background: rgba(255, 255, 255, .4);
+        }
+        .gift-appeal-flow-arrow svg {
+          width: 28px;
+          height: 28px;
+          margin-top: -2px;
+        }
+        .gift-appeal-flow-icon-inner {
+          flex: 0 0 auto;
+          display: inline-flex;
+          width: 38px;
+          height: 38px;
+          align-items: center;
+          justify-content: center;
+          border-radius: 10px;
+          background: rgba(47, 155, 185, .12);
+          color: #2f9bb9;
+        }
+        .gift-appeal-flow-icon-inner svg {
+          width: 18px;
+          height: 18px;
+          stroke-width: 2;
+        }
+        .gift-appeal-flow-content {
+          display: grid;
+          justify-items: center;
+          text-align: center;
+          gap: 4px;
+        }
+        .gift-appeal-flow-title {
+          margin: 0;
+          color: #0a2540;
+          font: 700 22px/1.3 Poppins, sans-serif;
+        }
+        .gift-appeal-cta-card {
+          width: fit-content;
+          max-width: 100%;
+          margin: 24px auto 0;
+          padding: 18px 28px;
+        }
+        @media (max-width: 640px) {
+          .gift-appeal-cta-card {
+            padding: 14px 18px;
+          }
+        }
+        .gift-appeal-cta-row {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: center;
+          gap: 20px;
+        }
+        .gift-appeal-cta-btn {
+          margin-block-end: 0 !important;
+        }
+        .gift-appeal-cta-btn .wpr-button-wrap {
+          display: inline-flex;
+          width: auto;
+        }
+        .gift-appeal-cta-btn .wpr-button {
           display: inline-flex;
           align-items: center;
-          white-space: nowrap;
-          padding: 8px 16px;
-          background: transparent;
-          border: 1px solid transparent;
-          border-radius: 8px;
-          color: rgba(255, 255, 255, 0.88) !important;
-          font-family: Poppins, sans-serif;
-          font-size: 14px;
-          font-weight: 500;
-          text-shadow: none;
-          text-decoration: none;
-          transition: background 0.2s, border-color 0.2s, color 0.2s;
+          justify-content: center;
+          gap: 10px;
+          width: auto;
+          padding: 14px 30px;
+          border-radius: 999px;
+          background: linear-gradient(135deg, #2f9bb9, #0f6d91);
+          box-shadow: 0 10px 24px rgba(47, 155, 185, .32);
+          transition: transform .25s ease, box-shadow .25s ease;
         }
-        .elementor-166 .wpr-nav-menu a.wpr-menu-item:hover,
-        .elementor-166 .wpr-nav-menu .menu-item-has-children:hover > span.wpr-menu-item {
-          background: rgba(255, 255, 255, 0.12);
-          border-color: rgba(255, 255, 255, 0.28);
-          color: #fff !important;
+        .gift-appeal-cta-btn .wpr-button:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 14px 30px rgba(47, 155, 185, .4);
         }
-        .elementor-166 .wpr-nav-menu .wpr-active-menu-item {
-          background: rgba(255, 255, 255, 0.18) !important;
-          border-color: rgba(255, 255, 255, 0.38) !important;
-          color: #fff !important;
-          font-weight: 600 !important;
+        .gift-appeal-cta-btn .wpr-button-content {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
         }
-        .wpr-nav-menu .menu-item-has-children { position: static; }
-        .gift-desktop-dropdown { position: relative; }
-        .gift-desktop-dropdown > summary {
-          list-style: none;
-          cursor: pointer;
+        .gift-appeal-cta-btn .wpr-button-text {
+          width: auto;
+          color: #fff;
+          font: 600 15px Poppins, sans-serif;
         }
-        .gift-desktop-dropdown > summary::-webkit-details-marker { display: none; }
-        .gift-desktop-dropdown > summary::marker { display: none; }
-        @keyframes gift-dropdown-in {
-          from { opacity: 0; transform: translateX(-50%) translateY(-8px); }
-          to   { opacity: 1; transform: translateX(-50%) translateY(0); }
-        }
-        .gift-desktop-dropdown[open] > .sub-menu {
-          display: block;
-          animation: gift-dropdown-in 0.18s ease-out;
-        }
-        .wpr-nav-menu .sub-menu {
-          display: none; position: absolute; top: calc(100% + 10px); left: 50%;
-          transform: translateX(-50%); min-width: 200px; list-style: none; margin: 0; padding: 6px;
-          background: linear-gradient(145deg, rgba(10,40,68,0.97) 0%, rgba(15,75,130,0.95) 100%);
-          backdrop-filter: blur(24px) saturate(160%);
-          -webkit-backdrop-filter: blur(24px) saturate(160%);
-          border: 1px solid rgba(255,255,255,0.12);
-          border-radius: 12px;
-          box-shadow: 0 20px 60px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.06);
-          z-index: 200;
-        }
-        .wpr-nav-menu .sub-menu li a {
-          display: block; padding: 10px 16px; color: rgba(255,255,255,0.82); text-decoration: none;
-          font-family: Poppins, sans-serif; font-size: 14px; border-radius: 8px;
-          white-space: nowrap; transition: background .15s, color .15s;
-        }
-        .wpr-nav-menu .sub-menu li a:hover {
-          background: rgba(255,255,255,0.12);
+        .gift-appeal-cta-btn .wpr-button-icon svg {
+          width: 16px;
+          height: 16px;
           color: #fff;
         }
-        .gift-mobile-parent {
-          display: block; padding: 10px 12px; color: #999;
-          font-family: Poppins, sans-serif; font-weight: 600;
-          font-size: 12px; text-transform: uppercase; letter-spacing: .05em;
+        .gift-appeal-cta-social {
+          display: flex;
+          align-items: center;
+          gap: 14px;
         }
-        .gift-mobile-child { padding-left: 24px !important; font-size: 14px !important; color: #555 !important; }
+        .gift-appeal-cta-icon {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          color: #fff;
+          box-shadow: 0 10px 22px rgba(10, 37, 64, .18);
+          transition: transform .25s ease, box-shadow .25s ease;
+        }
+        .gift-appeal-cta-icon:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 14px 28px rgba(10, 37, 64, .26);
+        }
+        .gift-appeal-cta-icon svg {
+          width: 22px;
+          height: 22px;
+        }
+        .gift-appeal-cta-icon-wa {
+          background: #25d366;
+        }
+        .gift-appeal-cta-icon-mail {
+          background: linear-gradient(135deg, #2f9bb9, #0f6d91);
+        }
+        .gift-floating-nav a,
+        .gift-floating-nav button {
+          -webkit-tap-highlight-color: transparent;
+        }
+        .gift-floating-nav nav button,
+        .gift-floating-nav nav a {
+          border: none !important;
+        }
+        .gift-floating-nav nav button:focus,
+        .gift-floating-nav nav button:focus-visible,
+        .gift-floating-nav nav a:focus,
+        .gift-floating-nav nav a:focus-visible {
+          outline: none;
+          box-shadow: none;
+        }
+        .gift-floating-nav nav a:hover,
+        .gift-floating-nav nav button:hover,
+        .gift-floating-nav nav a:focus-visible,
+        .gift-floating-nav nav button:focus-visible {
+          background-color: rgba(40, 157, 185, 0.1) !important;
+          color: #289db9 !important;
+        }
         .gift-wp-mobile-menu {
-          display: none;
           position: relative;
         }
         .gift-wp-mobile-menu summary {
           display: grid;
           gap: 4px;
-          width: 44px;
-          height: 44px;
+          width: 48px;
+          height: 48px;
+          border-radius: 9999px;
           place-content: center;
           cursor: pointer;
           list-style: none;
@@ -192,27 +284,69 @@ export function WpStyles() {
         .gift-wp-mobile-menu summary span {
           display: block;
           width: 24px;
-          height: 2px;
-          background: #0081ff;
+          height: 2.5px;
+          background: #1e293b;
+          border-radius: 1px;
         }
         .gift-wp-mobile-menu div {
           position: absolute;
           right: 0;
-          top: 100%;
+          top: calc(100% + 10px);
           display: grid;
           width: 220px;
-          gap: 1px;
+          gap: 2px;
           padding: 10px;
-          background: #fff;
-          border: 1px solid #e8e8e8;
-          box-shadow: 0 18px 40px rgba(0, 0, 0, .12);
+          background: rgba(255, 255, 255, 0.97);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(15, 23, 42, 0.08);
+          border-radius: 16px;
+          box-shadow: 0 18px 40px rgba(15, 23, 42, .14);
         }
         .gift-wp-mobile-menu a {
-          padding: 10px 12px;
-          color: #333;
+          padding: 12px 14px;
+          border-radius: 10px;
+          color: #334155;
           text-decoration: none;
           font-family: Poppins, sans-serif;
           font-weight: 500;
+          transition: background .15s, color .15s;
+        }
+        .gift-wp-mobile-menu a:hover {
+          background: rgba(15, 23, 42, 0.06);
+          color: #0f172a;
+        }
+        .gift-mobile-parent {
+          display: block; padding: 12px 14px; color: #94a3b8;
+          font-family: Poppins, sans-serif; font-weight: 600;
+          font-size: 12px; text-transform: uppercase; letter-spacing: .05em;
+        }
+        .gift-mobile-child { padding-left: 24px !important; font-size: 14px !important; }
+        .gift-lang-flag-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          flex: 0 0 auto;
+          padding: 9px;
+          border: none;
+          border-radius: 9999px;
+          background: transparent;
+          cursor: pointer;
+          transition: background .2s;
+        }
+        .gift-lang-flag-btn:hover {
+          background: rgba(15, 23, 42, .06);
+        }
+        .gift-lang-flag-btn:focus,
+        .gift-lang-flag-btn:focus-visible {
+          outline: none;
+          background: rgba(15, 23, 42, .06);
+        }
+        .gift-lang-flag-icon {
+          display: block;
+          width: 30px;
+          height: 19px;
+          border-radius: 2px;
         }
         .gift-wp-hero {
           position: relative;
@@ -421,6 +555,11 @@ export function WpStyles() {
           height: auto;
           display: block;
           object-fit: cover;
+        }
+        .elementor-1186 .elementor-element-3edfafc img {
+          border-radius: 20px;
+          border: 1px solid rgba(48, 164, 197, 0.25);
+          box-shadow: 0 20px 50px rgba(48, 164, 197, 0.18);
         }
         .gift-wp-about .elementor-widget-image img,
         .gift-wp-facilities .elementor-widget-image img,
@@ -1028,6 +1167,9 @@ export function WpStyles() {
           z-index: 1;
           padding-top: 89px;
         }
+        .gift-wp-subhero .elementor-heading-title {
+          color: #fff !important;
+        }
         .gift-wp-policy {
           padding: 100px 0;
           background:
@@ -1205,24 +1347,29 @@ export function WpStyles() {
           height: 1px;
           background: #626c8d;
         }
-        .elementor-1185 .elementor-element.elementor-element-974875d {
-          display: grid;
-          grid-template-columns: repeat(6, minmax(0, 1fr));
-          gap: 50px;
-          align-items: center;
-          justify-items: center;
+        .gift-wp-client-marquee {
           margin-top: 40px;
+          overflow: hidden;
         }
-        .elementor-1185 .elementor-element.elementor-element-974875d img {
+        .gift-wp-client-track {
+          display: flex;
+          align-items: center;
+          gap: 64px;
+          width: max-content;
+          animation: gift-client-marquee 26s linear infinite;
+        }
+        .gift-wp-client-marquee:hover .gift-wp-client-track {
+          animation-play-state: paused;
+        }
+        .gift-wp-client-track img {
           max-height: 90px;
-          max-width: 100%;
+          width: auto;
+          flex-shrink: 0;
           object-fit: contain;
-          margin: 0 auto;
-          transition: transform .25s ease, opacity .25s ease;
         }
-        .elementor-1185 .elementor-element.elementor-element-974875d img:hover {
-          opacity: .92;
-          transform: translateY(-4px);
+        @keyframes gift-client-marquee {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
         }
         .gift-wp-contact-grid {
           display: grid !important;
@@ -1507,6 +1654,12 @@ export function WpStyles() {
         .gift-wp-footer-contact li > a.gift-wp-contact-link:hover {
           color: #82d6ed;
         }
+        .gift-wp-footer-contact li {
+          align-items: center;
+        }
+        .gift-wp-footer-contact li > a.gift-wp-contact-link {
+          align-items: center;
+        }
         .gift-wp-contact-credentials {
           display: flex;
           flex-wrap: wrap;
@@ -1674,10 +1827,10 @@ export function WpStyles() {
           gap: 16px;
         }
         .gift-footer-heading {
-          font: 700 13px/1 Poppins, sans-serif;
+          font: 700 12px/1 Poppins, sans-serif;
           letter-spacing: 0.1em;
           text-transform: uppercase;
-          color: #fff;
+          color: #94a3b8;
           margin-bottom: 4px;
         }
         .gift-footer-desc {
@@ -1685,6 +1838,32 @@ export function WpStyles() {
           font-size: 15px;
           line-height: 1.65;
           margin: 0;
+        }
+        .gift-footer-social {
+          display: flex;
+          gap: 10px;
+          margin-top: 4px;
+        }
+        .gift-footer-social-link {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          border: 1px solid rgba(255, 255, 255, .16);
+          background: rgba(255, 255, 255, .06);
+          color: rgba(255, 255, 255, .75);
+          transition: color .2s ease, background .2s ease, transform .2s ease;
+        }
+        .gift-footer-social-link:hover {
+          color: #82d6ed;
+          background: rgba(130, 214, 237, .14);
+          transform: translateY(-2px);
+        }
+        .gift-footer-social-link svg {
+          width: 18px;
+          height: 18px;
         }
         .elementor-222 .wpr-logo-image img {
           max-width: 240px;
@@ -1697,6 +1876,15 @@ export function WpStyles() {
         }
         .elementor-222 a:hover {
           color: #fff;
+        }
+        .elementor-222 a.elementor-icon-list-text {
+          transition: color .2s ease;
+        }
+        .elementor-222 a.elementor-icon-list-text:hover {
+          color: #82d6ed;
+        }
+        .gift-footer-grid > .gift-footer-col:last-child .gift-wp-footer-contact {
+          gap: 8px;
         }
         .gift-footer-divider {
           border: none;
@@ -2055,7 +2243,7 @@ export function WpStyles() {
           color: rgba(255,255,255,.72);
         }
         .gift-blog-detail {
-          padding: 64px 0 110px;
+          padding: 89px 0 110px;
           background: #f4f8fb;
         }
         .gift-blog-detail-wrap {
@@ -2142,30 +2330,114 @@ export function WpStyles() {
         .gift-blog-detail-nav {
           margin-top: 36px;
         }
+        /* ===== OFFICE LOCATION SECTION ===== */
+        .gift-wp-office-location {
+          padding: 100px 0 0;
+          background: #fff;
+        }
+        .gift-wp-office-wrap {
+          width: min(1100px, calc(100% - 40px));
+          margin: 0 auto;
+        }
+        .gift-wp-office-header {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 48px;
+          align-items: center;
+          margin-bottom: 52px;
+        }
+        .gift-wp-office-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          padding: 6px 14px;
+          border-radius: 6px;
+          background: rgba(47, 155, 185, .1);
+          color: #2f9bb9;
+          font: 800 12px/1 Poppins, sans-serif;
+          letter-spacing: .08em;
+          text-transform: uppercase;
+          margin-bottom: 20px;
+        }
+        .gift-wp-office-badge .gift-wp-lucide { width: 14px; height: 14px; stroke-width: 2; }
+        .gift-wp-office-heading {
+          margin: 0;
+          color: #0a2540;
+          font: 700 48px/1.1 Poppins, sans-serif;
+        }
+        .gift-wp-office-desc {
+          margin: 0;
+          color: #607184;
+          font: 500 16px/1.75 Montserrat, sans-serif;
+        }
+        .gift-wp-office-card {
+          position: relative;
+          border-radius: 20px;
+          overflow: hidden;
+          min-height: 560px;
+          background: url("/landing/contact-card.png") center / cover no-repeat;
+          background-color: #1c2a3a;
+          display: flex;
+          align-items: flex-end;
+        }
+        .gift-wp-office-card-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to top,
+            rgba(5, 18, 38, .92) 0%,
+            rgba(5, 18, 38, .60) 50%,
+            rgba(5, 18, 38, .22) 100%);
+          pointer-events: none;
+        }
+        .gift-wp-office-card-content {
+          position: relative;
+          z-index: 1;
+          padding: 44px 48px;
+        }
+        .gift-wp-office-pill {
+          display: inline-block;
+          padding: 6px 16px;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, .18);
+          border: 1px solid rgba(255, 255, 255, .35);
+          color: #fff;
+          font: 700 11px/1.2 Poppins, sans-serif;
+          letter-spacing: .12em;
+          text-transform: uppercase;
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          margin-bottom: 12px;
+        }
+        .gift-wp-office-city {
+          margin: 0 0 22px;
+          color: #fff;
+          font: 700 64px/1.05 Poppins, sans-serif;
+        }
+        .gift-wp-office-info-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: grid;
+          gap: 11px;
+        }
+        .gift-wp-office-info-list li {
+          display: flex;
+          align-items: flex-start;
+          gap: 11px;
+          color: rgba(255, 255, 255, .9);
+          font: 500 14px/1.65 Montserrat, sans-serif;
+        }
+        .gift-wp-office-info-list .gift-wp-lucide {
+          flex: 0 0 18px;
+          width: 18px;
+          height: 18px;
+          margin-top: 2px;
+          color: #82d6ed;
+          stroke-width: 2;
+        }
         @media (max-width: 1024px) {
-          .elementor-166 .wpr-nav-menu-container {
-            display: none;
-          }
-          .gift-wp-mobile-menu {
-            display: block;
-          }
-          .elementor-166 .elementor-element-927abb3 {
-            flex: 0 0 auto !important;
-            width: auto !important;
-            flex-direction: row !important;
-            justify-content: flex-end !important;
-            align-items: center !important;
-          }
-          .elementor-166 .elementor-element-98c3935 {
-            width: auto !important;
-          }
-          .elementor-166 .elementor-element-98c3935 > .elementor-widget-container {
-            display: flex !important;
-            flex-direction: row !important;
-            justify-content: flex-end !important;
-            align-items: center !important;
-            width: auto !important;
-          }
+          .gift-wp-office-header { grid-template-columns: 1fr; gap: 16px; }
+          .gift-wp-office-heading { font-size: 38px; }
           .gift-wp-two-column {
             grid-template-columns: 1fr;
           }
@@ -2248,20 +2520,13 @@ export function WpStyles() {
           .gift-wp-contact-band .elementor-element-5771a84 {
             padding: 0;
           }
-          .elementor-1185 .elementor-element.elementor-element-974875d {
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-          }
         }
         @media (max-width: 767px) {
-          .elementor-166 .elementor-element-bdb4fea > .e-con-inner {
-            min-height: 76px;
-          }
-          .elementor-166 .wpr-logo,
-          .elementor-166 .wpr-logo-image,
-          .elementor-166 .wpr-logo-image img {
-            width: 104px !important;
-            max-width: 104px !important;
-          }
+          .gift-wp-office-location { padding: 64px 0 0; }
+          .gift-wp-office-heading { font-size: 30px; }
+          .gift-wp-office-city { font-size: 44px; }
+          .gift-wp-office-card { min-height: 380px; }
+          .gift-wp-office-card-content { padding: 28px 24px; }
           .gift-wp-service-grid {
             grid-template-columns: 1fr !important;
           }
@@ -2287,10 +2552,6 @@ export function WpStyles() {
           .gift-wp-quote .elementor-heading-title {
             font-size: 30px;
             line-height: 1.1;
-          }
-          .elementor-1185 .elementor-element.elementor-element-974875d {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 30px 24px;
           }
           .gift-wp-contact-intro {
             text-align: left;
