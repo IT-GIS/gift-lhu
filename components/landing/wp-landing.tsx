@@ -38,6 +38,7 @@ import type { LandingDictionary, Locale } from "./i18n/dictionary";
 import { ScrollFade } from "./ScrollFade";
 import { ContactForm } from "./ContactForm";
 import { LandingFlagToggle } from "./landing-flag-toggle";
+import { ContactFab } from "./contact-fab";
 
 type ActivePage = "home" | "profile" | "services" | "artikel" | "keluhan-dan-banding" | "contact";
 
@@ -74,6 +75,7 @@ export function WpLandingShell({
     <>
       <WpHeader activePage={activePage} />
       {children}
+      <ContactFab />
       <WpFooter />
     </>
   );
@@ -385,6 +387,54 @@ export function ContactLandingPage() {
           </div>
         </section>
 
+        {/* ===== Office Location Section ===== */}
+        <section className="gift-wp-office-location">
+          <div className="gift-wp-office-wrap">
+            <ScrollFade variant="up">
+              <div className="gift-wp-office-header">
+                <div className="gift-wp-office-header-left">
+                  <h2 className="gift-wp-office-heading">
+                    Kunjungi kantor Global Inspeksi Forensik Teknik.
+                  </h2>
+                </div>
+                <div className="gift-wp-office-header-right">
+                  <p className="gift-wp-office-desc">
+                    PT Global Inspeksi Forensik Teknik adalah laboratorium pengujian
+                    konstruksi yang mendukung program pemerintah dalam penerapan
+                    Standar Nasional Indonesia (SNI). Kunjungi kantor kami untuk
+                    konsultasi pengujian, koordinasi proyek, atau informasi
+                    mengenai layanan sertifikasi kami.
+                  </p>
+                </div>
+              </div>
+            </ScrollFade>
+
+            <ScrollFade variant="up" delay={0.12}>
+              <div className="gift-wp-office-card">
+                <div className="gift-wp-office-card-overlay" />
+                <div className="gift-wp-office-card-content">
+                  <span className="gift-wp-office-pill">HEAD OFFICE</span>
+                  <h3 className="gift-wp-office-city">Tangerang</h3>
+                  <ul className="gift-wp-office-info-list">
+                    <li>
+                      <Phone className="gift-wp-lucide" />
+                      <span>{company.phone}</span>
+                    </li>
+                    <li>
+                      <Mail className="gift-wp-lucide" />
+                      <span>{company.email}</span>
+                    </li>
+                    <li>
+                      <MapPin className="gift-wp-lucide" />
+                      <span>{company.address}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </ScrollFade>
+          </div>
+        </section>
+
         <ContactBand sourcePage="contact" />
 
         <section className="elementor-element elementor-element-62d7e54 e-flex e-con-boxed e-con e-parent gift-wp-map">
@@ -672,7 +722,7 @@ function WpHeader({ activePage }: { activePage: ActivePage }) {
 
   return (
     <header className="fixed inset-x-0 top-4 z-50 px-4">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-2">
+      <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-2 px-4">
         <div
           className={`gift-floating-nav flex min-w-0 flex-1 items-center justify-between gap-3 rounded-full border px-7 py-3 backdrop-blur-xl transition-all duration-300 sm:px-9 ${pillSurface}`}
         >
@@ -682,10 +732,10 @@ function WpHeader({ activePage }: { activePage: ActivePage }) {
             alt={company.shortName}
             className="h-12 w-12 rounded-full object-contain sm:h-14 sm:w-14"
           />
-          <span className="hidden whitespace-nowrap text-lg font-bold text-slate-900 sm:inline sm:text-xl">{company.shortName}</span>
+          <span className="hidden whitespace-nowrap text-xl font-bold text-slate-900 sm:inline sm:text-2xl">{company.shortName}</span>
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center gap-2 md:flex">
           {navItems.map((item) => {
             const isActive = navItemMatches(item, activePage, content);
             if (item.children) {
@@ -700,8 +750,8 @@ function WpHeader({ activePage }: { activePage: ActivePage }) {
                   <button
                     type="button"
                     onClick={() => setOpenDropdown((current) => (current === item.label ? null : item.label))}
-                    className={`appearance-none border-0 flex items-center gap-1 whitespace-nowrap !rounded-full px-4 py-2.5 text-sm font-medium transition focus:outline-none focus-visible:outline-none focus-visible:bg-primary/10 focus-visible:text-indigo-500 ${
-                      isActive ? "bg-indigo-50 text-indigo-500 font-semibold" : isOpen ? "bg-primary/10 text-indigo-500" : "!text-slate-600 hover:bg-primary/10 hover:text-indigo-500"
+                    className={`appearance-none border-0 flex items-center gap-1 whitespace-nowrap !rounded-full px-4 py-2.5 text-lg !font-semibold transition focus:outline-none focus-visible:outline-none focus-visible:bg-primary/10 focus-visible:text-primary ${
+                      isActive ? "bg-primary/10 text-primary font-semibold" : isOpen ? "bg-primary/10 text-primary font-semibold" : "!text-slate-600 font-semibold hover:bg-primary/10 hover:text-primary"
                     }`}
                   >
                     {item.label}
@@ -720,7 +770,7 @@ function WpHeader({ activePage }: { activePage: ActivePage }) {
                           <Link
                             href={child.href}
                             onClick={() => setOpenDropdown(null)}
-                            className="block whitespace-nowrap rounded-xl px-3 py-2 text-sm text-slate-600 transition hover:bg-primary/10 hover:text-indigo-500 active:bg-secondary/80 active:text-indigo-500 focus:outline-none focus-visible:outline-none focus-visible:bg-primary/10 focus-visible:text-indigo-500"
+                            className="block whitespace-nowrap rounded-xl px-3 py-2 text-base font-semibold text-slate-600 transition hover:bg-primary/10 hover:text-primary active:bg-secondary/80 active:text-primary focus:outline-none focus-visible:outline-none focus-visible:bg-primary/10 focus-visible:text-primary"
                           >
                             {child.label}
                           </Link>
@@ -735,7 +785,7 @@ function WpHeader({ activePage }: { activePage: ActivePage }) {
               <Link
                 key={item.href}
                 href={item.href!}
-                className={`whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-medium transition active:bg-secondary/80 active:text-indigo-500 focus:outline-none focus-visible:outline-none focus-visible:bg-primary/10 focus-visible:text-indigo-500 ${
+                className={`whitespace-nowrap rounded-full px-4 py-2.5 text-lg font-semibold transition active:bg-secondary/80 active:text-indigo-500 focus:outline-none focus-visible:outline-none focus-visible:bg-primary/10 focus-visible:text-indigo-500 ${
                   isActive ? "bg-indigo-50 text-indigo-500 font-semibold" : "text-slate-600 hover:bg-primary/10 hover:text-indigo-500"
                 }`}
               >

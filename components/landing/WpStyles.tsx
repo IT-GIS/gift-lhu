@@ -2330,7 +2330,114 @@ export function WpStyles() {
         .gift-blog-detail-nav {
           margin-top: 36px;
         }
+        /* ===== OFFICE LOCATION SECTION ===== */
+        .gift-wp-office-location {
+          padding: 100px 0 0;
+          background: #fff;
+        }
+        .gift-wp-office-wrap {
+          width: min(1100px, calc(100% - 40px));
+          margin: 0 auto;
+        }
+        .gift-wp-office-header {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 48px;
+          align-items: center;
+          margin-bottom: 52px;
+        }
+        .gift-wp-office-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          padding: 6px 14px;
+          border-radius: 6px;
+          background: rgba(47, 155, 185, .1);
+          color: #2f9bb9;
+          font: 800 12px/1 Poppins, sans-serif;
+          letter-spacing: .08em;
+          text-transform: uppercase;
+          margin-bottom: 20px;
+        }
+        .gift-wp-office-badge .gift-wp-lucide { width: 14px; height: 14px; stroke-width: 2; }
+        .gift-wp-office-heading {
+          margin: 0;
+          color: #0a2540;
+          font: 700 48px/1.1 Poppins, sans-serif;
+        }
+        .gift-wp-office-desc {
+          margin: 0;
+          color: #607184;
+          font: 500 16px/1.75 Montserrat, sans-serif;
+        }
+        .gift-wp-office-card {
+          position: relative;
+          border-radius: 20px;
+          overflow: hidden;
+          min-height: 560px;
+          background: url("/landing/contact-card.png") center / cover no-repeat;
+          background-color: #1c2a3a;
+          display: flex;
+          align-items: flex-end;
+        }
+        .gift-wp-office-card-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to top,
+            rgba(5, 18, 38, .92) 0%,
+            rgba(5, 18, 38, .60) 50%,
+            rgba(5, 18, 38, .22) 100%);
+          pointer-events: none;
+        }
+        .gift-wp-office-card-content {
+          position: relative;
+          z-index: 1;
+          padding: 44px 48px;
+        }
+        .gift-wp-office-pill {
+          display: inline-block;
+          padding: 6px 16px;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, .18);
+          border: 1px solid rgba(255, 255, 255, .35);
+          color: #fff;
+          font: 700 11px/1.2 Poppins, sans-serif;
+          letter-spacing: .12em;
+          text-transform: uppercase;
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          margin-bottom: 12px;
+        }
+        .gift-wp-office-city {
+          margin: 0 0 22px;
+          color: #fff;
+          font: 700 64px/1.05 Poppins, sans-serif;
+        }
+        .gift-wp-office-info-list {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          display: grid;
+          gap: 11px;
+        }
+        .gift-wp-office-info-list li {
+          display: flex;
+          align-items: flex-start;
+          gap: 11px;
+          color: rgba(255, 255, 255, .9);
+          font: 500 14px/1.65 Montserrat, sans-serif;
+        }
+        .gift-wp-office-info-list .gift-wp-lucide {
+          flex: 0 0 18px;
+          width: 18px;
+          height: 18px;
+          margin-top: 2px;
+          color: #82d6ed;
+          stroke-width: 2;
+        }
         @media (max-width: 1024px) {
+          .gift-wp-office-header { grid-template-columns: 1fr; gap: 16px; }
+          .gift-wp-office-heading { font-size: 38px; }
           .gift-wp-two-column {
             grid-template-columns: 1fr;
           }
@@ -2415,6 +2522,11 @@ export function WpStyles() {
           }
         }
         @media (max-width: 767px) {
+          .gift-wp-office-location { padding: 64px 0 0; }
+          .gift-wp-office-heading { font-size: 30px; }
+          .gift-wp-office-city { font-size: 44px; }
+          .gift-wp-office-card { min-height: 380px; }
+          .gift-wp-office-card-content { padding: 28px 24px; }
           .gift-wp-service-grid {
             grid-template-columns: 1fr !important;
           }
