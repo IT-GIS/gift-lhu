@@ -917,11 +917,12 @@ function WpFooter() {
 }
 
 function ServicesGrid({ compact = false }: { compact?: boolean }) {
+  const { content } = useLandingLanguage();
+
   if (compact) {
     return <HomeServicesGrid />;
   }
 
-  const { content } = useLandingLanguage();
   const orderedServices = getOrderedServices(content);
 
   return (
@@ -1467,3 +1468,4 @@ function renderArticleContent(content: string) {
 
   return blocks;
 }
+

@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useState, type ReactNode } from "react";
 import { dictionary, type LandingDictionary, type Locale } from "./i18n/dictionary";
 
 const STORAGE_KEY = "landing-lang";
@@ -14,12 +14,11 @@ type LandingLanguageContextValue = {
 const LandingLanguageContext = createContext<LandingLanguageContextValue | null>(null);
 
 export function LandingLanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Locale>("id");
-
-  useEffect(() => {
+  const [language, setLanguage] = useState<Locale>(() => {
+    if (typeof window === "undefined") return "id";
     const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (stored === "en" || stored === "id") setLanguage(stored);
-  }, []);
+    return stored === "en" || stored === "id" ? stored : "id";
+  });
 
   const selectLanguage = useCallback((locale: Locale) => {
     window.localStorage.setItem(STORAGE_KEY, locale);
@@ -38,3 +37,4 @@ export function useLandingLanguage() {
   if (!ctx) throw new Error("useLandingLanguage must be used within LandingLanguageProvider");
   return ctx;
 }
+
