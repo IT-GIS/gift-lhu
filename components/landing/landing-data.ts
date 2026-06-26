@@ -86,13 +86,13 @@ export const blogPosts: {
 }[] = [];
 
 export const clientLogos = [
-  { src: "/landing/client-mutubeton.png", alt: "Mutu Beton" },
-  { src: "/landing/client-indoprecast-original.png", alt: "INDOPRECAST" },
+  { src: "/landing/client-mutubeton.png", alt: "Mutu Beton", large: true },
+  { src: "/landing/client-indoprecast-original.png", alt: "INDOPRECAST", large: true },
   { src: "/landing/client-spi.png", alt: "Shangyang Perkasa Indonesia" },
-  { src: "/landing/client-global-inspeksi-sistem.png", alt: "Global Inspeksi Sistem" },
-  { src: "/landing/client-bep.png", alt: "BEP Precast and Prestress Concrete" },
+  { src: "/landing/client-global-inspeksi-sistem.png", alt: "Global Inspeksi Sistem", large: true },
+  { src: "/landing/client-bep.png", alt: "BEP Precast and Prestress Concrete", large: true },
   { src: "/landing/client-jaya.png", alt: "Jaya Beton" },
-  { src: "/landing/client-asiacon.png", alt: "Asiacon Cipta Prima" },
+  { src: "/landing/client-asiacon.png", alt: "Asiacon Cipta Prima", large: true },
 ];
 
 /** Fixed display order for the services grid/promo cards, by slug (same across locales). */
