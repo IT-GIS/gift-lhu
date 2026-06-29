@@ -46,10 +46,6 @@ export function WpStyles() {
         .elementor-1184 .elementor-element.elementor-element-cf5e46f:not(.elementor-motion-effects-element-type-background) {
           background-image: url("/landing/facility-bg.png") !important;
         }
-        .elementor-1189 .elementor-element.elementor-element-cf5e46f,
-        .elementor-1189 .elementor-element.elementor-element-cf5e46f:not(.elementor-motion-effects-element-type-background) {
-          background-image: url("https://gift-laboratory.com/wp-content/uploads/2024/06/home-1.jpg") !important;
-        }
         .elementor-1160 .elementor-element.elementor-element-4e53d5c,
         .elementor-1160 .elementor-element.elementor-element-4e53d5c:not(.elementor-motion-effects-element-type-background) {
           background-image: url("/landing/subpage-cover.jpg") !important;
@@ -1055,7 +1051,7 @@ export function WpStyles() {
           inset: 0;
           background:
             linear-gradient(rgba(0, 46, 91, .61), rgba(0, 46, 91, .61)),
-            url("https://gift-laboratory.com/wp-content/uploads/2025/08/konstruksi-1.png") center / cover no-repeat;
+            url("/landing/blog-konstruksi.png") center / cover no-repeat;
           opacity: .95;
           pointer-events: none;
         }
