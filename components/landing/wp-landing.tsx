@@ -753,6 +753,7 @@ function WpHeader({ activePage }: { activePage: ActivePage }) {
                     className={`appearance-none border-0 flex items-center gap-1 whitespace-nowrap !rounded-full px-4 py-2.5 text-lg !font-semibold transition focus:outline-none focus-visible:outline-none focus-visible:bg-primary/10 focus-visible:text-primary ${
                       isActive ? "bg-primary/10 text-primary font-semibold" : isOpen ? "bg-primary/10 text-primary font-semibold" : "!text-slate-600 font-semibold hover:bg-primary/10 hover:text-primary"
                     }`}
+                    suppressHydrationWarning
                   >
                     {item.label}
                     <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
