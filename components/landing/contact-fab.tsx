@@ -156,6 +156,7 @@ export function ContactFab() {
         className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-primary text-white shadow-glow transition-shadow duration-200 hover:shadow-[0_4px_24px_rgba(14,165,233,0.55)] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.94 }}
+        suppressHydrationWarning
       >
         <AnimatePresence mode="wait" initial={false}>
           {!showPlus ? (
