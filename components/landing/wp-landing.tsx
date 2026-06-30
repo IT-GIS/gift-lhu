@@ -521,7 +521,7 @@ export function BlogLandingPage({
               <ScrollFade variant="left">
                 <Link href={featured.href} className="gift-blog-featured">
                   <div className="gift-blog-featured-img">
-                    <img src={featured.image} alt={featured.title} />
+                    <img src={featured.image} alt={featured.title} onError={(e) => { (e.target as HTMLImageElement).src = "/landing/blog-konstruksi.png"; }} />
                   </div>
                   <div className="gift-blog-featured-body">
                     <span className="gift-blog-tag">{featured.category}</span>
@@ -573,7 +573,7 @@ export function BlogDetailLandingPage({ post }: { post: BlogCard & { content?: s
                   <h1>{post.title}</h1>
                   <time className="gift-wp-blog-meta">{formatBlogDate(post.date, language)}</time>
                 </header>
-                <img src={post.image} alt={post.title} className="gift-blog-article-cover" />
+                <img src={post.image} alt={post.title} className="gift-blog-article-cover" onError={(e) => { (e.target as HTMLImageElement).src = "/landing/blog-konstruksi.png"; }} />
                 {renderArticleContent(post.content || post.excerpt)}
               </article>
             </ScrollFade>
@@ -1224,7 +1224,7 @@ function BlogCard({ post }: { post: BlogCard }) {
   return (
     <article className="gift-blog-card">
       <Link href={post.href} className="gift-blog-card-img">
-        <img src={post.image} alt={post.title} />
+        <img src={post.image} alt={post.title} onError={(e) => { (e.target as HTMLImageElement).src = "/landing/blog-konstruksi.png"; }} />
       </Link>
       <div className="gift-blog-card-body">
         <span className="gift-blog-tag">{post.category}</span>

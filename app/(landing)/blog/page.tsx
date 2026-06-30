@@ -35,7 +35,7 @@ async function getAllPosts() {
       title: p.title,
       date: new Date(p.publishedAt).toISOString(),
       category: p.category || "Blog",
-      image: (p.imageUrl?.startsWith("/") || p.imageUrl?.startsWith("data:")) ? p.imageUrl : FALLBACK_IMAGE,
+      image: (p.imageUrl?.startsWith("data:") || (p.imageUrl?.startsWith("/") && !p.imageUrl.startsWith("/uploads/"))) ? p.imageUrl : FALLBACK_IMAGE,
       excerpt: p.excerpt || stripHtml(p.content).slice(0, 180),
       content: p.content,
       href: `/blog/${p.slug}`,

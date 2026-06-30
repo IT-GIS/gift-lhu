@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 import { dictionary, type LandingDictionary, type Locale } from "./i18n/dictionary";
 
 const STORAGE_KEY = "landing-lang";
@@ -14,11 +14,16 @@ type LandingLanguageContextValue = {
 const LandingLanguageContext = createContext<LandingLanguageContextValue | null>(null);
 
 export function LandingLanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Locale>(() => {
-    if (typeof window === "undefined") return "id";
+  // Always initialize with server default "id" so SSR and first client render match.
+  // Read localStorage in useEffect to avoid React hydration error #418.
+  const [language, setLanguage] = useState<Locale>("id");
+
+  useEffect(() => {
     const stored = window.localStorage.getItem(STORAGE_KEY);
-    return stored === "en" || stored === "id" ? stored : "id";
-  });
+    if (stored === "en" || stored === "id") {
+      setLanguage(stored);
+    }
+  }, []);
 
   const selectLanguage = useCallback((locale: Locale) => {
     window.localStorage.setItem(STORAGE_KEY, locale);

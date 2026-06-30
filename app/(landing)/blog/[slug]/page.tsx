@@ -57,7 +57,7 @@ async function getPost(slug: string) {
       title: post.title,
       date: new Date(post.publishedAt).toISOString(),
       category: post.category || "Blog",
-      image: (post.imageUrl?.startsWith("/") || post.imageUrl?.startsWith("data:"))
+      image: (post.imageUrl?.startsWith("data:") || (post.imageUrl?.startsWith("/") && !post.imageUrl.startsWith("/uploads/")))
         ? post.imageUrl
         : "/landing/blog-konstruksi.png",
       excerpt: post.excerpt || stripHtml(post.content).slice(0, 180),
