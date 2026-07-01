@@ -21,7 +21,8 @@ export function LandingLanguageProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const stored = window.localStorage.getItem(STORAGE_KEY);
     if (stored === "en" || stored === "id") {
-      setLanguage(stored);
+      const frame = window.requestAnimationFrame(() => setLanguage(stored));
+      return () => window.cancelAnimationFrame(frame);
     }
   }, []);
 
