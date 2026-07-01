@@ -456,15 +456,16 @@ function categoryLabel(category: string, content: LandingDictionary) {
   return category === "All Posts" ? content.blog.allCategoriesLabel : category;
 }
 
-/** Posts pass an ISO date string; format it for display in the active locale. */
-function formatBlogDate(value: string, language: Locale) {
+const ID_MONTHS = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+const EN_MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+/** ICU-independent date formatter — avoids toLocaleDateString() which produces
+ *  different output on Node.js small-icu vs browser, causing React error #418. */
+function formatBlogDate(value: string, language: Locale): string {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return value;
-  return date.toLocaleDateString(language === "en" ? "en-US" : "id-ID", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
+  const months = language === "en" ? EN_MONTHS : ID_MONTHS;
+  return `${date.getUTCDate()} ${months[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
 }
 
 export function BlogLandingPage({
@@ -910,7 +911,7 @@ function WpFooter() {
         </div>
         <ScrollFade variant="fade" delay={0.3}>
           <hr className="gift-footer-divider" />
-          <p className="gift-footer-copy">© {new Date().getFullYear()} Global Inspeksi Forensik Teknik</p>
+          <p className="gift-footer-copy" suppressHydrationWarning>© {new Date().getFullYear()} Global Inspeksi Forensik Teknik</p>
         </ScrollFade>
       </div>
     </footer>
