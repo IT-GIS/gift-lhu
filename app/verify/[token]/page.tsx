@@ -11,7 +11,7 @@ import { formatDate, getConcreteTypeLabel } from "@/lib/utils";
 const LABORATORY_PROFILE = {
   companyName: "PT GLOBAL INSPEKSI FORENSIK TEKNIK",
   addressLines: [
-    "Komplek 91 Distrik BSD blok C5 Pagedangan",
+    "91 Distrik BSD blok C5 Pagedangan",
     "Desa/Kelurahan Pagedangan, Kec. Pagedangan, Kab. Tangerang,",
     "Provinsi Banten 15339",
   ],

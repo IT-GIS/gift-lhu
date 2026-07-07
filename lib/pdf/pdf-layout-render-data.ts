@@ -143,7 +143,7 @@ export function createSamplePdfLayoutRenderData(): PdfLayoutRenderData {
 
   textBindings.companyName = "PT GLOBAL INSPEKSI FORENSIK TEKNIK";
   textBindings.companyAddress =
-    "Komplek 91 Distrik BSD Blok C5, Pagedangan\nKabupaten Tangerang, Banten 15339";
+    "91 Distrik BSD Blok C5, Pagedangan\nKabupaten Tangerang, Banten 15339";
   textBindings.companyEmail = "globalinspeksiforensikteknik@gmail.com";
   textBindings.reportTitle = "Laporan Hasil Pengujian";
   textBindings.reportSubtitle = "Pengujian Kuat Tekan Beton Silinder";

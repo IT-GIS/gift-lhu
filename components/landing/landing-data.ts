@@ -30,7 +30,7 @@ export const company = {
   phone: "+62 812-5056-7742",
   whatsapp: "6281250567742",
   email: "globalinspeksiforensikteknik@gmail.com",
-  address: "Ruko 91 District BSD No C5, Pagedangan, Tangerang, Banten 15339",
+  address: "91 District BSD No C5, Pagedangan, Tangerang, Banten 15339",
 };
 
 const whatsappMessage: Record<Locale, string> = {
