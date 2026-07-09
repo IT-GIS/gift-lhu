@@ -178,15 +178,6 @@ const NEU_CSS = `
     font-size: 1.1rem;
     font-weight: 500;
   }
-  .neu-forgot {
-    color: var(--neu-primary);
-    font-size: 1.1rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: opacity .2s;
-    cursor: pointer;
-  }
-  .neu-forgot:hover { opacity: .7; }
 
   /* Error message */
   .neu-error {
@@ -457,7 +448,7 @@ export default function LoginClient({
                   />
                 </div>
 
-                {/* Remember Me + Forgot */}
+                {/* Remember Me */}
                 <div className="neu-row">
                   <div className="neu-checkbox-wrap" onClick={() => setRemember(!remember)}>
                     <input type="checkbox" name="remember" value="on" readOnly checked={remember} style={{ display: "none" }} />
@@ -466,7 +457,6 @@ export default function LoginClient({
                     </div>
                     <span className="neu-checkbox-label">Remember me</span>
                   </div>
-                  <span className="neu-forgot">Forgot?</span>
                 </div>
 
                 {/* Error */}
