@@ -580,6 +580,15 @@ export function WpStyles() {
           position: relative;
           z-index: 1;
         }
+        .gift-wp-vision .elementor-element-3a05b207 p {
+          font-size: 16px;
+        }
+        .gift-wp-vision .elementor-element-46533381 .wpr-feature-list-title {
+          font-size: 21px;
+        }
+        .gift-wp-vision .elementor-element-46533381 .wpr-feature-list-description {
+          font-size: 16px;
+        }
         .gift-wp-services {
           padding: 100px 0;
         }
@@ -703,7 +712,7 @@ export function WpStyles() {
         .gift-wp-facilities .elementor-element-563e6ef p {
           margin: 0;
           color: #555;
-          font: 500 15px/1.8 Raleway, sans-serif;
+          font: 500 17px/1.8 Raleway, sans-serif;
         }
         .gift-wp-facilities .elementor-element-563e6ef strong {
           color: #333;
@@ -766,12 +775,12 @@ export function WpStyles() {
         .gift-wp-facilities .wpr-feature-list-title {
           margin: 0 0 7px;
           color: #333;
-          font: 600 18px/1.35 Poppins, sans-serif;
+          font: 600 19px/1.35 Poppins, sans-serif;
         }
         .gift-wp-facilities .wpr-feature-list-description {
           margin: 0;
           color: #777;
-          font: 500 14px/1.75 Raleway, sans-serif;
+          font: 500 16px/1.75 Raleway, sans-serif;
         }
         .elementor-1185 .gift-wp-profile-intro {
           padding: 100px 0;
@@ -813,7 +822,7 @@ export function WpStyles() {
         .elementor-1185 .gift-wp-profile-vision .elementor-element-76264e8 p {
           margin: 12px 0 0;
           color: #777;
-          font: 500 19px/1.75 Montserrat, sans-serif;
+          font: 500 20px/1.75 Montserrat, sans-serif;
         }
         .elementor-1185 .gift-wp-profile-mission {
           position: relative;
@@ -887,12 +896,12 @@ export function WpStyles() {
         .elementor-1185 .elementor-element-f9309dd .wpr-feature-list-title {
           margin: 0;
           color: #000;
-          font: 600 20px/1.35 Poppins, sans-serif;
+          font: 600 21px/1.35 Poppins, sans-serif;
         }
         .elementor-1185 .elementor-element-f9309dd .wpr-feature-list-description {
           margin: 6px 0 0;
           color: #555;
-          font: 500 14px/1.65 Raleway, sans-serif;
+          font: 500 16px/1.65 Raleway, sans-serif;
         }
         .elementor-1186 .gift-wp-services {
           padding: 0;
@@ -1542,6 +1551,15 @@ export function WpStyles() {
         .elementor-1189 .elementor-element-66ecdbf .elementor-icon-box-description {
           white-space: normal;
         }
+        .elementor-1189 .elementor-icon-box-description a {
+          color: #2f9bb9;
+          text-decoration: none;
+          transition: color .2s ease;
+        }
+        .elementor-1189 .elementor-icon-box-description a:hover {
+          color: #1f6f85;
+          text-decoration: underline;
+        }
         .gift-wp-contact-band {
           position: relative;
           padding: 112px 0;
@@ -1637,24 +1655,25 @@ export function WpStyles() {
           margin-top: 3px;
           color: #82d6ed;
         }
-        .gift-wp-contact-list li > a.gift-wp-contact-link,
-        .gift-wp-footer-contact li > a.gift-wp-contact-link {
-          display: flex;
-          align-items: flex-start;
-          gap: 12px;
+        .gift-wp-contact-list li a,
+        .gift-wp-footer-contact li a,
+        .gift-wp-office-info-list li a {
           color: inherit;
           text-decoration: none;
           transition: color .2s ease;
         }
-        .gift-wp-contact-list li > a.gift-wp-contact-link:hover,
-        .gift-wp-footer-contact li > a.gift-wp-contact-link:hover {
+        .gift-wp-contact-list li a:hover,
+        .gift-wp-footer-contact li a:hover,
+        .gift-wp-office-info-list li a:hover {
           color: #82d6ed;
         }
         .gift-wp-footer-contact li {
           align-items: center;
         }
-        .gift-wp-footer-contact li > a.gift-wp-contact-link {
-          align-items: center;
+        .gift-wp-contact-phone-lines {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
         }
         .gift-wp-contact-credentials {
           display: flex;

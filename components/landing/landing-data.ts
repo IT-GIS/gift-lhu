@@ -29,6 +29,8 @@ export const company = {
   shortName: "Global Inspeksi Forensik Teknik",
   phone: "+62 812-5056-7742",
   whatsapp: "6281250567742",
+  phoneSecondary: "+62 856-4504-6160",
+  whatsappSecondary: "6285645046160",
   email: "globalinspeksiforensikteknik@gmail.com",
   address: "91 District BSD No C5, Pagedangan, Tangerang, Banten 15339",
 };
@@ -38,8 +40,8 @@ const whatsappMessage: Record<Locale, string> = {
   en: "Hello, I would like to ask about GIFT Laboratory's services.",
 };
 
-export function getWhatsappLink(locale: Locale) {
-  return `https://wa.me/${company.whatsapp}?text=${encodeURIComponent(whatsappMessage[locale])}`;
+export function getWhatsappLink(locale: Locale, number: string = company.whatsapp) {
+  return `https://wa.me/${number}?text=${encodeURIComponent(whatsappMessage[locale])}`;
 }
 
 const contactCardsBase = [

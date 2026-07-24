@@ -352,7 +352,6 @@ export function ServiceDetailLandingPage({
 
 export function ContactLandingPage() {
   const { content, language } = useLandingLanguage();
-  const whatsappLink = getWhatsappLink(language);
   const contactCards = getContactCards(content);
 
   return (
@@ -377,8 +376,8 @@ export function ContactLandingPage() {
                     className={["elementor-element-66ecdbf", "elementor-element-eccc5bd", "elementor-element-4595e59"][index]}
                     icon={item.icon}
                     title={item.title}
-                    description={item.description}
-                    href={item.key === "phone" ? whatsappLink : item.href}
+                    description={item.key === "phone" ? <PhoneLinks language={language} stacked /> : item.description}
+                    href={item.key === "phone" ? undefined : item.href}
                     external={item.external}
                   />
                 </ScrollFade>
@@ -418,7 +417,7 @@ export function ContactLandingPage() {
                   <ul className="gift-wp-office-info-list">
                     <li>
                       <Phone className="gift-wp-lucide" />
-                      <span>{company.phone}</span>
+                      <PhoneLinks language={language} stacked />
                     </li>
                     <li>
                       <Mail className="gift-wp-lucide" />
@@ -847,7 +846,6 @@ function navItemMatches(item: NavItem, activePage: ActivePage, content: LandingD
 function WpFooter() {
   const { content, language } = useLandingLanguage();
   const navItems = getNavItems(content);
-  const whatsappLink = getWhatsappLink(language);
 
   return (
     <footer data-elementor-type="wp-post" data-elementor-id="222" className="elementor elementor-222">
@@ -879,9 +877,7 @@ function WpFooter() {
               <div className="gift-footer-heading">{content.footer.contactInfo}</div>
               <ul className="elementor-icon-list-items gift-wp-footer-contact">
                 <li className="elementor-icon-list-item">
-                  <a className="gift-wp-contact-link" href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                    <PhoneIcon /><span className="elementor-icon-list-text">{company.phone}</span>
-                  </a>
+                  <PhoneIcon /><span className="elementor-icon-list-text"><PhoneLinks language={language} /></span>
                 </li>
                 <li className="elementor-icon-list-item"><MailIcon /><span className="elementor-icon-list-text">{company.email}</span></li>
                 <li className="elementor-icon-list-item"><MapIcon /><span className="elementor-icon-list-text">{company.address}</span></li>
@@ -992,7 +988,6 @@ function HomeServicesGrid() {
 
 function ContactBand({ sourcePage }: { sourcePage: "home" | "contact" }) {
   const { content, language } = useLandingLanguage();
-  const whatsappLink = getWhatsappLink(language);
 
   return (
     <section className="elementor-element elementor-element-cf5e46f e-flex e-con-boxed e-con e-parent gift-wp-contact-band">
@@ -1008,9 +1003,7 @@ function ContactBand({ sourcePage }: { sourcePage: "home" | "contact" }) {
             <Divider className="elementor-element-8725434" />
             <ul className="elementor-icon-list-items gift-wp-contact-list">
               <li>
-                <a className="gift-wp-contact-link" href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                  <PhoneIcon /> <span>{company.phone}</span>
-                </a>
+                <PhoneIcon /> <PhoneLinks language={language} stacked={sourcePage === "contact"} />
               </li>
               <li><MailIcon /> <span>{company.email}</span></li>
               <li><MapIcon /> <span>{company.address}</span></li>
@@ -1173,6 +1166,19 @@ function ServicePromoBox({
   );
 }
 
+function PhoneLinks({ language, stacked = false }: { language: Locale; stacked?: boolean }) {
+  const newLink = getWhatsappLink(language, company.whatsappSecondary);
+  const oldLink = getWhatsappLink(language, company.whatsapp);
+
+  return (
+    <span className={stacked ? "gift-wp-contact-phone-lines" : undefined}>
+      <a href={newLink} target="_blank" rel="noopener noreferrer">{company.phoneSecondary}</a>
+      {!stacked && " | "}
+      <a href={oldLink} target="_blank" rel="noopener noreferrer">{company.phone}</a>
+    </span>
+  );
+}
+
 function ContactIconBox({
   className,
   icon: Icon,
@@ -1184,7 +1190,7 @@ function ContactIconBox({
   className: string;
   icon: ComponentType<{ className?: string }>;
   title: string;
-  description: string;
+  description: ReactNode;
   href?: string;
   external?: boolean;
 }) {

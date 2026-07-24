@@ -34,6 +34,15 @@ function InstagramIcon({ className }: { className?: string }) {
 
 const dialItems = [
   {
+    key: "whatsapp-secondary",
+    label: "WhatsApp Baru",
+    hrefKey: "whatsappSecondaryHref" as const,
+    bgColor: "bg-[#25D366]",
+    hoverBg: "hover:bg-[#1ebe5a]",
+    shadowColor: "hover:shadow-[0_4px_20px_rgba(37,211,102,0.5)]",
+    Icon: WhatsAppIcon,
+  },
+  {
     key: "whatsapp",
     label: "WhatsApp",
     hrefKey: "whatsappHref" as const,
@@ -99,6 +108,7 @@ export function ContactFab() {
 
   const hrefs: Record<string, string> = {
     whatsappHref: getWhatsappLink(language),
+    whatsappSecondaryHref: getWhatsappLink(language, company.whatsappSecondary),
     instagramHref: "https://www.instagram.com/ptglobalinspeksiforensikteknik/",
     emailHref: `mailto:${company.email}`,
   };
