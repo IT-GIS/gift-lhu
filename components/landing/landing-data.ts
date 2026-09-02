@@ -29,8 +29,6 @@ export const company = {
   shortName: "Global Inspeksi Forensik Teknik",
   phone: "+62 812-5056-7742",
   whatsapp: "6281250567742",
-  phoneSecondary: "+62 856-4504-6160",
-  whatsappSecondary: "6285645046160",
   email: "globalinspeksiforensikteknik@gmail.com",
   address: "91 District BSD No C5, Pagedangan, Tangerang, Banten 15339",
 };

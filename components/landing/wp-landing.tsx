@@ -1167,14 +1167,11 @@ function ServicePromoBox({
 }
 
 function PhoneLinks({ language, stacked = false }: { language: Locale; stacked?: boolean }) {
-  const newLink = getWhatsappLink(language, company.whatsappSecondary);
-  const oldLink = getWhatsappLink(language, company.whatsapp);
+  const link = getWhatsappLink(language, company.whatsapp);
 
   return (
     <span className={stacked ? "gift-wp-contact-phone-lines" : undefined}>
-      <a href={newLink} target="_blank" rel="noopener noreferrer">{company.phoneSecondary}</a>
-      {!stacked && " | "}
-      <a href={oldLink} target="_blank" rel="noopener noreferrer">{company.phone}</a>
+      <a href={link} target="_blank" rel="noopener noreferrer">{company.phone}</a>
     </span>
   );
 }
