@@ -134,7 +134,7 @@ export function HomeLandingPage() {
             <div className="elementor-column elementor-col-50 elementor-top-column elementor-element elementor-element-57d48a63">
               <div className="elementor-widget-wrap elementor-element-populated">
                 <ScrollFade variant="left">
-                  <ImageWidget className="elementor-element-5530ede6" src="/landing/about-building.png" alt="Gedung laboratorium GIFT" />
+                  <ImageWidget className="elementor-element-5530ede6" src="/landing/about-building.png?v=2" alt="Gedung laboratorium GIFT" />
                 </ScrollFade>
               </div>
             </div>
@@ -376,7 +376,15 @@ export function ContactLandingPage() {
                     className={["elementor-element-66ecdbf", "elementor-element-eccc5bd", "elementor-element-4595e59"][index]}
                     icon={item.icon}
                     title={item.title}
-                    description={item.key === "phone" ? <PhoneLinks language={language} stacked /> : item.description}
+                    description={
+                      item.key === "phone" ? (
+                        <PhoneLinks language={language} stacked />
+                      ) : item.key === "location" ? (
+                        <CompanyAddresses />
+                      ) : (
+                        item.description
+                      )
+                    }
                     href={item.key === "phone" ? undefined : item.href}
                     external={item.external}
                   />
@@ -413,7 +421,6 @@ export function ContactLandingPage() {
                 <div className="gift-wp-office-card-overlay" />
                 <div className="gift-wp-office-card-content">
                   <span className="gift-wp-office-pill">HEAD OFFICE</span>
-                  <h3 className="gift-wp-office-city">Tangerang</h3>
                   <ul className="gift-wp-office-info-list">
                     <li>
                       <Phone className="gift-wp-lucide" />
@@ -425,7 +432,7 @@ export function ContactLandingPage() {
                     </li>
                     <li>
                       <MapPin className="gift-wp-lucide" />
-                      <span>{company.address}</span>
+                      <CompanyAddresses />
                     </li>
                   </ul>
                 </div>
@@ -440,7 +447,7 @@ export function ContactLandingPage() {
           <ScrollFade variant="up">
             <iframe
               title={company.address}
-              src="https://maps.google.com/maps?q=Ruko%2091%20District%20BSD%20No%20C5%2C%20Pagedangan%2C%20Tangerang%2C%20Banten%2015339&t=m&z=14&output=embed&iwloc=near"
+              src="https://maps.google.com/maps?q=Foresta%20Business%20Loft-2%2C%20Jl.%20BSD%20Raya%20Utama%20Unit%2016%2C%20Kabupaten%20Tangerang%2C%20Banten%2015339&t=m&z=14&output=embed&iwloc=near"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
@@ -880,7 +887,10 @@ function WpFooter() {
                   <PhoneIcon /><span className="elementor-icon-list-text"><PhoneLinks language={language} /></span>
                 </li>
                 <li className="elementor-icon-list-item"><MailIcon /><span className="elementor-icon-list-text">{company.email}</span></li>
-                <li className="elementor-icon-list-item"><MapIcon /><span className="elementor-icon-list-text">{company.address}</span></li>
+                <li className="elementor-icon-list-item">
+                  <MapIcon />
+                  <CompanyAddresses />
+                </li>
               </ul>
             </ScrollFade>
           </div>
@@ -915,7 +925,7 @@ function WpFooter() {
 }
 
 function ServicesGrid({ compact = false }: { compact?: boolean }) {
-  const { content } = useLandingLanguage();
+  const { content, language } = useLandingLanguage();
 
   if (compact) {
     return <HomeServicesGrid />;
@@ -942,6 +952,7 @@ function ServicesGrid({ compact = false }: { compact?: boolean }) {
                     title={service.title}
                     description={service.servicePageDescription}
                     cta={content.servicesSection.promoCta}
+                    href={getWhatsappLink(language)}
                   />
                 </ScrollFade>
               ))}
@@ -999,14 +1010,15 @@ function ContactBand({ sourcePage }: { sourcePage: "home" | "contact" }) {
             <p className="gift-wp-contact-band-copy">
               {content.contactBand.copy}
             </p>
-            <Heading className="elementor-element-2fa7ae0">{content.contactBand.officeHeading}</Heading>
-            <Divider className="elementor-element-8725434" />
             <ul className="elementor-icon-list-items gift-wp-contact-list">
               <li>
                 <PhoneIcon /> <PhoneLinks language={language} stacked={sourcePage === "contact"} />
               </li>
               <li><MailIcon /> <span>{company.email}</span></li>
-              <li><MapIcon /> <span>{company.address}</span></li>
+              <li>
+                <MapIcon />
+                <CompanyAddresses />
+              </li>
             </ul>
             <div className="gift-wp-contact-credentials" aria-label="Company credentials">
               <span><Building2 size={16} /> PT Global Inspeksi Forensik Teknik</span>
@@ -1084,7 +1096,7 @@ function PolicySection() {
                 <p>{policy.antiBriberyBody2}</p>
                 <ul className="gift-wp-policy-contact-list">
                   <li><strong>{policy.contactLabels.email}</strong><span>globalinspeksiforensikteknik@gmail.com</span></li>
-                  <li><strong>{policy.contactLabels.phone}</strong><span>+62 812-5056-7742</span></li>
+                  <li><strong>{policy.contactLabels.phone}</strong><span>{company.phone}</span></li>
                   <li><strong>{policy.contactLabels.website}</strong><span>www.gift-laboratory.com</span></li>
                   <li><strong>{policy.contactLabels.letter}</strong><span>PT. Global Inspeksi Forensik Teknik</span></li>
                   <li><strong>{policy.contactLabels.address}</strong><span>District 91, No C5 BSD, Tangerang</span></li>
@@ -1137,12 +1149,14 @@ function ServicePromoBox({
   title,
   description,
   cta,
+  href,
 }: {
   className: string;
   image: string;
   title: string;
   description: string;
   cta: string;
+  href: string;
 }) {
   return (
     <article className={`elementor-element ${className} wpr-promo-box-style-cover elementor-widget elementor-widget-wpr-promo-box gift-wp-service-card-anim`}>
@@ -1155,10 +1169,10 @@ function ServicePromoBox({
           <div className="wpr-promo-box-content">
             <h3 className="wpr-promo-box-title"><span>{title}</span></h3>
             <div className="wpr-promo-box-description"><p>{description}</p></div>
-            <Link className="wpr-promo-box-btn" href="/contact">
+            <a className="wpr-promo-box-btn" href={href} target="_blank" rel="noopener noreferrer">
               <span className="wpr-promo-box-btn-text">{cta}</span>
               <span className="wpr-promo-box-btn-icon"><Phone size={14} /></span>
-            </Link>
+            </a>
           </div>
         </div>
       </div>
@@ -1172,6 +1186,21 @@ function PhoneLinks({ language, stacked = false }: { language: Locale; stacked?:
   return (
     <span className={stacked ? "gift-wp-contact-phone-lines" : undefined}>
       <a href={link} target="_blank" rel="noopener noreferrer">{company.phone}</a>
+    </span>
+  );
+}
+
+function CompanyAddresses() {
+  return (
+    <span className="gift-company-addresses">
+      <span className="gift-company-address">
+        <strong>Kantor Inspeksi</strong>
+        <span>{company.address}</span>
+      </span>
+      <span className="gift-company-address">
+        <strong>Kantor Laboratorium</strong>
+        <span>{company.laboratoryAddress}</span>
+      </span>
     </span>
   );
 }

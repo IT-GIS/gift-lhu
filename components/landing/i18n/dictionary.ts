@@ -170,8 +170,9 @@ export const dictionary: Record<Locale, LandingDictionary> = {
     about: {
       kicker: "Tentang Kami",
       paragraphs: [
-        "PT. Global Inspeksi Forensik Teknik adalah laboratorium yang bergerak di bidang pengujian konstruksi, dan merupakan bagian dari Lembaga Sertifikasi Global Inspeksi Sertifikasi. Kami mendukung program pemerintah dalam penerapan Standar Nasional Indonesia (SNI) untuk memastikan kualitas dan keamanan konstruksi di Indonesia.",
-          "Laboratorium kami berlokasi di BSD, Tangerang, dan fokus pada pengujian material bangunan serta struktur konstruksi. Dengan memanfaatkan fasilitas gedung yang modern serta peralatan pengujian yang lengkap dan terkalibrasi, kami berkomitmen untuk memberikan hasil uji yang akurat dan terpercaya.",
+        "PT. Global Inspeksi Forensik Teknik adalah laboratorium yang bergerak di bidang pengujian konstruksi, inspeksi kontainer, serta draught survey, dan merupakan bagian dari Lembaga Sertifikasi Global Inspeksi Sertifikasi. Kami mendukung program pemerintah dalam penerapan Standar Nasional Indonesia (SNI) untuk memastikan kualitas dan keamanan konstruksi di Indonesia.",
+        "Laboratorium kami berlokasi di Jl. Pahlawan No. 2, Kwadengan Barat, Lemahputro, Kecamatan Sidoarjo, Kabupaten Sidoarjo, Jawa Timur, dan berfokus pada pengujian material bangunan serta struktur konstruksi. Dengan memanfaatkan fasilitas gedung yang modern serta peralatan pengujian yang lengkap dan terkalibrasi, kami berkomitmen untuk memberikan hasil uji yang akurat dan terpercaya.",
+        "Selain laboratorium pengujian di Sidoarjo, kami juga memiliki kantor inspeksi yang berlokasi di BSD, Tangerang, guna mendukung layanan inspeksi kontainer dan draught survey di wilayah Jabodetabek dan sekitarnya.",
       ],
       cta: "Lihat Selengkapnya",
     },

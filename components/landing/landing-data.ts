@@ -27,10 +27,11 @@ export function getNavItems(t: LandingDictionary): NavItem[] {
 export const company = {
   name: "PT. Global Inspeksi Forensik Teknik",
   shortName: "Global Inspeksi Forensik Teknik",
-  phone: "+62 812-5056-7742",
-  whatsapp: "6281250567742",
+  phone: "+62 822-5250-8258 (Zainal)",
+  whatsapp: "6282252508258",
   email: "globalinspeksiforensikteknik@gmail.com",
-  address: "91 District BSD No C5, Pagedangan, Tangerang, Banten 15339",
+  address: "Foresta Business Loft-2, Jl. BSD Raya Utama Unit 16, Kabupaten Tangerang, Banten 15339",
+  laboratoryAddress: "Jl. Pahlawan No.2, Kwadengan Barat, Lemahputro, Kec. Sidoarjo, Kabupaten Sidoarjo, Jawa Timur 61213",
 };
 
 const whatsappMessage: Record<Locale, string> = {
@@ -57,7 +58,7 @@ const contactCardsBase = [
   },
   {
     key: "location" as const,
-    description: company.address,
+    description: `Kantor Inspeksi: ${company.address}\nKantor Laboratorium: ${company.laboratoryAddress}`,
     icon: MapPin,
     href: "https://share.google/AGl5avcvPFOvNL6dA",
     external: true,

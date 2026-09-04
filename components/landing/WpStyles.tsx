@@ -476,6 +476,39 @@ export function WpStyles() {
         .gift-wp-two-column .elementor-widget-container {
           width: 100%;
         }
+        .elementor-1184 .gift-wp-about {
+          padding: 72px 0;
+        }
+        .elementor-1184 .gift-wp-about > .elementor-container {
+          width: min(1480px, calc(100% - 80px));
+          max-width: none;
+          margin: 0 auto;
+          grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+          gap: 80px;
+        }
+        .elementor-1184 .gift-wp-about .elementor-element-5530ede6 img {
+          min-height: 0;
+          max-height: 520px;
+          aspect-ratio: 4 / 3;
+          object-fit: cover;
+        }
+        .elementor-1184 .gift-wp-about .elementor-element-7d19e0 {
+          margin-bottom: 14px;
+        }
+        .elementor-1184 .gift-wp-about .elementor-element-7d19e0 .elementor-heading-title {
+          color: #282828;
+          font: 700 18px/1.25 Poppins, sans-serif;
+          text-transform: uppercase;
+        }
+        .elementor-1184 .gift-wp-about .elementor-element-effe491 .elementor-heading-title {
+          color: #333;
+          font: 600 48px/1.12 Poppins, sans-serif;
+        }
+        .elementor-1184 .gift-wp-about .elementor-element-30980496 p {
+          margin: 18px 0 0;
+          color: #555;
+          font: 500 16px/1.8 Raleway, sans-serif;
+        }
         .gift-wp-section {
           padding: 100px 0;
           margin-block-start: 0 !important;
@@ -783,8 +816,15 @@ export function WpStyles() {
           font: 500 16px/1.75 Raleway, sans-serif;
         }
         .elementor-1185 .gift-wp-profile-intro {
-          padding: 100px 0;
+          padding: 64px 0 72px;
           background: #fff;
+        }
+        .elementor-1185 .gift-wp-profile-intro > .e-con-inner {
+          width: min(1180px, calc(100% - 64px));
+          max-width: none;
+          margin: 0 auto;
+          grid-template-columns: minmax(0, 1.02fr) minmax(420px, .98fr);
+          gap: 64px;
         }
         .elementor-1185 .gift-wp-profile-intro .elementor-element-7d19e0 {
           margin-bottom: 18px;
@@ -796,12 +836,12 @@ export function WpStyles() {
         }
         .elementor-1185 .elementor-element-1b719f4 .elementor-heading-title {
           color: #333;
-          font: 500 45px/1.15 Poppins, sans-serif;
+          font: 600 46px/1.12 Poppins, sans-serif;
         }
         .elementor-1185 .elementor-element-84e7306 p {
           margin: 18px 0 0;
           color: #555;
-          font: 500 14px/1.85 Raleway, sans-serif;
+          font: 500 15px/1.8 Raleway, sans-serif;
         }
         .elementor-1185 .elementor-element-84e7306 strong {
           color: #333;
@@ -810,6 +850,13 @@ export function WpStyles() {
         .elementor-1185 .elementor-widget-image img {
           border-radius: 10px;
           box-shadow: none;
+        }
+        .elementor-1185 .gift-wp-profile-intro .elementor-element-6fc82a9 img {
+          aspect-ratio: 1.12 / 1;
+          max-height: 520px;
+          object-fit: cover;
+          border-radius: 12px;
+          box-shadow: 0 18px 45px rgba(10, 37, 64, .12);
         }
         .elementor-1185 .gift-wp-profile-vision {
           padding: 100px 0;
@@ -1548,6 +1595,38 @@ export function WpStyles() {
           text-align: left;
           overflow-wrap: anywhere;
         }
+        .elementor-1189 .elementor-element-4595e59 .elementor-icon-box-wrapper {
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: flex-start;
+          padding: 28px 30px 30px;
+        }
+        .elementor-1189 .elementor-element-4595e59 .elementor-icon-box-icon {
+          margin: 0 0 18px !important;
+        }
+        .elementor-1189 .elementor-element-4595e59 .elementor-icon-box-content {
+          gap: 8px;
+        }
+        .elementor-1189 .elementor-element-4595e59 .elementor-icon-box-description {
+          margin: 0;
+          font-size: 14px;
+          line-height: 1.65;
+        }
+        .elementor-1189 .elementor-element-4595e59 .gift-company-addresses {
+          gap: 14px;
+        }
+        .elementor-1189 .elementor-element-4595e59 .gift-company-address {
+          padding-left: 10px;
+          border-left: 2px solid rgba(47, 155, 185, .28);
+        }
+        .elementor-1189 .elementor-element-4595e59 .gift-company-address + .gift-company-address {
+          padding-top: 12px;
+          border-top: 1px solid rgba(47, 155, 185, .14);
+        }
+        .elementor-1189 .elementor-element-4595e59 .gift-company-address strong {
+          padding: 3px 8px;
+          background: rgba(47, 155, 185, .08);
+        }
         .elementor-1189 .elementor-element-66ecdbf .elementor-icon-box-description {
           white-space: normal;
         }
@@ -1650,6 +1729,12 @@ export function WpStyles() {
           color: rgba(255, 255, 255, .92);
           font-size: 15px;
         }
+        .gift-wp-contact-list li > .gift-company-addresses,
+        .gift-wp-footer-contact li > .gift-company-addresses,
+        .gift-wp-office-info-list li > .gift-company-addresses {
+          flex: 1 1 auto;
+          min-width: 0;
+        }
         .gift-wp-contact-list svg {
           flex: 0 0 auto;
           margin-top: 3px;
@@ -1674,6 +1759,69 @@ export function WpStyles() {
           display: flex;
           flex-direction: column;
           gap: 2px;
+        }
+        .gift-company-addresses {
+          display: grid;
+          gap: 12px;
+          width: 100%;
+        }
+        .gift-company-address {
+          display: grid;
+          gap: 3px;
+        }
+        .gift-company-address strong {
+          display: inline-flex;
+          width: fit-content;
+          padding: 3px 8px;
+          border: 1px solid rgba(130, 214, 237, .3);
+          border-radius: 999px;
+          color: #82d6ed;
+          font-size: 11px;
+          line-height: 1.3;
+        }
+        .gift-company-address > span {
+          display: block;
+        }
+        .elementor-222 .gift-company-addresses {
+          gap: 10px;
+        }
+        .elementor-222 .gift-company-address strong {
+          color: #b8eaf5;
+          background: rgba(130, 214, 237, .08);
+        }
+        .elementor-222 .gift-company-address > span {
+          color: rgba(255, 255, 255, .82);
+        }
+        .elementor-222 .gift-wp-footer-contact li {
+          align-items: flex-start;
+        }
+        .elementor-222 .gift-wp-footer-contact li > .gift-company-addresses {
+          font-size: 13px;
+          line-height: 1.55;
+        }
+        .elementor-222 .gift-wp-footer-contact li > .gift-company-addresses .gift-company-address {
+          gap: 2px;
+        }
+        .elementor-222 .gift-wp-footer-contact li > .gift-company-addresses .gift-company-address strong {
+          font-size: 10px;
+        }
+        .gift-wp-contact-band .gift-company-addresses {
+          gap: 14px;
+        }
+        .gift-wp-contact-band .gift-company-address {
+          padding: 5px 0 6px 12px;
+          border-left: 2px solid rgba(130, 214, 237, .5);
+          gap: 4px;
+        }
+        .gift-wp-contact-band .gift-company-address > span {
+          color: rgba(255, 255, 255, .9);
+        }
+        .elementor-1189 .elementor-icon-box-description .gift-company-addresses {
+          gap: 10px;
+          white-space: normal;
+        }
+        .elementor-1189 .elementor-icon-box-description {
+          white-space: pre-line;
         }
         .gift-wp-contact-credentials {
           display: flex;
@@ -2537,6 +2685,41 @@ export function WpStyles() {
           }
         }
         @media (max-width: 767px) {
+          .elementor-1185 .gift-wp-profile-intro {
+            padding: 52px 0 60px;
+          }
+          .elementor-1185 .gift-wp-profile-intro > .e-con-inner {
+            width: min(560px, calc(100% - 32px));
+            gap: 34px;
+          }
+          .elementor-1185 .elementor-element-1b719f4 .elementor-heading-title {
+            font-size: 34px;
+          }
+          .elementor-1185 .elementor-element-84e7306 p {
+            font-size: 14px;
+          }
+          .elementor-1185 .gift-wp-profile-intro .elementor-element-6fc82a9 img {
+            aspect-ratio: 1 / 1;
+            max-height: none;
+          }
+          .elementor-1184 .gift-wp-about {
+            padding: 56px 0;
+          }
+          .elementor-1184 .gift-wp-about > .elementor-container {
+            width: min(560px, calc(100% - 32px));
+            grid-template-columns: 1fr;
+            gap: 32px;
+          }
+          .elementor-1184 .gift-wp-about .elementor-element-effe491 .elementor-heading-title {
+            font-size: 34px;
+          }
+          .elementor-1184 .gift-wp-about .elementor-element-30980496 p {
+            font-size: 15px;
+          }
+          .elementor-1184 .gift-wp-about .elementor-element-5530ede6 img {
+            aspect-ratio: 4 / 3;
+            max-height: none;
+          }
           .gift-wp-office-location { padding: 64px 0 0; }
           .gift-wp-office-heading { font-size: 30px; }
           .gift-wp-office-city { font-size: 44px; }
