@@ -156,6 +156,27 @@ export async function getLhuDocumentByToken(
   return getLhuDocumentById(tokenRows[0].lhuDocumentId);
 }
 
+export async function getPublishedLhuTokenByIdentifier(identifier: string): Promise<string | null> {
+  const value = identifier.trim();
+  if (!value) return null;
+
+  for (const field of [lhuDocuments.referenceNumber, lhuDocuments.lhuNumber]) {
+    const rows = await db
+      .select({ token: lhuVerificationTokens.publicToken })
+      .from(lhuDocuments)
+      .innerJoin(lhuVerificationTokens, eq(lhuVerificationTokens.lhuDocumentId, lhuDocuments.id))
+      .where(and(
+        eq(lhuDocuments.status, "published"),
+        eq(lhuVerificationTokens.isActive, true),
+        like(field, value),
+      ))
+      .limit(1);
+    if (rows[0]) return rows[0].token;
+  }
+
+  return null;
+}
+
 // ─── Sequence / Document Code ─────────────────────────────────────────────────
 
 export async function generateDocumentCode(): Promise<string> {

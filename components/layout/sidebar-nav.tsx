@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, FileText, Upload, Settings, Users, ScrollText, SearchCheck, Newspaper, Inbox } from "lucide-react";
+import { LayoutDashboard, FileText, Upload, Settings, Users, ScrollText, SearchCheck, Newspaper, Inbox, ScanLine } from "lucide-react";
 import { can, type Role } from "@/lib/auth/rbac";
 
 const navGroups = [
@@ -14,6 +14,7 @@ const navGroups = [
       { href: "/lhu/new", label: "Buat Draft", icon: Upload },
       { href: "/lhu", label: "Data LHU", icon: FileText },
       { href: "/publish", label: "Dokumen Publish", icon: SearchCheck },
+      { href: "/verify", label: "Verifikasi LHU", icon: ScanLine },
       { href: "/users", label: "Users", icon: Users, permission: "manageUsers" },
     ],
   },
